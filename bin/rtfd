@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# This file is placed in the Public Domain.
+
+
+import os
+import sys
+
+
+#INCLUDE = '''"Jinja2==3.0.0" "mock==1.0.1" "pillow>5.4.1" "alabaster>=0.7,<0.8,!=0.7.5" "commonmark==0.8.1" "recommonmark==0.5.0" "sphinx<6" "sphinx-rtd-theme<0.5" "readthedocs-sphinx-ext<2.2"'''
+
+INCLUDE = '''"pillow" "mock==1.0.1" "alabaster>=0.7,<0.8,!=0.7.5" "commonmark==0.9.1" "recommonmark==0.5.0" "sphinx" "sphinx-rtd-theme" "readthedocs-sphinx-ext<2.2"'''
+
+def popen(txt):
+    proc = os.popen(txt)
+    while 1:
+        l = proc.readline()
+        if not l:
+            break
+        print(l.rstrip())
+        sys.stdout.flush()
+
+
+if not os.path.isdir("dist"):
+    popen("python3 setup.py sdist")
+if not os.path.isdir("env"):
+    popen("python3 -mvirtualenv --no-download env")
+if not os.path.exists("env/bin/sphinx-apidoc"):
+    popen("rm -fR ~/.cache/pip")
+    popen("env/bin/python3 env/bin/pip3 install -I %s" % INCLUDE)
+popen("env/bin/python3 env/bin/pip3 install operbot -f dist --force-reinstall --no-deps")
+popen("env/bin/python3 env/bin/sphinx-build docs html")

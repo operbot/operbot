@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+# This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116
+
+
+"cleanup"
+
+
+import os
+
+
+def popen(txt):
+    for line in os.popen(txt).readlines():
+        print(line)
+
+
+popen("rm -fR build dist MANIFEST *~ .op operbot.egg-info __pycache__ .pytest_cache")
+popen('rm -fR operbot.egg-info')
+popen("rm -fR op/*~ op/__pycache__")
+popen("rm -fR oper/*~ oper/__pycache__")
+popen("rm -fR operbot/*~ operbot/__pycache__")
+popen("rm -fR bin/*~ bin/__pycache__")
+popen("rm -fR docs/*~ docs/oper*.rst docs/_templates/*~ docs/_static/*~")
+popen("rm -fR .test test/__pycache__ test/*~")
+popen("rm -fR env html")
