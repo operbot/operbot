@@ -266,18 +266,11 @@ class TestObject(unittest.TestCase):
         )
 
 
-
-
 class TestDb(unittest.TestCase):
 
     def test_cdir(self):
         cdir(".test")
         self.assertTrue(os.path.exists(".test"))
-
-    def test_composite(self):
-        com1 = Composite()
-        com2 = loads(dumps(com1))
-        self.assertEqual(type(com2.dbs), type(""))
 
     def test_fns(self):
         obj = Object()
@@ -308,6 +301,7 @@ class Composite(Object):
 
 Class.add(Composite)
 
+
 class TestComposite(unittest.TestCase):
 
     def test_composite(self):
@@ -315,7 +309,7 @@ class TestComposite(unittest.TestCase):
         path = dump(composite, os.path.join(Wd.workdir, "compositetest"))
         composite2 = Composite()
         load(composite2, path)
-        self.assertEqual(type(composite2.db), Db)
+        self.assertEqual(type(composite2.dbs), Db)
 
 
 class TestPath(unittest.TestCase):
