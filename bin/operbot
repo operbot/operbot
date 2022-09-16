@@ -19,9 +19,8 @@ sys.path.insert(0, os.getcwd())
 
 from op import Wd, format, keys, update
 from oper import Cfg, Client, Event, docmd, parse, scan, wait
-
-
-from operbot import bsc, dbg, log, irc, rss, sts, tdo
+from opermod import bsc, dbg, log, sts, tdo
+from operbot import irc, rss
 from operbot.irc import Config, IRC
 from operbot.rss import Fetcher
 
