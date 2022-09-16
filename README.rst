@@ -114,7 +114,7 @@ use the -i option to start the irc client.
 
 you can add a -r option to have the rss fetcher started.
 
-| ``operbot -c -r``
+| ``$ operbot -c -r``
 | ``OPERBOT started at Fri Sep 16 02:44:51 2022``
 | ``> thr``
 | ``Console.loop/1s Fetcher.run/4m59s``
