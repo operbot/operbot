@@ -11,14 +11,15 @@ don't get overwritten by __dict__ updating and, without methods defined on the
 object, is easily being updated from a on disk stored json (dict). Functions
 are provided using function call/first argument an Object e.g not::
 
->>> o = op.Object()
->>> o.save()
+ import op
+ o = op.Object()
+ o.save()
 
 but::
 
 >>> from op import Object, save
 >>> o = Object()
->>> save(o)
+>>> path = save(o)
 
 Some hidden methods are provided, methods are factored out into functions
 like get, items, keys, register, set, update and values.
@@ -44,8 +45,6 @@ load/save from/to disk::
 
 Big Objects can be searched with database functions and uses read-only files
 to improve persistence and a type in filename for reconstruction::
-
-'op.obj.Object/2021-08-31/15:31:05.717063'
 
 >>> import op
 >>> o = op.Object()

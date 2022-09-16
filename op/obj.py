@@ -11,8 +11,8 @@ the object, is easily being updated from a on disk stored json (dict).
 
 basic usage is this::
 
- >>> import opl
- >>> o = opl.Object()
+ >>> import op
+ >>> o = op.Object()
  >>> o.key = "value"
  >>> o.key
  'value'
@@ -22,24 +22,24 @@ like get, items, keys, register, set, update and values.
 
 load/save from/to disk::
 
- >>> import opl
- >>> o = opl.Object()
+ >>> import op
+ >>> o = op.Object()
  >>> o.key = "value"
- >>> p = opl.save(o)
- >>> oo = opl.Object()
- >>> opl.load(oo, p)
+ >>> p = op.save(o)
+ >>> oo = op.Object()
+ >>> op.load(oo, p)
  >>> oo.key
  'value'
 
 Big Objects can be searched with database functions and uses read-only files
 to improve persistence and a type in filename for reconstruction::
 
- 'opl.obj.Object/2021-08-31/15:31:05.717063'
+ 'op.obj.Object/2021-08-31/15:31:05.717063'
 
- >>> import opl
- >>> o = opl.Object()
- >>> opl.save(o)  # doctest: +ELLIPSIS
- 'opl.obj.Object/...'
+ >>> import op
+ >>> o = op.Object()
+ >>> op.save(o)  # doctest: +ELLIPSIS
+ 'op.obj.Object/...'
 
 Great for giving objects peristence by having their state stored in files.
 
@@ -85,10 +85,10 @@ class Object:
        Method are implemented as functions with the object as the first
        argument, a trick to mimic object method calls.
 
-       >>> import opl
-       >>> o = opl.Object()
+       >>> import op
+       >>> o = op.Object()
        >>> o.test = "try"
-       >>> opl.format(o)
+       >>> op.format(o)
        'test=try'
 
        Some hidden methods are provided, methods are factored out into functions

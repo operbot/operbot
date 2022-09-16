@@ -13,4 +13,7 @@ def popen(txt):
 
 
 popen("python3 -m pytest")
+popen("python3 -m doctest -o ELLIPSIS op/*.py")
+popen("python3 -m doctest -o ELLIPSIS oper/*.py")
+popen("python3 -m doctest -o ELLIPSIS operbot/*.py")
 popen("python3 -m doctest -o ELLIPSIS test/*.py")

@@ -3,8 +3,8 @@
 
 
 
-from .com import dispatch
-from .hdl import Handler
+from oper.com import dispatch
+from oper.hdl import Handler
 
 
 def __dir__():
