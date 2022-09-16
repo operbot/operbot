@@ -132,7 +132,7 @@ def main():
         return
     if isopt("d"):
         daemon()
-    if isopt("c"):
+    if isopt("ci"):
         banner(cfg)
     if isopt("di"):
         bot = IRC()
@@ -142,7 +142,7 @@ def main():
     if isopt("r"):
         fetcher = Fetcher()
         fetcher.start()
-    if isopt("c") and not isopt("d"):
+    if isopt("ci") and not isopt("d"):
         csl = Console()
         csl.start()
         csl.forever()
