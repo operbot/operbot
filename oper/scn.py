@@ -1,5 +1,5 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0114,C0115,C0116,R0903
+# pylint: disable=C0114,C0115,C0116,R0903,W0703
 
 
 import inspect
@@ -54,5 +54,5 @@ def scandir(path, func):
         try:
             res.append(func(pname, mname))
         except Exception as ex:
-            res.append(from_exception())        
+            res.append(from_exception(ex))
     return res
