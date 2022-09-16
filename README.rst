@@ -34,7 +34,6 @@ reading type from the object.
 channel. It can do some logging of txt and take note of things todo.
 This should be the bot where you build your own one from ;]
 
-
 **INSTALL**
 
 | ``pip3 install operbot --upgrade --force-reinstall``
@@ -54,15 +53,12 @@ This should be the bot where you build your own one from ;]
 
 **sasl**
 
-|
 | ``operbot pwd <nickservnick> <nickservpass>``
 | ``operbot cfg password=<outputfrompwd>``
 |
 
 **users**
 
-
-|
 | ``operbot cfg users=True``
 | ``operbot met <userhost>``
 |
@@ -117,6 +113,13 @@ use the -i option to start the irc client.
 **rss**
 
 you can add a -r option to have the rss fetcher started.
+
+| ``operbot -c -r``
+| ``OPERBOT started at Fri Sep 16 02:44:51 2022``
+| ``> thr``
+| ``Console.loop/1s Fetcher.run/4m59s``
+| ``>``
+|
 
 **COMMANDS**
 
@@ -177,10 +180,10 @@ load/save from/to disk::
 
 great for giving objects peristence by having their state stored in files::
 
->>> import op
->>> o = op.Object()
->>> op.save(o)
-'op.obj.Object/2021-08-31/15:31:05.717063'
+ >>> import op
+ >>> o = op.Object()
+ >>> op.save(o)
+ 'op.obj.Object/2021-08-31/15:31:05.717063'
 
 **AUTHOR**
 
