@@ -47,7 +47,7 @@ This should be the bot where you build your own one from ;]
 | configuration is done by calling the ``cfg`` command of ``operbot``
 | 
 
-*irc*
+**irc**
 
 |
 | ``operbot cfg server=<server> channel=<channel> nick=<nick>``
@@ -55,14 +55,14 @@ This should be the bot where you build your own one from ;]
 | (*) default channel/server is #operbot on localhost
 |
 
-*sasl*
+**sasl**
 
 |
 | ``operbot pwd <nickservnick> <nickservpass>``
 | ``operbot cfg password=<outputfrompwd>``
 |
 
-*users*
+**users**
 
 
 |
@@ -70,7 +70,7 @@ This should be the bot where you build your own one from ;]
 | ``operbot met <userhost>``
 |
 
-*rss*
+**rss**
 
 |
 | ``operbot rss <url>``
@@ -80,7 +80,7 @@ This should be the bot where you build your own one from ;]
 
 this part shows how to run ``operbot``.
 
-*cli*
+**cli**
 
 without any arguments ``operbot`` doesn't respond, add arguments to have
 ``operbot`` execute a command:
@@ -95,7 +95,7 @@ the ``cmd`` command shows you a list of available commands:
 | ``cfg,cmd,dlt,dne,dpl,flt,fnd,ftc,log,met,mre,nme,pwd,rem,rss,tdo,thr,ver``
 |
 
-*console*
+**console**
 
 use the -c option to start the bot as a console.
 
@@ -103,13 +103,14 @@ use the -c option to start the bot as a console.
 | ``OPERBOT started at Fri Sep 16 02:11:23 2022``
 | ``> thr``
 | ``Console.loop/1s``
+|
 
-*irc*
+**irc**
 
 use the -i option to start the irc client
 
 
-| ``$ operbot -i
+| ``$ operbot -i``
 | ``> cfg``
 | ``server=localhost port=6667 channel=#operbot nick=operbot cc=!``
 | ``> thr``
@@ -117,7 +118,7 @@ use the -i option to start the irc client
 | ``>`` 
 |
 
-*rss*
+**rss**
 
 you can add a -r option to have the rss fetcher started.
 
