@@ -2,6 +2,8 @@
 # pylint: disable=R0903,C0103,C0114,C0115,C0116
 
 
+"rich site syndicate"
+
 import html.parser
 import re
 import threading

@@ -6,8 +6,6 @@ import threading
 
 
 from op import Default, update
-
-
 from oper.bus import Bus
 from oper.prs import parse
 

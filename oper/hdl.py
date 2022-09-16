@@ -11,8 +11,6 @@ import time
 
 
 from op import Object
-
-
 from oper.bus import Bus
 from oper.cbs import Callbacks
 from oper.thr import launch

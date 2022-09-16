@@ -5,13 +5,16 @@
 "list of Objects. Object should provides a say(channel, txt) method."
 
 
+from op import Object
+
+
 def __dir__():
     return (
             "Bus",
            )
 
 
-class Bus():
+class Bus(Object):
 
     objs = []
 
