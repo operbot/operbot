@@ -3,7 +3,7 @@ README
 
 **NAME**
 
-OPERBOT - operator bot
+``operbot`` - operator bot, write your own commands.
 
 
 **SYNOPSIS**
@@ -15,7 +15,7 @@ OPERBOT - operator bot
 
 **DESCRIPTION**
 
-**OPERBOT** is a solid, non hackable bot, intended to be programmable in a
+``operbot`` is a solid, non hackable bot, intended to be programmable in a
 static, only code, no popen, fixed imports and no reading modules from a
 directory, to not have a directory to read modules from to add
 commands to the bot but include the own programmed modules directly into the
@@ -24,13 +24,13 @@ runable. Reading random code from a directory is what gets avoided. As
 experience tells os.popen and __import__, importlib are also avoided, direct
 imports in the code is what is used.
 
-**OPERBOT** stores it's data on disk where objects are time versioned and the
+``operbot`` stores it's data on disk where objects are time versioned and the
 last version saved on disk is served to the user layer. Files are JSON dumps
 that are read-only so thus should provide (disk) persistence. Paths carry the
 type in the path name what makes reconstruction from filename easier then
 reading type from the object.
 
-**OPERBOT** has some functionality, mostly feeding RSS feeds into a irc
+``operbot`` has some functionality, mostly feeding RSS feeds into a irc
 channel. It can do some logging of txt and take note of things todo.
 This should be the bot where you build your own one from ;]
 
