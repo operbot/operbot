@@ -103,6 +103,7 @@ use the -i option to start the irc client.
 
 
 | ``$ operbot -i``
+| ``OPERBOT started at Fri Sep 16 02:11:23 2022``
 | ``> cfg``
 | ``server=localhost port=6667 channel=#operbot nick=operbot cc=!``
 | ``> thr``
@@ -191,4 +192,4 @@ Bart Thate - operbot100@gmail.com
 
 **COPYRIGHT**
 
-OPERBOT is placed in the Public Domain. No Copyright, No License.
+``operbot`` is placed in the Public Domain. No Copyright, No License.
