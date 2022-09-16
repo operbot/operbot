@@ -10,15 +10,15 @@ def read():
 
 setup(
     name="operbot",
-    version="1",
+    version="100",
     author="Bart Thate",
     author_email="operbot100@gmail.com",
     url="http://github.com/operbot/operbot",
     description="operator bot",
     long_description=read(),
     license="Public Domain",
-    packages=["op", "oper", "operbot"],
-    scripts=["bin/operbot"],
+    packages=["op", "oper", "operbot", "opermod"],
+    scripts=["bin/op", "bin/operbot"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: Public Domain",
