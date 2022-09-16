@@ -9,7 +9,7 @@ OPERBOT - operator bot
 **SYNOPSIS**
 
 
-| ``operbot [-c]``
+| ``operbot [-c] [-i] [-r]``
 | ``operbot <cmd> [key=value] [key==value]``
 |
 
