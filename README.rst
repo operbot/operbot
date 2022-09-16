@@ -37,19 +37,16 @@ This should be the bot where you build your own one from ;]
 
 **INSTALL**
 
-|
 | ``pip3 install operbot --upgrade --force-reinstall``
 |
 
 **CONFIGURATION**
 
-|
 | configuration is done by calling the ``cfg`` command of ``operbot``
 | 
 
 **irc**
 
-|
 | ``operbot cfg server=<server> channel=<channel> nick=<nick>``
 |
 | (*) default channel/server is #operbot on localhost
@@ -72,7 +69,6 @@ This should be the bot where you build your own one from ;]
 
 **rss**
 
-|
 | ``operbot rss <url>``
 |
 
@@ -107,7 +103,7 @@ use the -c option to start the bot as a console.
 
 **irc**
 
-use the -i option to start the irc client
+use the -i option to start the irc client.
 
 
 | ``$ operbot -i``
@@ -122,12 +118,10 @@ use the -i option to start the irc client
 
 you can add a -r option to have the rss fetcher started.
 
-
 **COMMANDS**
 
 here is a short description of the commands.
 
-|
 | ``cfg`` - show the irc configuration, also edits the config
 | ``cmd`` - show all commands
 | ``dlt`` - remove a user
@@ -181,7 +175,7 @@ load/save from/to disk::
 >>> obj.key
 >>> 'value'
 
-great for giving objects peristence by having their state stored in files.
+great for giving objects peristence by having their state stored in files::
 
 >>> import op
 >>> o = op.Object()
@@ -190,10 +184,8 @@ great for giving objects peristence by having their state stored in files.
 
 **AUTHOR**
 
-Bart Thate
-
+Bart Thate - operbot100@gmail.com
 
 **COPYRIGHT**
 
 OPERBOT is placed in the Public Domain. No Copyright, No License.
-
