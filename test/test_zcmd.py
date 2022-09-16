@@ -5,6 +5,7 @@
 "command"
 
 
+import sys
 import unittest
 
 
@@ -32,7 +33,8 @@ class CLI(Client):
     @staticmethod
     def raw(txt):
         if Cfg.verbose:
-            print(txt)
+            sys.stdout.write(txt)
+            sys.stdout.flush()
 
 
 cli = CLI()
