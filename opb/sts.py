@@ -9,7 +9,7 @@ import time
 
 
 from op import elapsed, format
-from oper import Bus
+from opr import Bus
 
 
 def __dir__():

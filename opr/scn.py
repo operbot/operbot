@@ -7,8 +7,10 @@ import os
 
 
 from op import Class
-from oper.com import Commands
-from oper.trc import from_exception
+
+
+from .com import Commands
+from .trc import from_exception
 
 
 def __dir__():

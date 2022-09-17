@@ -6,8 +6,10 @@ import threading
 
 
 from op import Default, update
-from oper.bus import Bus
-from oper.prs import parse
+
+
+from .bus import Bus
+from .prs import parse
 
 
 def __dir__():

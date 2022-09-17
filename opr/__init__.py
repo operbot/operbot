@@ -7,18 +7,18 @@
 import time
 
 
-from oper.bus import Bus
-from oper.cbs import Callbacks
-from oper.cfg import Config
-from oper.clt import Client
-from oper.com import Commands
-from oper.evt import Event, docmd
-from oper.hdl import Handler
-from oper.prs import parse
-from oper.scn import scan, scandir
-from oper.thr import Thread, launch
-from oper.tmr import Timer, Repeater
-from oper.utl import wait
+from .bus import Bus
+from .cbs import Callbacks
+from .cfg import Config
+from .clt import Client
+from .com import Commands
+from .evt import Event, docmd
+from .hdl import Handler
+from .prs import parse
+from .scn import scan, scandir
+from .thr import Thread, launch
+from .tmr import Timer, Repeater
+from .utl import wait
 
 
 starttime = time.time()

@@ -6,8 +6,8 @@ import threading
 import time
 
 
-from op.obj import Object, name
-from oper.thr import launch
+from op import Object, name
+from opr.thr import launch
 
 
 def __dir__():

@@ -19,7 +19,7 @@ from urllib.request import Request, urlopen
 from op import Default, Object, edit, get, register, save, update
 from op.dbs import Class, Db, find, last, fntime
 from op.utl import elapsed, spl
-from oper import Bus, Cfg, Repeater, launch
+from opr import Bus, Cfg, Repeater, launch
 
 
 def __dir__():

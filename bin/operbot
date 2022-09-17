@@ -18,11 +18,11 @@ sys.path.insert(0, os.getcwd())
 
 
 from op import Wd, format, keys, update
-from oper import Cfg, Client, Event, docmd, parse, scan, wait
-from opermod import bsc, dbg, log, sts, tdo
-from operbot import irc, rss
-from operbot.irc import Config, IRC
-from operbot.rss import Fetcher
+from opr import Cfg, Client, Event, docmd, parse, scan, wait
+from opb import bsc, dbg, log, sts, tdo
+from opb import irc, rss
+from opb.irc import Config, IRC
+from opb.rss import Fetcher
 
 
 Config.nick = "operbot"

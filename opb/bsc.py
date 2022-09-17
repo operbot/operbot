@@ -6,7 +6,7 @@ import time
 
 
 from op import elapsed
-from oper import Commands, starttime
+from opr import Commands, starttime
 
 
 def __dir__():

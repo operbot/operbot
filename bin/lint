@@ -25,6 +25,5 @@ def popen(txt):
 
 
 popen("pylint op")
-popen("pylint oper")
-popen("pylint operbot")
-popen("pylint opermod")
+popen("pylint opr")
+popen("pylint opb")
