@@ -10,6 +10,4 @@ from opr.cfg import Config
 starttime = time.time()
 
 
-class Cfg(Config):
-
-    pass
+Cfg = Config()
