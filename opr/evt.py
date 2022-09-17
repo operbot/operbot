@@ -5,8 +5,8 @@
 import threading
 
 
-from op import Default, update
-
+from op.dft import Default
+from op.obj import update
 
 from .bus import Bus
 from .prs import parse

@@ -13,12 +13,16 @@ import time
 import _thread
 
 
-from op import Class, Default, Object, edit, elapsed, format, keys, save, update
+from op.cls import Class
+from op.dft import Default
+from op.jsn import save
+from op.obj import Object, edit, format, keys, update
+from op.utl import elapsed
 from op.dbs import find, fntime, locked, last
-from opr import Callbacks, Client, launch
-
-
-import opr
+from opr.cbs import Callbacks
+from opr.clt import Client
+from opr.evt import Event
+from opr.thr import launch
 
 
 def __dir__():
@@ -84,10 +88,10 @@ class Config(Default):
 Class.add(Config)
 
 
-class Event(opr.Event):
+class IrcEvent(Event):
 
     def __init__(self):
-        opr.Event.__init__(self)
+        Event.__init__(self)
         self.args = []
         self.arguments = []
         self.channel = ""
@@ -328,7 +332,7 @@ class IRC(Client, Output):
         rawstr = str(txt)
         rawstr = rawstr.replace("\u0001", "")
         rawstr = rawstr.replace("\001", "")
-        obj = Event()
+        obj = IrcEvent()
         obj.rawstr = rawstr
         obj.command = ""
         obj.arguments = []
@@ -389,7 +393,7 @@ class IRC(Client, Output):
             except (socket.timeout, ConnectionResetError) as ex:
                 self.joined.clear()
                 time.sleep(5.0)
-                evt = Event()
+                evt = IrcEvent()
                 evt.txt = str(ex)
                 evt.type = "ERROR"
                 evt.orig = repr(self)

@@ -6,7 +6,7 @@ import threading
 import time
 
 
-from op import Object, name
+from op.obj import Object, name
 from opr.thr import launch
 
 

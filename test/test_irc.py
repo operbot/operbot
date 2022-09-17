@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot.irc import IRC
+from oper.irc import IRC
 
 
 class TestIRC(unittest.TestCase):

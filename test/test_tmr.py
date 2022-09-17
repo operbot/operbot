@@ -8,7 +8,7 @@
 import unittest
 
 
-from oper import Timer
+from opr import Timer
 
 
 def test():

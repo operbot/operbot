@@ -5,7 +5,7 @@
 "default"
 
 
-from op.obj import Object
+from .obj import Object
 
 
 def __dir__():
@@ -23,4 +23,7 @@ class Default(Object):
         self.__default__ = ""
 
     def __getattr__(self, key):
-        return self.__dict__.get(key, self.__default__)
+        val = self.__dict__.get(key, None)
+        if val:
+            return val
+        return self.__default__

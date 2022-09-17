@@ -6,11 +6,10 @@ import inspect
 import os
 
 
-from op import Class
+from op.obj import Class
 
 
 from .com import Commands
-from .trc import from_exception
 
 
 def __dir__():
@@ -53,8 +52,5 @@ def scandir(path, func):
         except IndexError:
             pname = path
         mname = _fn.split(os.sep)[-1][:-3]
-        try:
-            res.append(func(pname, mname))
-        except Exception as ex:
-            res.append(from_exception(ex))
+        res.append(func(pname, mname))
     return res

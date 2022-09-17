@@ -5,7 +5,7 @@
 import unittest
 
 
-from oper import Client
+from opr import Client
 
 
 class MyClient(Client):

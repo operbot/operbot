@@ -2,7 +2,7 @@
 # pylint: disable=C0114,C0115,R0903
 
 
-from op import Default
+from op.dft import Default
 
 
 def __dir__():

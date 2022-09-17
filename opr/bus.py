@@ -5,7 +5,7 @@
 "list of Objects. Object should provides a say(channel, txt) method."
 
 
-from op import Object
+from op.obj import Object
 
 
 def __dir__():

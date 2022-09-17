@@ -8,7 +8,7 @@
 import unittest
 
 
-from oper import Bus, Client
+from opr import Bus, Client
 
 
 class MyClient(Client):

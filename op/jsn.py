@@ -13,9 +13,9 @@ import os
 from json import JSONDecoder, JSONEncoder
 
 
-from op.obj import Object, update
-from op.utl import cdir
-from op.wdr import Wd
+from .obj import Object, update
+from .utl import cdir
+from .wdr import Wd
 
 
 def __dir__():

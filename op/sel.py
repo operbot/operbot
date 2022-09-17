@@ -5,7 +5,7 @@
 "selector"
 
 
-from op.dft import Default
+from .dft import Default
 
 
 def __dir__():

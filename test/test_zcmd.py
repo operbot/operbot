@@ -10,7 +10,8 @@ import unittest
 
 
 from op import Object, get
-from oper import Cfg, Client, Commands, docmd
+from opr import Cfg, Client, Commands, docmd
+
 
 evts = []
 skip = ["cfg",]

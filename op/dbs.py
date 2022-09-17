@@ -8,12 +8,12 @@
 import _thread
 
 
-from op.obj import get, items, otype, update
-from op.cls import Class
-from op.jsn import hook
-from op.sel import Selector
-from op.wdr import Wd
-from op.utl import fns, fntime
+from .obj import get, items, otype, update
+from .cls import Class
+from .jsn import hook
+from .sel import Selector
+from .wdr import Wd
+from .utl import fns, fntime
 
 
 dblock = _thread.allocate_lock()

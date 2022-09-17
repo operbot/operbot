@@ -5,8 +5,8 @@
 import unittest
 
 
-from oper import Commands, scan
-from operbot import irc
+from opr import Commands, scan
+from oper import irc
 
 
 class TestScan(unittest.TestCase):

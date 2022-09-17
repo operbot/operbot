@@ -19,8 +19,8 @@ sys.path.insert(0, os.getcwd())
 
 
 from op import Object, Wd, get, format, name, keys, elapsed
-from oper import Cfg, Client, Commands, Event, parse, scandir, scan
-from oper.trc import from_exception
+from opr import Cfg, Client, Commands, Event, parse, scandir, scan
+from opr.trc import from_exception
 
 
 Cfg.debug = True

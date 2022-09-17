@@ -10,8 +10,7 @@ import threading
 import time
 
 
-from op import Object
-
+from op.obj import Object
 
 from .bus import Bus
 from .cbs import Callbacks

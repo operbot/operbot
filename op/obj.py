@@ -51,7 +51,7 @@ import os
 import types
 
 
-from op.cls import Class
+from .cls import Class
 
 
 def __dir__():
@@ -105,13 +105,16 @@ class Object:
             os.sep.join(str(datetime.datetime.now()).split()),
         )
         if args:
-            update(self, args[0])
+            self.__dict__.update(vars(args[0]))
 
     def __iter__(self):
         return iter(self.__dict__)
 
     def __len__(self):
         return len(self.__dict__)
+
+    def __repr__(self):
+        return repr(self.__dict__)
 
     def __str__(self):
         return str(self. __dict__)
@@ -201,6 +204,9 @@ def otype(obj):
     return str(type(obj)).split()[-1][1:-2]
 
 
+def set(obj, key, value):
+    setattr(obj, key, value)
+
 def register(obj, key, value):
     "Register an attribute."
     setattr(obj, key, value)
@@ -208,11 +214,8 @@ def register(obj, key, value):
 
 def update(obj, data):
     "Update this object with another object/dict."
-    if isinstance(data, type({})):
-        obj.__dict__.update(data)
-    else:
-        obj.__dict__.update(vars(data))
-
+    for key, value in items(data):
+        set(obj, key, value)
 
 def values(obj):
     "Return the values of assigned attributes."
