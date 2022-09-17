@@ -44,7 +44,10 @@ class Object:
             os.sep.join(str(datetime.datetime.now()).split()),
         )
         if args:
-            self.__dict__.update(vars(args[0]))
+            try:
+                self.__dict__.update(vars(args[0]))
+            except TypeError:
+                self.__dict__.update(args[0])
 
     def __contains__(self, key):
         return key in self.__dict__

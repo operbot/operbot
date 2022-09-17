@@ -11,7 +11,10 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op import Object, Wd, cdir, format, keys, find, fntime, elapsed, update
+from op.obj import Object, format, keys, update
+from op.dbs import find, fntime
+from op.wdr import Wd
+from op.utl import cdir, elapsed
 
 
 def fnd():
