@@ -16,7 +16,7 @@ import _thread
 from op.cls import Class
 from op.dft import Default
 from op.jsn import save
-from op.obj import Object, edit, format, keys, update
+from op.obj import Object, edit, keys, printable, update
 from op.utl import elapsed
 from op.dbs import find, fntime, locked, last
 from opr.cbs import Callbacks
@@ -616,7 +616,11 @@ def cfg(event):
     config = Config()
     last(config)
     if not event.sets:
-        event.reply(format(config, keys(config), skip="control,password,realname,sleep,username"))
+        event.reply(printable(
+                              config,
+                              keys(config),
+                              skip="control,password,realname,sleep,username")
+                             )
     else:
         edit(config, event.sets)
         save(config)

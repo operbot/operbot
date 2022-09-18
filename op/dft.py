@@ -1,11 +1,11 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0112,C0103,C0114,C0115,C0116,R0903
+# pylint: disable=R0903
 
 
 "default"
 
 
-from .obj import Object
+from op.obj import Object
 
 
 def __dir__():
@@ -15,6 +15,8 @@ def __dir__():
 
 
 class Default(Object):
+
+    "return value or, if not available, return default value."
 
     __slots__ = ("__default__",)
 

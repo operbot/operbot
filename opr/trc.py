@@ -6,7 +6,7 @@ import os
 import traceback
 
 
-from op import name
+from op.obj import name
 
 
 def from_exception(exc):

@@ -10,8 +10,11 @@ import os
 import time
 
 
-from op import Class, Db, elapsed, find, fntime
-from op import Object, format, save, update
+from op.cls import Class
+from op.dbs import Db, find, fntime
+from op.utl import elapsed
+from op.obj import Object, printable, update
+from op.jsn import save
 
 
 def __dir__():
@@ -116,7 +119,7 @@ def cor(event):
             txt = "From,Subject"
         event.reply("%s %s %s" % (
                                   _nr,
-                                  format(email, txt, plain=True),
+                                  printable(email, txt, plain=True),
                                   elapsed(time.time() - fntime(email.__stp__)))
                                  )
 
@@ -132,7 +135,7 @@ def eml(event):
             _nr += 1
             event.reply("%s %s %s" % (
                                       _nr,
-                                      format(obj, "From,Subject"),
+                                      printable(obj, "From,Subject"),
                                       elapsed(time.time() - fntime(_fn)))
                                      )
 

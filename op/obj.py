@@ -1,5 +1,8 @@
 # This file is placed in the Public Domain.
-# pylint: disable=W0613,W0221,C0112,C0103,C0114,C0115,C0116,R0903,W0622
+# pylint: disable=W0613
+
+
+"object"
 
 
 import datetime
@@ -7,7 +10,7 @@ import os
 import types
 
 
-from .cls import Class
+from op.cls import Class
 
 
 def __dir__():
@@ -18,13 +21,13 @@ def __dir__():
             'Wd',
             'delete',
             'edit',
-            'format',
             'get',
             'items',
             'jsn',
             'keys',
             'name',
             'otype',
+            'printable',
             'register',
             'save',
             'types',
@@ -34,6 +37,8 @@ def __dir__():
 
 
 class Object:
+
+    "big object."
 
     __slots__ = ('__dict__','__stp__')
 
@@ -48,9 +53,6 @@ class Object:
                 self.__dict__.update(vars(args[0]))
             except TypeError:
                 self.__dict__.update(args[0])
-
-    def __contains__(self, key):
-        return key in self.__dict__
 
     def __iter__(self):
         return iter(self.__dict__)
@@ -69,15 +71,18 @@ Class.add(Object)
 
 
 def delete(obj, key):
+    "delete attribute ``key``."
     delattr(obj, key)
 
 
 def edit(obj, setter):
+    "set items with values in a setter (key/value dict)."
     for key, value in items(setter):
         register(obj, key, value)
 
 
-def format(obj, args="", skip="", plain=False):
+def printable(obj, args="", skip="", plain=False):
+    "return printable string."
     res = []
     keyz = []
     if "," in args:
@@ -109,10 +114,12 @@ def format(obj, args="", skip="", plain=False):
 
 
 def get(obj, key, default=None):
+    "return item ``key``."
     return obj.__dict__.get(key, default)
 
 
 def name(obj):
+    "return full qualified name."
     typ = type(obj)
     if isinstance(typ, types.ModuleType):
         return obj.__name__
@@ -128,29 +135,32 @@ def name(obj):
 
 
 def items(obj):
+    "return key/value pairs of the object ``obj``."
     if isinstance(obj, type({})):
         return obj.items()
     return obj.__dict__.items()
 
 
 def keys(obj):
+    "return keys of object ``obj``."
     return obj.__dict__.keys()
 
 
 def otype(obj):
+    "return object type of object ``obj``."
     return str(type(obj)).split()[-1][1:-2]
 
 
-def set(obj, key, value):
-    setattr(obj, key, value)
-
 def register(obj, key, value):
+    "register key/value on object ``obj``."
     setattr(obj, key, value)
 
 
 def update(obj, data):
+    "update object ``obj`` with a key/value dict."
     for key, value in items(data):
-        set(obj, key, value)
+        setattr(obj, key, value)
 
 def values(obj):
+    "return values of object ``obj``."
     return obj.__dict__.values()

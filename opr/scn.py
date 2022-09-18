@@ -7,9 +7,7 @@ import os
 
 
 from op.obj import Class
-
-
-from .com import Commands
+from opr.com import Commands
 
 
 def __dir__():

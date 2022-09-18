@@ -1,5 +1,4 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0112,C0103,C0114,C0115,C0116
 
 
 "utility"
@@ -22,6 +21,7 @@ def __dir__():
 
 
 def cdir(path):
+    "create directory allowing for saving of ``path``."
     if os.path.exists(path):
         return
     if os.sep in path:
@@ -30,6 +30,7 @@ def cdir(path):
 
 
 def elapsed(seconds, short=True):
+    "return string representing the elapsed time (``seconds`` is a diff)."
     txt = ""
     nsec = float(seconds)
     year = 365*24*60*60
@@ -72,6 +73,7 @@ def elapsed(seconds, short=True):
 
 
 def fns(path, timed=None):
+    "return all filenames matching, optionally within a time frame."
     if not path:
         return []
     if not os.path.exists(path):
@@ -102,6 +104,7 @@ def fns(path, timed=None):
 
 
 def fntime(path):
+    "return the time in a path."
     after = 0
     path = " ".join(path.split(os.sep)[-2:])
     if "." in path:
@@ -116,6 +119,7 @@ def fntime(path):
 
 
 def fnclass(path):
+    "return type (class) in a path."
     try:
         _rest, *pth = path.split("Store")
     except ValueError:
@@ -125,6 +129,7 @@ def fnclass(path):
 
 
 def spl(txt):
+    "return list from comma seperated string."
     try:
         res = txt.split(",")
     except (TypeError, ValueError):
