@@ -38,7 +38,7 @@ class Thread(threading.Thread):
         for k in dir(self):
             yield k
 
-    def join(self, timeout):
+    def join(self, timeout=None):
         super().join(timeout)
         return self._result
 
