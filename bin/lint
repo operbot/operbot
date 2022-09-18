@@ -26,4 +26,4 @@ def popen(txt):
 
 popen("pylint op")
 popen("pylint opr")
-popen("pylint opb")
+popen("pylint oper")

@@ -38,7 +38,7 @@ Config.realname = "program your own commands"
 Config.username = "operbot"
 
 
-Wd.workdir = os.path.expanduser("~/.operbot")
+Wd.workdir = os.path.expanduser("~/.oper")
 
 
 scan(cmd)

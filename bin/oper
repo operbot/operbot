@@ -3,7 +3,7 @@
 # pylint: disable=E1101,E0611,C0115,C0116,C0413,C0411,W0406
 
 
-"program your own commands"
+"operator bot"
 
 
 import os
@@ -32,13 +32,13 @@ from oper.rss import Fetcher
 from oper.run import Cfg
 
 
-Config.nick = "operbot"
-Config.channel = "#operbot"
-Config.realname = "program your own commands"
-Config.username = "operbot"
+Config.nick = "oper"
+Config.channel = "#oper"
+Config.realname = "object programming demo"
+Config.username = "oper"
 
 
-Wd.workdir = os.path.expanduser("~/.operbot")
+Wd.workdir = os.path.expanduser("~/.oper")
 
 
 scan(cmd)
@@ -73,7 +73,7 @@ class Console(CLI):
 
 def banner(cfg):
     print(
-          "OPERBOT started at %s %s" % (
+          "OPER started at %s %s" % (
                                      time.ctime(time.time()).replace("  ", " "),
                                      printable(cfg, "debug,verbose")
                                     )
