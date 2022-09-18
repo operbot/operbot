@@ -157,7 +157,7 @@ factored out into functions to have a clean namespace to read JSON data into.
 
 basic usage is this::
 
->>> from op import Object
+>>> from op.spc import Object
 >>> o = Object()
 >>> o.key = "value"
 >>> o.key
@@ -170,20 +170,20 @@ and values.
 
 load/save from/to disk::
 
->>> import op
->>> o = op.Object()
+>>> from op.spc import Object, load, save
+>>> o = Object()
 >>> o.key = "value"
->>> p = op.save(o)
->>> obj = op.Object()
->>> op.load(obj, p)
+>>> p = save(o)
+>>> obj = Object()
+>>> load(obj, p)
 >>> obj.key
 >>> 'value'
 
 great for giving objects peristence by having their state stored in files::
 
- >>> import op
- >>> o = op.Object()
- >>> op.save(o)
+ >>> from op.spc import Object, save
+ >>> o = Object()
+ >>> save(o)
  'op.obj.Object/2021-08-31/15:31:05.717063'
 
 **AUTHOR**
