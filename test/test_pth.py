@@ -7,10 +7,10 @@
 import unittest
 
 
-from op import fntime
+from op.utl import fntime
 
 
-FN = "store/oper.evt.Event/2022-04-11/22:40:31.259218"
+FN = "store/opr.evt.Event/2022-04-11/22:40:31.259218"
 
 
 class TestPath(unittest.TestCase):

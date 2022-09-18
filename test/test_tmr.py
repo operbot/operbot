@@ -8,7 +8,7 @@
 import unittest
 
 
-from opr import Timer
+from opr.tmr import Timer
 
 
 def test():

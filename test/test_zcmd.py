@@ -9,9 +9,11 @@ import sys
 import unittest
 
 
-from op import Object, get
-from opr import Cfg, Client, Commands, docmd
-
+from op.obj import Object, get
+from opr.clt import Client
+from opr.com import Commands
+from opr.evt import docmd
+from oper.run import Cfg
 
 evts = []
 skip = ["cfg",]

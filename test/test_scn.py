@@ -5,7 +5,8 @@
 import unittest
 
 
-from opr import Commands, scan
+from opr.com import Commands
+from opr.scn import  scan
 from oper import irc
 
 

@@ -5,7 +5,7 @@
 import unittest
 
 
-from opr import Client
+from opr.clt import Client
 
 
 class MyClient(Client):

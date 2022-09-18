@@ -18,10 +18,10 @@
 
     but::
 
-    >>> from op.obj import Object, save
+    >>> from op.spc import Object, save
     >>> o = Object()
     >>> path = save(o)
 
     Some hidden methods are provided, methods are factored out into functions
-     like get, items, keys, register, set, update and values.
+    like get, items, keys, register, set, update and values.
 """

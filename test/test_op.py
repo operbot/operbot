@@ -10,7 +10,7 @@ import os
 import unittest
 
 
-from op import *
+from op.spc import *
 
 
 Wd.workdir = ".test"
@@ -192,7 +192,7 @@ class TestObject(unittest.TestCase):
 
     def test_printable(self):
         obj = Object()
-        self.assertEqual(format(obj, keys(obj)), "")
+        self.assertEqual(printable(obj, keys(obj)), "")
 
     def test_get(self):
         obj = Object()
