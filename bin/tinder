@@ -18,9 +18,10 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from op import Object, Wd,  elapsed, get, keys, name, printable
-from oper import Cfg, Client, Commands, Event, parse, scandir, scan
-from oper.trc import from_exception
+from op.spc import Object, Wd,  elapsed, get, keys, name, printable
+from opr.spc import Client, Commands, Event, parse, scandir, scan
+from opr.trc import from_exception
+from oper.run import Cfg
 
 
 Cfg.debug = True
@@ -35,16 +36,28 @@ results = []
 
 
 param = Object()
-param.add = ["test@shell", "bart", ""]
-param.cfg = ["server=localhost", ""]
-param.dne = ["test4", ""]
-param.rem = ["reddit", ""]
-param.dpl = ["reddit title,summary,link", ""]
-param.log = ["test1", ""]
-param.flt = ["0", ""]
-param.fnd = ["cfg", "log", "rss", "log txt==test", "cfg server==localhost", "rss rss==reddit"]
+param.cfg = ["server=localhost"]
+param.cmd = [""]
+param.cor = ["bthate@gmail.com"]
+param.dlt = ["test@shell"]
+param.dne = ["test4"]
+param.dpl = ["reddit title,summary,link"]
+param.eml = ["bthate@gmail.com"]
+param.flt = ["", "0"]
+param.ftc = [""]
+param.log = ["test1"]
+param.mbx = ["~/25-01-2013"]
+param.met = ["test@shell"]
+param.mre = [""]
+param.nme = ["reddit reddit"]
+param.pwd = ["bart test"]
+param.rem = ["reddit"]
 param.rss = ["https://www.reddit.com/r/python/.rss"]
+param.sts = [""]
 param.tdo = ["test4", ""]
+param.thr = [""]
+param.upt = [""]
+
 
 
 def cprint(txt):
@@ -76,18 +89,12 @@ def consume(evts):
     return res
 
 
-def from_exception(exc, txt="", sep=" "):
-    result = []
-    for frm in traceback.extract_tb(exc.__traceback__):
-        result.append("%s:%s" % (os.sep.join(frm.filename.split(os.sep)[-2:]), frm.lineno))
-    return "%s(%s) %s" % (name(exc), exc, " ".join(result))
-
-
 def importer(packagename, modulename):
     name = "%s.%s" % (packagename, modulename)
     try:
         mod = importlib.import_module(name, packagename)
         scan(mod)
+        print(mod)
     except Exception as ex:
         print(from_exception(ex))
 
@@ -129,8 +136,9 @@ def main():
         Cfg.verbose = True
     cprint(printable(Cfg, keys(Cfg)))
     scandir("op", importer)
+    scandir("opr", importer)
     scandir("oper", importer)
-    scandir("opermod", importer)
+    print(",".join(sorted(Commands.cmds)))
     cli = CLI()
     cli.start()
     nrs = cfg.index or 20

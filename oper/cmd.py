@@ -26,8 +26,8 @@ def __dir__():
             "flt",
             "log",
             "sts",
+            "tdo",
             "thr",
-            "todo",
             "upt"
            )
 

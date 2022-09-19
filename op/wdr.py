@@ -14,6 +14,9 @@ def __dir__():
            )
 
 
+from op.utl import cdir
+
+
 class Wd:
 
     "class level working directory pointer."
@@ -38,7 +41,10 @@ class Wd:
     @staticmethod
     def storedir():
         "return the ``store`` path in the working directory."
-        return os.path.join(Wd.workdir, "store", '')
+        sdr =  os.path.join(Wd.workdir, "store", '')
+        if not os.path.exists(sdr):
+            cdir(sdr)
+        return sdr
 
     @staticmethod
     def types(name=None):
