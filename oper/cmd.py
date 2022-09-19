@@ -93,7 +93,7 @@ def sts(event):
         try:
             event.reply("%s: %s (%s)" % (
                                          bot.cfg.server,
-                                         format(bot.state, skip="last"),
+                                         printable(bot.state, skip="last"),
                                          elapsed(time.time()-bot.state.last))
                                         )
         except AttributeError:

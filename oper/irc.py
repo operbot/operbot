@@ -473,7 +473,7 @@ class IRC(Client, Output):
     def wait(self):
         self.joined.wait()
 
-
+ 
 def cb_auth(event):
     time.sleep(1.0)
     bot = event.bot()
