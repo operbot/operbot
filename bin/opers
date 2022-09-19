@@ -24,8 +24,6 @@ from opr.evt import Event, docmd
 from opr.prs import parse
 from opr.scn import scan
 from opr.utl import wait
-
-
 from oper import cmd, irc, rss
 from oper.irc import Config, IRC
 from oper.rss import Fetcher
@@ -36,48 +34,12 @@ Config.nick = "operbot"
 Config.channel = "#operbot"
 Config.realname = "program your own commands"
 Config.username = "operbot"
-
-
 Wd.workdir = os.path.expanduser("~/.operbot")
 
 
 scan(cmd)
 scan(irc)
 scan(rss)
-
-
-class CLI(Client):
-
-    @staticmethod
-    def raw(txt):
-        print(txt)
-
-
-class Console(CLI):
-
-    @staticmethod
-    def announce(txt):
-        pass
-
-    @staticmethod
-    def handle(event):
-        Client.handle(event)
-        event.wait()
-
-    def poll(self):
-        event = Event()
-        event.txt = input("> ")
-        event.orig = repr(self)
-        return event
-
-
-def banner(cfg):
-    print(
-          "OPERBOT started at %s %s" % (
-                                     time.ctime(time.time()).replace("  ", " "),
-                                     printable(cfg, "debug,verbose")
-                                    )
-         )
 
 
 def hup(_sig, _frame):
@@ -111,22 +73,11 @@ def wrap(func):
 
 def main():
     signal.signal(signal.SIGHUP, hup)
-    txt = ' '.join(sys.argv[1:])
-    cfg = parse(txt)
-    update(Cfg, cfg)
-    banner(cfg)
-    if cfg.txt:
-        cli = CLI()
-        docmd(cli, cfg.otxt)
-        return
     bot = IRC()
     bot.start()
-    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
     fetcher = Fetcher()
     fetcher.start()
-    csl = Console()
-    csl.start()
-    csl.forever()
+    wait()
         
 
 wrap(main)

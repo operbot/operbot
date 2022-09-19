@@ -80,6 +80,20 @@ def banner(cfg):
          )
 
 
+def daemon():
+    pid = os.fork()
+    if pid != 0:
+        os._exit(0)
+    os.setsid()
+    os.umask(0)
+    sis = open("/dev/null", 'r')
+    sos = open("/dev/null", 'a+')
+    ses = open("/dev/null", 'a+')
+    os.dup2(sis.fileno(), sys.stdin.fileno())
+    os.dup2(sos.fileno(), sys.stdout.fileno())
+    os.dup2(ses.fileno(), sys.stderr.fileno())
+
+
 def hup(_sig, _frame):
     print("signal 15 called")
     sys.stdout.flush()
@@ -114,19 +128,8 @@ def main():
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
     update(Cfg, cfg)
-    banner(cfg)
-    if cfg.txt:
-        cli = CLI()
-        docmd(cli, cfg.otxt)
-        return
-    bot = IRC()
-    bot.start()
-    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    fetcher = Fetcher()
-    fetcher.start()
-    csl = Console()
-    csl.start()
-    csl.forever()
-        
+    cli = CLI()
+    docmd(cli, cfg.otxt)
+
 
 wrap(main)
