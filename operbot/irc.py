@@ -271,7 +271,6 @@ class IRC(Client, Output):
         self.command("PRIVMSG", channel, txt)
 
     def event(self, txt):
-        print(txt)
         evt = self.parsing(txt)
         cmd = evt.command
         if cmd == "PING":
@@ -291,6 +290,7 @@ class IRC(Client, Output):
             self.state.error = ""
             self.joined.set()
         elif cmd == "433":
+            self.state.error = txt
             nck = self.cfg.nick + "_" + str(random.randint(1,10))
             self.command("NICK", nck)
         return evt
