@@ -4,6 +4,7 @@
 import base64
 import os
 import queue
+import random
 import socket
 import ssl
 import textwrap
@@ -270,6 +271,7 @@ class IRC(Client, Output):
         self.command("PRIVMSG", channel, txt)
 
     def event(self, txt):
+        print(txt)
         evt = self.parsing(txt)
         cmd = evt.command
         if cmd == "PING":
@@ -289,8 +291,8 @@ class IRC(Client, Output):
             self.state.error = ""
             self.joined.set()
         elif cmd == "433":
-            nck = self.cfg.nick + "_"
-            self.raw("NICK %s" % nck)
+            nck = self.cfg.nick + "_" + str(random.randint(1,10))
+            self.command("NICK", nck)
         return evt
 
     def fileno(self):

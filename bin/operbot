@@ -37,14 +37,7 @@ scan(irc)
 scan(rss)
 
 
-class CLI(Client):
-
-    @staticmethod
-    def raw(txt):
-        print(txt)
-
-
-class Console(CLI):
+class Console(Client):
 
     @staticmethod
     def announce(txt):
@@ -61,6 +54,9 @@ class Console(CLI):
         event.orig = repr(self)
         return event
 
+    @staticmethod
+    def raw(txt):
+        print(txt)
 
 def banner(cfg):
     print(
@@ -69,20 +65,6 @@ def banner(cfg):
                                      printable(cfg, "debug,verbose")
                                     )
          )
-
-
-def daemon():
-    pid = os.fork()
-    if pid != 0:
-        os._exit(0)
-    os.setsid()
-    os.umask(0)
-    sis = open("/dev/null", 'r')
-    sos = open("/dev/null", 'a+')
-    ses = open("/dev/null", 'a+')
-    os.dup2(sis.fileno(), sys.stdin.fileno())
-    os.dup2(sos.fileno(), sys.stdout.fileno())
-    os.dup2(ses.fileno(), sys.stderr.fileno())
 
 
 def hup(_sig, _frame):
@@ -119,28 +101,15 @@ def main():
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
     update(Cfg, cfg)
-    if cfg.txt:
-        cli = CLI()
-        docmd(cli, cfg.otxt)
-        return
-    if isopt("d"):
-        daemon()
-    if isopt("ci"):
-        banner(cfg)
-    if isopt("di"):
-        bot = IRC()
-        bot.start()
-        if isopt("v"):
-            print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    if isopt("r"):
-        fetcher = Fetcher()
-        fetcher.start()
-    if isopt("ci") and not isopt("d"):
-        csl = Console()
-        csl.start()
-        csl.forever()
-    if isopt("d"):
-        wait()
+    banner(cfg)
+    bot = IRC()
+    bot.start()
+    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
+    fetcher = Fetcher()
+    fetcher.start()
+    csl = Console()
+    csl.start()
+    csl.forever()
         
 
 wrap(main)
