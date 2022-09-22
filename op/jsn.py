@@ -75,7 +75,7 @@ def dump(obj, opath):
         json.dump(
             obj.__dict__, ofile, cls=ObjectEncoder, indent=4, sort_keys=True
         )
-
+    return opath
 
 def dumps(obj):
     return json.dumps(obj, cls=ObjectEncoder)

@@ -1,8 +1,4 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0114,C0115,C0116,C0411,R0903,R0904,W0622,W0401,W0614
-
-
-"object"
 
 
 import op
@@ -10,7 +6,7 @@ import os
 import unittest
 
 
-from op.spc import *
+from op import *
 
 
 Wd.workdir = ".test"
@@ -76,10 +72,9 @@ attrs2 = (
           '__repr__',
           '__setattr__',
           '__sizeof__',
-          '__slots__',
-          '__stp__',
           '__str__',
           '__subclasshook__',
+          '__weakref__'
          )
 
 
@@ -168,17 +163,6 @@ class TestObject(unittest.TestCase):
 
     def test_sizeof(self):
         self.assertEqual(Object().__sizeof__(), 32)
-
-    def test_slots(self):
-        self.assertEqual(Object().__slots__, (
-                                              "__dict__",
-                                              "__stp__",
-                                             )
-                        )
-
-    def test_stp(self):
-        obj = Object()
-        self.assertTrue("op.obj.Object" in obj.__stp__)
 
     def test_str(self):
         obj = Object()

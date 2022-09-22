@@ -1,19 +1,14 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0116,C0413,C0411
-
-
-"command"
 
 
 import sys
 import unittest
 
 
-from op.obj import Object, get
-from opr.clt import Client
-from opr.com import Commands
-from opr.evt import docmd
-from oper.run import Cfg
+from op import Object, get
+from oper import Client, Commands, docmd
+from operbot.run import Cfg
+
 
 evts = []
 skip = ["cfg",]

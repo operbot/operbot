@@ -1,11 +1,10 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0113,C0114,C0115,C0116
 
 
 import unittest
 
 
-from opr.clt import Client
+from oper import Client
 
 
 class MyClient(Client):

@@ -1,14 +1,10 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116
-
-
-"timer"
 
 
 import unittest
 
 
-from opr.tmr import Timer
+from oper import Timer
 
 
 def test():
