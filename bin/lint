@@ -24,6 +24,6 @@ def popen(txt):
             print(res)
 
 
-popen("pylint op")
-popen("pylint opr")
-popen("pylint oper")
+popen("pylint --disable=R,C,W0201,W0613 op")
+popen("pylint --disable=R,C,W0201,W0613 oper")
+popen("pylint --disable=R,C,W0201,W0613 operbot")

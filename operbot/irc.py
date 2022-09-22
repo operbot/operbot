@@ -1,5 +1,4 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0114,C0115,C0116,W0622,R0902,R0903,R0904,R0912,R0913,R0915
 
 
 import base64
@@ -13,16 +12,10 @@ import time
 import _thread
 
 
-from op.cls import Class
-from op.dft import Default
-from op.jsn import save
-from op.obj import Object, edit, keys, printable, update
-from op.utl import elapsed
-from op.dbs import find, fntime, locked, last
-from opr.cbs import Callbacks
-from opr.clt import Client
-from opr.evt import Event
-from opr.thr import launch
+from op import Class, Default, Object
+from op import edit, elapsed, keys, printable, save, update
+from op import find, fntime, locked, last
+from oper import Callbacks, Client, Event, launch
 
 
 def __dir__():

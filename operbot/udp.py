@@ -1,19 +1,12 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0115,C0116,C0413,C0411,R0903
-
-
-"udp to irc relay"
 
 
 import socket
 import time
 
 
-from op.dbs import last
-from op.cls import Class
-from op.obj import Object
-from opr.bus import Bus
-from opr.thr import launch
+from op import Class, Object, last
+from oper import Bus, launch
 
 
 def __dir__():

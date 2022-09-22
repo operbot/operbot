@@ -14,9 +14,9 @@ from op.dbs import find, fntime
 from op.obj import Object, get, name, printable, update
 from op.jsn import save
 from op.utl import elapsed
-from opr.bus import Bus
-from opr.com import Commands
-from oper.run import starttime
+from oper.bus import Bus
+from oper.com import Commands
+from operbot.run import starttime
 
 
 def __dir__():

@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,E0611,C0115,C0116,C0413,C0411,W0406
-
-
-"program your own commands"
 
 
 import os
@@ -19,17 +15,17 @@ sys.path.insert(0, os.getcwd())
 
 from op.wdr import Wd
 from op.obj import keys, printable, update
-from opr.clt import Client
-from opr.evt import Event, docmd
-from opr.prs import parse
-from opr.scn import scan
-from opr.utl import wait
+from oper.clt import Client
+from oper.evt import Event, docmd
+from oper.prs import parse
+from oper.scn import scan
+from oper.utl import wait
 
 
-from oper import cmd, irc, rss
-from oper.irc import Config, IRC
-from oper.rss import Fetcher
-from oper.run import Cfg
+from operbot import cmd, irc, rss
+from operbot.irc import Config, IRC
+from operbot.rss import Fetcher
+from operbot.run import Cfg
 
 
 Config.nick = "operbot"
@@ -80,6 +76,20 @@ def banner(cfg):
          )
 
 
+def daemon():
+    pid = os.fork()
+    if pid != 0:
+        os._exit(0)
+    os.setsid()
+    os.umask(0)
+    sis = open("/dev/null", 'r')
+    sos = open("/dev/null", 'a+')
+    ses = open("/dev/null", 'a+')
+    os.dup2(sis.fileno(), sys.stdin.fileno())
+    os.dup2(sos.fileno(), sys.stdout.fileno())
+    os.dup2(ses.fileno(), sys.stderr.fileno())
+
+
 def hup(_sig, _frame):
     print("signal 15 called")
     sys.stdout.flush()
@@ -114,19 +124,28 @@ def main():
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
     update(Cfg, cfg)
-    banner(cfg)
     if cfg.txt:
         cli = CLI()
         docmd(cli, cfg.otxt)
         return
-    bot = IRC()
-    bot.start()
-    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    fetcher = Fetcher()
-    fetcher.start()
-    csl = Console()
-    csl.start()
-    csl.forever()
+    if isopt("d"):
+        daemon()
+    if isopt("ci"):
+        banner(cfg)
+    if isopt("di"):
+        bot = IRC()
+        bot.start()
+        if isopt("v"):
+            print(printable(bot.cfg, "nick,channel,server,port,sasl"))
+    if isopt("r"):
+        fetcher = Fetcher()
+        fetcher.start()
+    if isopt("ci") and not isopt("d"):
+        csl = Console()
+        csl.start()
+        csl.forever()
+    if isopt("d"):
+        wait()
         
 
 wrap(main)

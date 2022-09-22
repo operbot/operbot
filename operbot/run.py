@@ -5,7 +5,7 @@
 import time
 
 
-from opr.cfg import Config
+from oper.cfg import Config
 
 
 starttime = time.time()

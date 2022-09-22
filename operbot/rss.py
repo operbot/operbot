@@ -1,8 +1,5 @@
 # This file is placed in the Public Domain.
-# pylint: disable=R0903,C0103,C0114,C0115,C0116
 
-
-"rich site syndicate"
 
 import html.parser
 import re
@@ -16,15 +13,10 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op.dbs import Class, Db, find, last, fntime
-from op.dft import Default
-from op.obj import Object, edit, get, register, update
-from op.jsn import save
-from op.utl import elapsed, spl
-from opr.bus import Bus
-from opr.tmr import Repeater
-from opr.thr import launch
-from oper.run import  Cfg
+from op import Class, Db, Default, Object, fntime
+from op import edit, elapsed, find, get, last, register, save, spl, update
+from oper import Bus, Repeater, launch
+from operbot.run import Cfg
 
 
 def __dir__():
