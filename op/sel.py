@@ -1,11 +1,7 @@
 # This file is placed in the Public Domain.
-# pylint: disable=R0903
 
 
-"selector"
-
-
-from op.dft import Default
+from .dft import Default
 
 
 def __dir__():
@@ -16,4 +12,4 @@ def __dir__():
 
 class Selector(Default):
 
-    "selector object."
+    pass

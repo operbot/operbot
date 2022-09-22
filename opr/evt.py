@@ -1,14 +1,14 @@
 # This file is placed in the Public Domain.
-# pylint: disable=W0613,W0221,W0201,C0112,C0103,C0114,C0115,C0116,R0902,R0903
 
 
 import threading
 
 
-from op.dft import Default
-from op.obj import update
-from opr.bus import Bus
-from opr.prs import parse
+from op import Default, update
+
+
+from .bus import Bus
+from .prs import parse
 
 
 def __dir__():

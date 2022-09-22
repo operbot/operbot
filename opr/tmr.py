@@ -1,13 +1,14 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0114,C0115,C0116
 
 
 import threading
 import time
 
 
-from op.obj import Object, name
-from opr.thr import launch
+from op import Object, name
+
+
+from .thr import launch
 
 
 def __dir__():

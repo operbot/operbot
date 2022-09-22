@@ -6,8 +6,10 @@ import inspect
 import os
 
 
-from op.obj import Class
-from opr.com import Commands
+from op import Class
+
+
+from .com import Commands
 
 
 def __dir__():

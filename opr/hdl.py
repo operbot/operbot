@@ -1,8 +1,4 @@
 # This file is placed in the Public Domain.
-# pylint: disable=W0613,W0221,W0201,C0112,C0103,C0114,C0115,C0116,R0902,R0903
-
-
-"handler"
 
 
 import queue
@@ -10,10 +6,12 @@ import threading
 import time
 
 
-from op.obj import Object
-from opr.bus import Bus
-from opr.cbs import Callbacks
-from opr.thr import launch
+from op import Object
+
+
+from .bus import Bus
+from .cbs import Callbacks
+from .thr import  launch
 
 
 def __dir__():
