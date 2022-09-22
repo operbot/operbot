@@ -36,7 +36,6 @@ scan(cmd)
 scan(irc)
 scan(rss)
 
-print(Class.full("rss"))
 
 class CLI(Client):
 
