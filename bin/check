@@ -25,10 +25,12 @@ ALL = [
 SKIP = [
         ".git",
         "README",
+        "bin",
         "dev",
         "grep",
         "mod",
-        "docs"
+        "docs",
+        "test"
        ]
 
 

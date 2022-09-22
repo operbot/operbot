@@ -232,7 +232,7 @@ def dpl(event):
         _fn, feed = db.match(names[0], {"rss": event.args[0]})
         if feed:
             edit(feed, setter)
-            save(feed)
+            p = save(feed)
             event.reply("ok")
 
 
@@ -288,7 +288,7 @@ def rss(event):
         for _fn, feed in find("rss"):
             event.reply("%s %s %s" % (
                                       _nr,
-                                      feed.rss,
+                                      feed,
                                       elapsed(time.time() - fntime(_fn)))
                                      )
             _nr += 1

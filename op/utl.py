@@ -112,12 +112,14 @@ def fntime(path):
 
 
 def fnclass(path):
+    pth = []
     try:
-        _rest, *pth = path.split("Store")
+        _rest, *pth = path.split("store")
     except ValueError:
+        pass
+    if not pth:
         pth = path.split(os.sep)
-    ppath = os.sep.join(pth)
-    return ppath.split(os.sep)[0]
+    return pth[0]
 
 
 def spl(txt):

@@ -13,13 +13,8 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op.wdr import Wd
-from op.obj import keys, printable, update
-from oper.clt import Client
-from oper.evt import Event, docmd
-from oper.prs import parse
-from oper.scn import scan
-from oper.utl import wait
+from op import Class, Wd, keys, printable, update
+from oper import Client, Event, docmd, parse, scan, wait
 
 
 from operbot import cmd, irc, rss
@@ -41,6 +36,7 @@ scan(cmd)
 scan(irc)
 scan(rss)
 
+print(Class.full("rss"))
 
 class CLI(Client):
 
