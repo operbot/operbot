@@ -1,8 +1,4 @@
 # This file is placed in the Public Domain.
-# pylint: disable=W0212,C0115,C0116,R0903,W0622
-
-
-"mailbox"
 
 
 import mailbox
@@ -10,11 +6,8 @@ import os
 import time
 
 
-from op.cls import Class
-from op.dbs import Db, find, fntime
-from op.utl import elapsed
-from op.obj import Object, printable, update
-from op.jsn import save
+from op import Class, Db, elapsed, find, fntime
+from op import Object, printable, save, update
 
 
 def __dir__():

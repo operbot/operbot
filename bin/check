@@ -2,8 +2,6 @@
 # This file is placed in the Public Domain.
 
 
-"check for blurp"
-
 import os
 
 
@@ -15,10 +13,10 @@ ALL = [
        "popen",
        "pkgutil",
        "importlib",
-       "print",
+       "print\(",
        "sys",
-       "inspect",
-       "traceback"
+       "traceback",
+       "pylint"
       ]
 
 
@@ -26,10 +24,7 @@ SKIP = [
         ".git",
         "README",
         "bin",
-        "dev",
         "grep",
-        "mod",
-        "docs",
         "test"
        ]
 

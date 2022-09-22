@@ -16,7 +16,6 @@ sys.path.insert(0, os.getcwd())
 
 from op import Object, Wd,  elapsed, get, keys, name, printable
 from oper import Client, Commands, Event, parse, scandir, scan
-from oper.trc import from_exception
 from operbot.run import Cfg
 
 
@@ -83,6 +82,13 @@ def consume(evts):
         except ValueError:
             continue
     return res
+
+
+def from_exception(exc):
+    result = []
+    for frm in traceback.extract_tb(exc.__traceback__)[::-1]:
+        result.append("%s:%s" % (os.sep.join(frm.filename.split(os.sep)[-2:]), frm.lineno))
+    return "%s(%s) %s" % (name(exc), exc, " ".join(result))
 
 
 def importer(packagename, modulename):
