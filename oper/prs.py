@@ -1,7 +1,11 @@
 # This file is placed in the Public Domain.
 
 
-from op import Default, register
+"parse"
+
+
+from .dft import Default
+from .obj import register
 
 
 def __dir__():

@@ -5,10 +5,8 @@ import inspect
 import os
 
 
-from op import Class
-
-
-from .com import Commands
+from .cls import Class
+from .com import Command
 
 
 def __dir__():
@@ -35,7 +33,7 @@ def scancls(mod):
 def scancmd(mod):
     for _k, obj in inspect.getmembers(mod, inspect.isfunction):
         if "event" in obj.__code__.co_varnames:
-            Commands.add(obj)
+            Command.add(obj)
     return mod
 
 

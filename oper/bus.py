@@ -1,7 +1,10 @@
 # This file is placed in the Public Domain.
 
 
-from op import Object
+"list of objects"
+
+
+from .obj import Object
 
 
 def __dir__():

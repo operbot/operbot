@@ -1,20 +1,21 @@
 # This file is placed in the Public Domain.
 
 
+"event"
+
+
 import threading
 
 
-from op import Default, update
-
-
 from .bus import Bus
+from .dft import Default
+from .obj import update
 from .prs import parse
 
 
 def __dir__():
     return (
             "Event",
-            "docmd"
            )
 
 
@@ -47,13 +48,3 @@ class Event(Default):
     def wait(self):
         self._ready.wait()
         return self._result
-
-
-def docmd(clt, txt):
-    cmd = Event()
-    cmd.channel = ""
-    cmd.orig = repr(clt)
-    cmd.txt = txt
-    clt.handle(cmd)
-    cmd.wait()
-    return cmd

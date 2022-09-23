@@ -1,13 +1,14 @@
 # This file is placed in the Public Domain.
 
 
+"timer"
+
+
 import threading
 import time
 
 
-from op import Object, name
-
-
+from .obj import Object, name
 from .thr import launch
 
 

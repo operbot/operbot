@@ -12,7 +12,6 @@ from .prs import parse
 from .scn import scan, scandir
 from .thr import Thread, launch
 from .tmr import Timer, Repeater
-from .utl import wait
 
 
 def __dir__():
@@ -33,5 +32,4 @@ def __dir__():
             'scan',
             'scandir',
             'starttime',
-            'wait'
            )

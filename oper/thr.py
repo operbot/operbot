@@ -1,12 +1,15 @@
 # This file is placed in the Public Domain.
 
 
+"thread"
+
+
 import queue
 import threading
 import time
 
 
-from op import name
+from .obj import name
 
 
 def __dir__():
