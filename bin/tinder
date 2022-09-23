@@ -96,7 +96,6 @@ def importer(packagename, modulename):
     try:
         mod = importlib.import_module(name, packagename)
         scan(mod)
-        print(mod)
     except Exception as ex:
         print(from_exception(ex))
 
@@ -140,7 +139,7 @@ def main():
     scandir("op", importer)
     scandir("oper", importer)
     scandir("operbot", importer)
-    print(",".join(sorted(Commands.cmds)))
+    print("commands: " +  ",".join(sorted(Commands.cmds)))
     cli = CLI()
     cli.start()
     nrs = cfg.index or 20

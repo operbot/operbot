@@ -5,9 +5,10 @@ import threading
 import time
 
 
-from op import Class, Object, get, name, printable, update
+from op import Object, get, name, printable, update
 from op import elapsed, find, fntime, save
-from oper import Bus, Commands, starttime
+from oper import Bus, Commands
+from operbot.run import starttime
 
 
 def __dir__():

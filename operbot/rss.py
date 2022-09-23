@@ -232,7 +232,7 @@ def dpl(event):
         _fn, feed = db.match(names[0], {"rss": event.args[0]})
         if feed:
             edit(feed, setter)
-            p = save(feed)
+            save(feed)
             event.reply("ok")
 
 

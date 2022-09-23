@@ -1,6 +1,9 @@
 # This file is placed in the Public Domain.
 
 
+"utiltity"
+
+
 import os
 import pathlib
 import time
@@ -13,7 +16,8 @@ def __dir__():
             "fns",
             "fntime",
             "fnclass",
-            "spl"
+            "spl",
+            "wait"
            )
 
 
@@ -128,3 +132,8 @@ def spl(txt):
     except (TypeError, ValueError):
         res = txt
     return [x for x in res if x]
+
+
+def wait():
+    while 1:
+        time.sleep(1.0)
