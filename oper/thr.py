@@ -9,7 +9,7 @@ import threading
 import time
 
 
-from .obj import name
+from op import name
 
 
 def __dir__():

@@ -9,10 +9,11 @@ import threading
 import time
 
 
+from op import Object
+
 from .bus import Bus
 from .cbs import Callbacks
-from .obj import Object
-from .thr import  launch
+from .thr import launch
 
 
 def __dir__():

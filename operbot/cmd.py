@@ -7,7 +7,7 @@ import time
 
 from op import Object, get, name, printable, update
 from op import elapsed, find, fntime, save
-from oper import Bus, Commands
+from oper import Bus, Command
 from operbot.run import starttime
 
 
@@ -39,7 +39,7 @@ class Todo(Object):
 
 
 def cmd(event):
-    event.reply(",".join(sorted(Commands.cmds)))
+    event.reply(",".join(sorted(Command.cmd)))
 
 
 def dne(event):

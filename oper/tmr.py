@@ -8,7 +8,8 @@ import threading
 import time
 
 
-from .obj import Object, name
+from op import Object, name
+
 from .thr import launch
 
 

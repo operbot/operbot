@@ -5,8 +5,8 @@ from .bus import Bus
 from .cbs import Callbacks
 from .cfg import Config
 from .clt import Client
-from .com import Commands, dispatch
-from .evt import Event, docmd
+from .com import Command, dispatch
+from .evt import Event
 from .hdl import Handler
 from .prs import parse
 from .scn import scan, scandir
@@ -19,7 +19,7 @@ def __dir__():
             'Bus',
             'Callbacks',
             'Client',
-            'Commands',
+            'Command',
             'Config',
             'Event',
             'Handler',

@@ -4,8 +4,7 @@
 "parse"
 
 
-from .dft import Default
-from .obj import register
+from op import Default, register
 
 
 def __dir__():

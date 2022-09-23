@@ -5,7 +5,8 @@ import inspect
 import os
 
 
-from .cls import Class
+from op import Class
+
 from .com import Command
 
 

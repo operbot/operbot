@@ -13,14 +13,14 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op import Class, Wd, keys, printable, update
-from oper import Client, Event, docmd, parse, scan, wait
+from op import Class, Wd, keys, printable, update, wait
+from oper import Client, Event, parse, scan
 
 
 from operbot import cmd, irc, rss
 from operbot.irc import Config, IRC
 from operbot.rss import Fetcher
-from operbot.run import Cfg
+from operbot.run import Cfg, docmd
 
 
 Config.nick = "operbot"

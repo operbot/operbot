@@ -4,7 +4,7 @@
 "callbacks"
 
 
-from .obj import Object
+from op import Object
 
 
 def __dir__():
