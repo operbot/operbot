@@ -6,8 +6,8 @@ import unittest
 
 
 from op import Object, get
-from oper import Client, Commands, docmd
-from operbot.run import Cfg
+from oper import Client, Command
+from operbot.run import Cfg, docmd
 
 
 evts = []
@@ -57,7 +57,7 @@ class TestCommands(unittest.TestCase):
     "commands test class."
 
     def test_commands(self):
-        cmds = sorted(Commands.cmds)
+        cmds = sorted(Command.cmd)
         for cmd in cmds:
             if cmd in skip:
                 continue
