@@ -1,4 +1,5 @@
 # This file is placed in the Public Domain.
+# pylint: disable=R,C
 
 
 "json"
@@ -13,7 +14,7 @@ from json import JSONDecoder, JSONEncoder
 
 
 from .cls import Class
-from .obj import Object, otype, update
+from .obj import Object, kind, update
 from .utl import cdir, fnclass
 from .wdr import Wd
 
@@ -111,7 +112,7 @@ def loads(jss):
 
 def save(obj):
     stp = os.path.join(
-                       otype(obj),
+                       kind(obj),
                        os.sep.join(str(datetime.datetime.now()).split())
                       )
     opath = Wd.getpath(stp)

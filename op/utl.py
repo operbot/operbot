@@ -1,7 +1,8 @@
 # This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116,W0612,W0613
 
 
-"utiltity"
+"utility"
 
 
 import os
@@ -113,6 +114,30 @@ def fntime(path):
         except ValueError:
             pass
     return tme
+
+
+def locked(lock):
+
+    noargs = False
+
+    def lockeddec(func, *args, **kwargs):
+
+        def lockedfunc(*args, **kwargs):
+            lock.acquire()
+            if args or kwargs:
+                locked.noargs = True
+            res = None
+            try:
+                res = func(*args, **kwargs)
+            finally:
+                lock.release()
+            return res
+
+        lockeddec.__wrapped__ = func
+        lockeddec.__doc__ = func.__doc__
+        return lockedfunc
+
+    return lockeddec
 
 
 def fnclass(path):
