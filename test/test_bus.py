@@ -11,6 +11,9 @@ class Client(Handler):
 
     gotcha = False
 
+    def announce(self, txt):
+        self.gotcha = True
+
     def raw(self, txt):
         self.gotcha = True
 

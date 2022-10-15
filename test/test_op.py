@@ -33,10 +33,10 @@ attrs1 = (
             'items',
             'iter',
             'keys',
+            'kind',
             'last',
             'load',
             'loads',
-            'otype',
             'nme',
             'register',
             'save',
@@ -148,9 +148,9 @@ class TestObject(unittest.TestCase):
     def test_module(self):
         self.assertTrue(Object().__module__, "obj")
 
-    def test_otype(self):
+    def test_kind(self):
         obj = Object()
-        self.assertEqual(otype(obj), "op.obj.Object")
+        self.assertEqual(kind(obj), "op.obj.Object")
 
     def test_repr(self):
         self.assertTrue(update(Object(),
@@ -181,7 +181,7 @@ class TestObject(unittest.TestCase):
     def test_get(self):
         obj = Object()
         obj.key = "value"
-        self.assertEqual(get(obj, "key"), "value")
+        self.assertEqual(getattr(obj, "key"), "value")
 
     def test_keys(self):
         obj = Object()
