@@ -4,7 +4,7 @@
 import unittest
 
 
-from oper import Event
+from opm.run import Event
 
 
 class TestEvent(unittest.TestCase):

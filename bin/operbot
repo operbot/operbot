@@ -13,14 +13,14 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op import Class, Wd, keys, printable, update, wait
-from oper import Client, Event, parse, scan
+from op import Class, Wd, keys, printable, update
+from opm.run import Command, Event, Handler, parse, scan
 
 
-from operbot import cmd, irc, rss
-from operbot.irc import Config, IRC
-from operbot.rss import Fetcher
-from operbot.run import Cfg, docmd
+from opm import cmds, irc, rss
+from opm.irc import Config, IRC
+from opm.rss import Fetcher
+from opm.run import Cfg
 
 
 Config.nick = "operbot"
@@ -32,12 +32,12 @@ Config.username = "operbot"
 Wd.workdir = os.path.expanduser("~/.operbot")
 
 
-scan(cmd)
+scan(cmds)
 scan(irc)
 scan(rss)
 
 
-class Console(Client):
+class Console(Handler):
 
     @staticmethod
     def announce(txt):
@@ -45,7 +45,7 @@ class Console(Client):
 
     @staticmethod
     def handle(event):
-        Client.handle(event)
+        Command.handle(event)
         event.wait()
 
     def poll(self):
@@ -109,7 +109,7 @@ def main():
     fetcher.start()
     csl = Console()
     csl.start()
-    csl.forever()
+    csl.wait()
         
 
 wrap(main)

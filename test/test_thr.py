@@ -4,7 +4,7 @@
 import unittest
 
 
-from oper import Thread
+from opm.run import Thread
 
 
 def test():

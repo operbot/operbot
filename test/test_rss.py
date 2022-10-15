@@ -4,7 +4,7 @@
 import unittest
 
 
-from operbot.rss import Fetcher
+from opm.rss import Fetcher
 
 
 class TestRss(unittest.TestCase):

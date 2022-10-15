@@ -5,9 +5,10 @@ import sys
 import unittest
 
 
-from op import Object, get
-from oper import Client, Command
-from operbot.run import Cfg, docmd
+from op import Object
+
+
+from opm.run import Cfg, Handler, Command, command
 
 
 evts = []
@@ -24,7 +25,7 @@ param.mre = [""]
 param.thr = [""]
 
 
-class CLI(Client):
+class CLI(Handler):
 
     "test cli class"
 
@@ -61,8 +62,8 @@ class TestCommands(unittest.TestCase):
         for cmd in cmds:
             if cmd in skip:
                 continue
-            for ex in get(param, cmd, ""):
-                evt = docmd(cli, cmd + " " + ex)
+            for ex in getattr(param, cmd, ""):
+                evt = command(cli, cmd + " " + ex)
                 evts.append(evt)
         consume(evts)
         self.assertTrue(not evts)

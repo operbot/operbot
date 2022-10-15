@@ -4,7 +4,7 @@
 import unittest
 
 
-from oper import Handler
+from opm.run import Handler
 
 
 class TestHandler(unittest.TestCase):

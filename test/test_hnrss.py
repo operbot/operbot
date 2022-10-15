@@ -4,7 +4,7 @@
 import unittest
 
 
-from operbot.rss import Parser
+from opm.rss import Parser
 
 
 class TestXml(unittest.TestCase):

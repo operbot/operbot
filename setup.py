@@ -17,7 +17,8 @@ setup(
     description="write your own commands",
     long_description=read(),
     license="Public Domain",
-    packages=["op", "oper", "operbot"],
+    install_requires=["objectprogramming"],
+    packages=["opm", "operbot"],
     scripts=["bin/op", "bin/operbot", "bin/opercmd", "bin/opersrv", "bin/operd"],
     classifiers=[
         "Development Status :: 3 - Alpha",

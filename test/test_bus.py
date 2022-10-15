@@ -4,10 +4,10 @@
 import unittest
 
 
-from oper import Bus, Client
+from opm.run import Bus, Handler
 
 
-class MyClient(Client):
+class Client(Handler):
 
     gotcha = False
 
@@ -15,33 +15,24 @@ class MyClient(Client):
         self.gotcha = True
 
 
+clt = Client()
+
+
 class TestBus(unittest.TestCase):
 
-    def test_construct(self):
-        bus = Bus()
-        self.assertEqual(type(bus), Bus)
 
     def test_add(self):
-        bus = Bus()
-        clt = MyClient()
-        bus.add(clt)
-        self.assertTrue(clt in bus.objs)
+        self.assertTrue(clt in Bus.objs)
 
     def test_announce(self):
-        bus = Bus()
-        clt = MyClient()
-        bus.add(clt)
-        bus.announce("test")
+        print(Bus.objs)
+        Bus.announce("test")
         self.assertTrue(clt.gotcha)
 
     def test_byorig(self):
-        bus = Bus()
-        clt = MyClient()
-        self.assertEqual(bus.byorig(repr(clt)), clt)
+        self.assertEqual(Bus.byorig(repr(clt)), clt)
 
     def test_say(self):
-        bus = Bus()
-        clt = MyClient()
-        bus.add(clt)
-        bus.say(repr(clt), "#test", "test")
+        clt.gotcha = False
+        Bus.say(repr(clt), "#test", "test")
         self.assertTrue(clt.gotcha)

@@ -5,12 +5,14 @@
 import unittest
 
 
-from oper import Command, scan
-from operbot import irc
+from opm.run import Command
+from opm import irc
+from opm.irc import IRC
 
 
 class TestScan(unittest.TestCase):
 
     def test_scan(self):
-        scan(irc)
+        iii = irc.IRC()
+        iii.scan(irc)
         self.assertTrue("cfg" in Command.cmd)
