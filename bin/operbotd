@@ -23,10 +23,10 @@ from operbot.rss import Fetcher
 from operbot import cmds, irc, rss
 
 
-Config.nick = "operd"
+Config.nick = "operbotd"
 Config.channel = "#operbot"
 Config.realname = "program your own commands"
-Config.username = "operd"
+Config.username = "operbotd"
 
 
 Wd.workdir = os.path.expanduser("~/.operbot")

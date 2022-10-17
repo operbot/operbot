@@ -18,7 +18,7 @@ setup(
     long_description=read(),
     license="Public Domain",
     install_requires=["objectprogramming"],
-    packages=["opm", "operbot"],
+    packages=["operbot"],
     scripts=[
              "bin/operbot",
              "bin/opercmd",
