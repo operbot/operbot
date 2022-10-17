@@ -6,7 +6,7 @@ import time
 
 
 from op import Class, Object, last
-from oper import Bus, launch
+from operbot.run import Bus, launch
 
 
 def __dir__():

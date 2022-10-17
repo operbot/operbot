@@ -14,12 +14,13 @@ sys.path.insert(0, os.getcwd())
 
 
 from op import Wd, keys, printable, update
-from oper import Client, Event, docmd, parse, scan, wait
-
-from operbot import cmd, irc, rss
+from operbot.run import Event, command, parse, scan
+from operbot.run import Cfg
 from operbot.irc import Config, IRC
 from operbot.rss import Fetcher
-from operbot.run import Cfg
+
+
+from operbot import cmds, irc, rss
 
 
 Config.nick = "operd"
@@ -31,7 +32,7 @@ Config.username = "operd"
 Wd.workdir = os.path.expanduser("~/.operbot")
 
 
-scan(cmd)
+scan(cmds)
 scan(irc)
 scan(rss)
 
@@ -62,7 +63,7 @@ def main():
     bot.start()
     fetcher = Fetcher()
     fetcher.start()
-    wait()
+    bot.wait()
         
 
 main()
