@@ -10,7 +10,7 @@ def read():
 
 setup(
     name="operbot",
-    version="101",
+    version="102",
     author="Bart Thate",
     author_email="operbot100@gmail.com",
     url="http://github.com/operbot/operbot",
