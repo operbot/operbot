@@ -14,8 +14,8 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from op import Object, Wd,  elapsed, get, keys, name, printable
-from oper import Client, Commands, Event, parse, scandir, scan
+from op import Object, Wd,  elapsed, keys, name, printable
+from operbot.run import Command, Event, Handler, parse, scandir, scan
 from operbot.run import Cfg
 
 
@@ -60,10 +60,10 @@ def cprint(txt):
     sys.stdout.flush()
 
 
-class CLI(Client):
+class CLI(Handler):
 
     def __init__(self):
-        Client.__init__(self)
+        Handler.__init__(self)
 
     def raw(self, txt):
         if Cfg.verbose:
@@ -101,10 +101,10 @@ def importer(packagename, modulename):
 
 
 def payload(cli):
-    cmds = sorted(Commands.cmds)
+    cmds = sorted(Command.cmd)
     _nr = 0
     for cmd in cmds:
-        for ex in get(param, cmd, [""]):
+        for ex in getattr(param, cmd, [""]):
             evt = Event()
             evt.txt = cmd + " " + ex
             evt.orig = repr(cli)
@@ -139,7 +139,7 @@ def main():
     scandir("op", importer)
     scandir("oper", importer)
     scandir("operbot", importer)
-    print("commands: " +  ",".join(sorted(Commands.cmds)))
+    print("commands: " +  ",".join(sorted(Command.cmd)))
     cli = CLI()
     cli.start()
     nrs = cfg.index or 20
@@ -152,7 +152,7 @@ def main():
         for thr in thrs:
             res += thr.join()
     else:
-        res = nrs * len(Commands.cmds)
+        res = nrs * len(Command.cmd)
     if not res:
         res = 1
     consume(events)
