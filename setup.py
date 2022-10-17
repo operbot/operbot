@@ -10,12 +10,13 @@ def read():
 
 setup(
     name="operbot",
-    version="102",
+    version="103",
     author="Bart Thate",
     author_email="operbot100@gmail.com",
     url="http://github.com/operbot/operbot",
     description="write your own commands",
     long_description=read(),
+    long_description_content_type="text/x-rst",
     license="Public Domain",
     install_requires=["objectprogramming"],
     packages=["operbot"],

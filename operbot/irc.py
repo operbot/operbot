@@ -599,7 +599,6 @@ Class.add(User)
 def cfg(event):
     config = Config()
     last(config)
-    print(config, event.sets)
     if not event.sets:
         event.reply(printable(
                               config,
