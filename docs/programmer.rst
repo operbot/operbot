@@ -18,7 +18,7 @@
 
     </b>
     </center>
-
+    <br>
 
 The ``op`` package provides an Object class (in bot.obj), that provides a
 save/load to/from json files on disk. Objects can be searched with database

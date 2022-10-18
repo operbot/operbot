@@ -70,8 +70,8 @@ html_sidebars = {
         'relations.html',
     ]
 }
-html_use_index = False
-html_split_index = False
+html_use_index = True
+html_split_index = True
 html_show_sourcelink = False
 html_show_sphinx = False
 html_show_copyright = False
@@ -103,7 +103,7 @@ rst_prolog = '''.. image:: operline.png
 
     <center><b>
 
-:ref:`home <home>` - :ref:`programmer <programmer>` - :ref:`source <source>` - `pypi <http://pypi.org/project/operbot>`_ - `github <http://github.com/operbot/operbot>`_ - `sponsor <http://operbot.rtfd.io>`_ - :ref:`about <about>`
+:ref:`about <about>` :ref:`manual <manual>` :ref:`programmer <programmer>` :ref:`source <source>` `pypi <http://pypi.org/project/operbot>`_ `github <http://github.com/operbot/operbot>`_  `sponsor <http://operbot.rtfd.io>`_ `index <genindex-all.html>`_ `@ <search.html>`_
 
 .. raw:: html
 

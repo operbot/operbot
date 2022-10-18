@@ -1,12 +1,10 @@
 .. _about:
 
+.. title:: about
 
 .. raw:: html
 
-  <br>
-
-.. raw:: html
-
+    <br>
     <center>
     <b>
 
@@ -16,7 +14,7 @@
 
     </b>
     </center>
-
+    <br>
 
 ``operbot`` is a solid, non hackable bot, that runs under systemd as a 24/7
 background service and starts the bot after reboot, intended to be

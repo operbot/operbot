@@ -14,7 +14,7 @@
     <center>
     <b>
 
-**M A N P A G E**
+**H O M E**
 
 .. raw:: html
 

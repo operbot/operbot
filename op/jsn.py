@@ -37,10 +37,12 @@ class ObjectDecoder(JSONDecoder):
         JSONDecoder.__init__(self, *args, **kwargs)
 
     def decode(self, s, _w=None):
+        ""
         value = json.loads(s)
         return Object(value)
 
     def raw_decode(self, s, *args, **kwargs):
+        ""
         return JSONDecoder.raw_decode(self, s, *args, **kwargs)
 
 
@@ -50,9 +52,11 @@ class ObjectEncoder(JSONEncoder):
         JSONEncoder.__init__(self, *args, **kwargs)
 
     def encode(self, o):
+        ""
         return JSONEncoder.encode(self, o)
 
     def default(self, o):
+        ""
         if isinstance(o, dict):
             return o.items()
         if isinstance(o, Object):
@@ -70,6 +74,7 @@ class ObjectEncoder(JSONEncoder):
             return str(o)
 
     def iterencode(self, o, *args, **kwargs):
+        ""
         return JSONEncoder.iterencode(self, o, *args, **kwargs)
 
 
