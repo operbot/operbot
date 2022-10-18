@@ -25,8 +25,10 @@
     :toctree: 
     :template: module.rst
 
+    op.cls		class
     op.dbs		database
     op.dft 		default
+    op.fnc		function
     op.jsn		json
     op.obj		object
     op.utl		utility

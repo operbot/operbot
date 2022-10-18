@@ -1,3 +1,5 @@
+.. _{{ name }}:
+
 .. raw:: html
 
    <br>
