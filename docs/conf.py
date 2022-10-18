@@ -103,7 +103,7 @@ rst_prolog = '''.. image:: operline.png
 
     <center><b>
 
-:ref:`about <about>` :ref:`manual <manual>` :ref:`programmer <programmer>` :ref:`source <source>` `pypi <http://pypi.org/project/operbot>`_ `github <http://github.com/operbot/operbot>`_  `sponsor <http://operbot.rtfd.io>`_ `index <genindex-all.html>`_ `@ <search.html>`_
+:ref:`about <about>` - :ref:`manual <manual>` - :ref:`programmer <programmer>` - :ref:`source <source>` - `pypi <http://pypi.org/project/operbot>`_ - `github <http://github.com/operbot/operbot>`_ - `sponsor <http://operbot.rtfd.io>`_ - `index <genindex-all.html>`_
 
 .. raw:: html
 
