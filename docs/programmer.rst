@@ -7,7 +7,18 @@
 .. title:: programmer
 
 
-**PROGRAMMER**
+.. raw:: html
+
+    <center>
+    <b>
+
+**P R O G R A M M E R**
+
+.. raw:: html
+
+    </b>
+    </center>
+
 
 The ``op`` package provides an Object class (in bot.obj), that provides a
 save/load to/from json files on disk. Objects can be searched with database
