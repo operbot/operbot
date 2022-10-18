@@ -11,6 +11,6 @@ def popen(txt):
 
 
 
-popen("bin/clean")
+popen("bins/clean")
 popen("rm -fR ~/.cache/pip/")
 popen("rm -fR env html")

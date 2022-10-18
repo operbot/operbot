@@ -1,6 +1,9 @@
 # This file is placed in the Public Domain.
 
 
+"udp to irc relay"
+
+
 import socket
 import time
 
