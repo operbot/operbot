@@ -58,6 +58,7 @@ def hup(_sig, _frame):
 
 def main():
     daemon()
+    permission(Wd.workdir)
     signal.signal(signal.SIGHUP, hup)
     bot = IRC()
     bot.start()
