@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+# This file is placed in the Public Domain.
+
+
+"skell for operbot"
+
+
+import os
+import sys
+
+
+sys.path.insert(0, os.getcwd())
+
+
+from op import Wd, cdir, permission
+
+
+Wd.workdir = os.path.expanduser("~/.operbot")
+
+
+SKIP = ["already exists",]
+
+
+def popen(txt):
+    for line in os.popen(txt).readlines():
+        dobreak = False
+        for skip in SKIP:
+            if skip in line:
+                dobreak = True
+        if dobreak:
+            continue
+        lne = line.strip()
+        if lne:
+            print(lne)
+
+
+def main():
+    popen("groupadd -f operbot")
+    popen("useradd -g operbot -m operbot")
+    cdir(Wd.workdir)
+    permission(Wd.workdir)
+    print("done")
+
+
+main()
