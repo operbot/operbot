@@ -30,6 +30,21 @@ def cdir(path):
     pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
 
+def permission(ddir, user="operbot", groups="operbot", umode=0700):
+    try:
+        stat = os.stat(ddir)
+    except OSError:
+        return
+    try:
+        uid = os.getuid()
+        gid = os.getgid()
+    except AttributeError:
+        return
+    if stat[ST_UID] != uid:
+        os.chown(ddir, uid, gid)
+    if S_IMODE(stat[ST_MODE]) != umode:
+        os.chmod(ddir, umode)
+
 def elapsed(seconds, short=True):
     txt = ""
     nsec = float(seconds)
