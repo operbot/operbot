@@ -34,6 +34,7 @@ def __dir__():
 class ObjectDecoder(JSONDecoder):
 
     def  __init__(self, *args, **kwargs):
+        ""
         JSONDecoder.__init__(self, *args, **kwargs)
 
     def decode(self, s, _w=None):
@@ -49,6 +50,7 @@ class ObjectDecoder(JSONDecoder):
 class ObjectEncoder(JSONEncoder):
 
     def  __init__(self, *args, **kwargs):
+        ""
         JSONEncoder.__init__(self, *args, **kwargs)
 
     def encode(self, o):
