@@ -10,13 +10,11 @@ ALL = [
        "__main__",
        "__version__",
        '"## "',
-       "popen",
+       "popen\(",
        "pkgutil",
        "importlib",
        "print\(",
        "sys",
-       "traceback",
-       "pylint"
       ]
 
 
@@ -24,6 +22,7 @@ SKIP = [
         ".git",
         "README",
         "bin",
+        "docs",
         "grep",
         "test"
        ]

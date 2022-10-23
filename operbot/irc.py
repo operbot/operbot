@@ -12,14 +12,10 @@ import queue
 import random
 import socket
 import ssl
-import sys
 import time
 import textwrap
 import threading
 import _thread
-
-
-sys.path.insert(0, os.getcwd())
 
 
 from op import Class, Default, Object, Wd
@@ -38,12 +34,6 @@ starttime = time.time()
 
 
 saylock = _thread.allocate_lock()
-
-
-class CLI(Shell):
-
-    def raw(self, txt):
-        print(txt)
 
 
 class NoUser(Exception):
