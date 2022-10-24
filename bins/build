@@ -2,10 +2,21 @@
 # This file is placed in the Public Domain.
 
 
-"build distribution"
+"build"
 
 
 import os
+import sys
+
+
+sys.path.insert(0, os.getcwd())
+
+
+def getlist():
+    return [x.strip() for x in open("CFG", "r").readlines()[-1].split(",")]
+
+
+TODO = getlist()
 
 
 def popen(txt):
@@ -13,4 +24,15 @@ def popen(txt):
         print(line.rstrip())
 
 
-popen("python3 setup.py sdist bdist_wheel")
+popen("rm -fR ~/.cache/pip")
+popen("rm -fR tar")
+popen("mkdir tar")
+
+for td in TODO:
+    print("## processing %s" % td)
+    os.chdir("src/%s" % td)
+    popen("bin/clean")
+    popen("python3 setup.py sdist")
+    popen("cp dist/* ../../tar/")
+    os.chdir("..")
+    os.chdir("..")

@@ -16,7 +16,7 @@ def popen(txt):
 
 
 popen("rm -fR ~/.cache/pip")
-popen("bin/clean")
-popen("python3 setup.py sdist")
+popen("bins/clean")
+popen("python3 setup.py bdist_wheel")
 popen("python3 -mvirtualenv --no-download env")
 popen("env/bin/pip3 install operbot -f dist --force-reinstall --no-deps")

@@ -17,10 +17,10 @@ def popen(txt):
             print(line.rstrip())
 
 
-popen("bin/wipe")
-popen("bin/check")
-popen("bin/build")
-popen("bin/lint")
-popen("bin/test")
-popen("bin/tinder")
-popen("bin/env")
+popen("bins/wipe")
+popen("bins/check")
+popen("bins/build")
+popen("bins/lint")
+popen("bins/test")
+popen("bins/tinder")
+popen("bins/env")
