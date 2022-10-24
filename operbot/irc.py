@@ -24,7 +24,7 @@ from op import edit, fntime, find, save, update
 from op import elapsed, register
 
 
-from operbot.run import Command, Event, Handler, Shell, launch
+from operbot.run import Command, Event, Handler, launch
 
 
 Wd.workdir = os.path.expanduser("~/.op")
@@ -131,11 +131,11 @@ class Output(Object):
         self.oqueue.put_nowait((channel, txt))
 
     def output(self):
-        while not self.dostop.isSet():
+        while not self.dostop.is_set():
             (channel, txt) = self.oqueue.get()
             if channel is None and txt is None:
                 break
-            if self.dostop.isSet():
+            if self.dostop.is_set():
                 break
             wrapper = TextWrap()
             txtlist = wrapper.wrap(txt)
@@ -479,8 +479,8 @@ class IRC(Handler, Output):
         self.joined.clear()
         self.doconnect(self.cfg.server, self.cfg.nick, int(self.cfg.port))
 
-    def register(self, cbs, func):
-        register(self.cbs, cbs, func)
+    def register(self, typ, cbs):
+        register(self.cbs, typ, cbs)
 
     def say(self, channel, txt):
         self.oput(channel, txt)

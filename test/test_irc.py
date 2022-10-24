@@ -4,7 +4,7 @@
 import unittest
 
 
-from opm.irc import IRC
+from operbot.irc import IRC
 
 
 class TestIRC(unittest.TestCase):

@@ -106,7 +106,7 @@ class Command(Object):
 
     @staticmethod
     def remove(cmd):
-        del Command.cmd[cmd]
+        delattr(Command.cmd, cmd)
 
 
 class Parsed(Default):
@@ -283,7 +283,6 @@ class Thread(threading.Thread):
         func, args = self.queue.get()
         if args:
             self._evt = args[0]
-        self.setName(self.name)
         self.starttime = time.time()
         self._result = func(*args)
 
@@ -305,8 +304,8 @@ class Timer(Object):
 
     def start(self):
         timer = threading.Timer(self.sleep, self.run)
-        timer.setName(self.name)
-        timer.setDaemon(True)
+        timer.name = self.name
+        timer.daemon = True
         timer.sleep = self.sleep
         timer.state = self.state
         timer.state.starttime = time.time()

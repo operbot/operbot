@@ -18,12 +18,6 @@ def __dir__():
            )
 
 
-
-def edit(obj, setter):
-    for key, value in items(setter):
-        register(obj, key, value)
-
-
 def printable(obj, args="", skip="", plain=False):
     res = []
     keyz = []

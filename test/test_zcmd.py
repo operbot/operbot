@@ -1,6 +1,9 @@
 # This file is placed in the Public Domain.
 
 
+"test commands"
+
+
 import sys
 import unittest
 
@@ -8,7 +11,7 @@ import unittest
 from op import Object
 
 
-from opm.run import Cfg, Handler, Command, command
+from operbot.run import Cfg, Handler, Command, command
 
 
 evts = []

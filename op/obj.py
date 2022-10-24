@@ -5,9 +5,6 @@
 "Object"
 
 
-import types
-
-
 from .cls import Class
 
 

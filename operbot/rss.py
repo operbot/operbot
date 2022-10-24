@@ -18,7 +18,7 @@ from urllib.request import Request, urlopen
 
 from op import Class, Db, Default, Object
 from op import find, fntime, last, printable, save
-from op import edit, elapsed, register, spl, update
+from op import dump, edit, elapsed, register, spl, update
 
 
 from operbot.run import Bus, Command, Cfg, Repeater, launch
@@ -288,11 +288,11 @@ def rem(event):
         return
     selector = {"rss": event.args[0]}
     got = []
-    for _fn, feed in find("rss", selector):
+    for fnm, feed in find("rss", selector):
         feed.__deleted__ = True
-        got.append(feed)
-    for feed in got:
-        save(feed)
+        got.append((fnm, feed))
+    for fnm, feed in got:
+        dump(feed, fnm)
     event.reply("ok")
 
 
@@ -318,6 +318,7 @@ def rss(event):
         return
     res = list(find("rss", {"rss": url}))
     if res:
+        event.reply("already got %s" % url)
         return
     feed = Rss()
     feed.rss = event.args[0]

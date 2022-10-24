@@ -4,7 +4,7 @@
 import unittest
 
 
-from opm.irc import User
+from operbot.irc import User
 
 
 class TestUser(unittest.TestCase):

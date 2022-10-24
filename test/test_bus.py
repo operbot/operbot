@@ -4,7 +4,7 @@
 import unittest
 
 
-from opm.run import Bus, Handler
+from operbot.run import Bus, Handler
 
 
 class Client(Handler):

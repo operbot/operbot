@@ -1,4 +1,8 @@
 # This file is placed in the Public Domain.
+# pylint: disable=W0401,W0621
+
+
+"op tests"
 
 
 import op
@@ -79,6 +83,88 @@ attrs2 = (
 
 
 class TestObject(unittest.TestCase):
+
+    def test_allobj(self):
+        objs = allobj("op.obj.Object")
+        self.assertTrue(objs)
+
+    def test_find(self):
+        objs = find("object")
+        self.assertTrue(objs)
+
+    def test_default(self):
+        dft = Default()
+        self.assertEqual(type(dft), Default)
+
+    def test_name(self):
+        obj = Object()
+        self.assertEqual(name(obj), "op.obj.Object")    
+
+    def test_decoder(self):
+        obj = ObjectDecoder().decode('{"bla": "mekker"}')
+        self.assertEqual(obj.bla, "mekker")
+
+    def test_encoder(self):
+        obj = Object()
+        obj.bla = "mekker"
+        jsn = ObjectEncoder().encode(obj)
+        self.assertEqual(jsn, '{"bla": "mekker"}')
+
+    def test_elapsed(self):
+        self.assertEqual(elapsed(60.0), "1m")
+
+    def test_locked(self):
+        @locked
+        def test():
+            return 1
+        self.assertTrue(test(), 1)
+
+    def test_spl(self):
+        lst = spl("1,2,3")
+        self.assertEqual(lst, ["1", "2", "3"])
+
+    def test_permission(self):
+        obj = Object()
+        path = save(obj)
+        self.assertTrue(permission(path))
+
+    def test_setwd(self):
+        setwd(".test2")
+        wd = Wd.workdir
+        Wd.workdir = ".test"
+        self.assertTrue(wd, ".test2")
+
+    def test_cls(self):
+        attr = dir(cls)        
+        self.assertTrue(attr)
+
+    def test_dbs(self):
+        attr = dir(dbs)
+        self.assertTrue(attr)
+
+    def test_dft(self):
+        attr = dir(dft)
+        self.assertTrue(attr)
+
+    def test_fnc(self):
+        attr = dir(fnc)
+        self.assertTrue(attr)
+
+    def test_jsn(self):
+        attr = dir(jsn)
+        self.assertTrue(attr)
+
+    def test_obj(self):
+        attr = dir(obj)        
+        self.assertTrue(attr)
+
+    def test_utl(self):
+        attr = dir(utl)        
+        self.assertTrue(attr)
+
+    def test_wdr(self):
+        attr = dir(wdr)
+        self.assertTrue(attr)
 
     def test_interface(self):
         self.assertTrue(dir(op), attrs1)

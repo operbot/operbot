@@ -1,7 +1,7 @@
 # This file is placed in the Public Domain.
 
 
-"object programming commands"
+"commands"
 
 
 import threading
@@ -9,7 +9,7 @@ import time
 
 
 from op import Class, Object, elapsed, find, fntime, save, update
-from operbot.run import Bus, Command
+from operbot.run import Command
 
 
 starttime = time.time()

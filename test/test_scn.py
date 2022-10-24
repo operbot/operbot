@@ -2,12 +2,14 @@
 # pylint: disable=C0113,C0114,C0115,C0116
 
 
+"scan tests"
+
+
 import unittest
 
 
-from opm.run import Command
-from opm import irc
-from opm.irc import IRC
+from operbot.run import Command
+from operbot import irc
 
 
 class TestScan(unittest.TestCase):

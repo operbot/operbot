@@ -9,11 +9,13 @@ import getpass
 import os
 import pathlib
 import pwd
-import stat
 import time
 
 
 from stat import ST_UID, ST_MODE, S_IMODE
+
+
+from op.wdr import Wd
 
 
 def __dir__():
@@ -99,8 +101,8 @@ def fns(path, timed=None):
         for dname in  dirs:
             ddd = os.path.join(rootdir, dname)
             fls = sorted(os.listdir(ddd))
-            if fls:
-                opath = os.path.join(ddd, fls[-1])
+            for fln in fls:
+                opath = os.path.join(ddd, fln)
                 if (
                     timed
                     and "from" in timed
@@ -168,8 +170,8 @@ def locked(lock):
     return lockeddec
 
 
-def permission(ddir, user="operbot", group="operbot", umode=0o700):
-    pwdline = pwd.getpwnam(user)
+def permission(ddir, username="operbot", group="operbot", umode=0o700):
+    pwdline = pwd.getpwnam(username)
     uid = pwdline.pw_uid
     gid = pwdline.pw_gid
     stats = os.stat(ddir)
@@ -177,10 +179,10 @@ def permission(ddir, user="operbot", group="operbot", umode=0o700):
         os.chown(ddir, uid, gid)
     if S_IMODE(stats[ST_MODE]) != umode:
         os.chmod(ddir, umode)
-
+    return True
 
 def savepid():
-    k = open(os.pah.join(Wd.workdir, 'operbot.pid'),'w')
+    k = open(os.pah.join(Wd.workdir, 'operbot.pid'), "w", encoding='utf-8')
     k.write(str(os.getpid()))
     k.close()
 
@@ -195,14 +197,14 @@ def spl(txt):
 
 def touch(fname):
     fd = os.open(fname, os.O_WRONLY | os.O_CREAT)
-    os.close(fd)  
+    os.close(fd)
 
 
 def user():
     try:
-        import getpass
         return getpass.getuser() 
-    except ImportError: return ""
+    except ImportError:
+        return ""
 
 
 def wait():

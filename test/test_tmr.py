@@ -4,7 +4,7 @@
 import unittest
 
 
-from opm.run import Timer
+from operbot.run import Timer
 
 
 def test():
