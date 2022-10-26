@@ -15,9 +15,6 @@ import time
 from stat import ST_UID, ST_MODE, S_IMODE
 
 
-from op.wdr import Wd
-
-
 def __dir__():
     return (
             "cdir",
@@ -180,11 +177,6 @@ def permission(ddir, username="operbot", group="operbot", umode=0o700):
     if S_IMODE(stats[ST_MODE]) != umode:
         os.chmod(ddir, umode)
     return True
-
-def savepid():
-    k = open(os.pah.join(Wd.workdir, 'operbot.pid'), "w", encoding='utf-8')
-    k.write(str(os.getpid()))
-    k.close()
 
 
 def spl(txt):

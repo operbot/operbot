@@ -40,20 +40,6 @@ def cmd(event):
 Command.add(cmd)
 
 
-def dne(event):
-    if not event.args:
-        return
-    selector = {"txt": event.args[0]}
-    for _fn, obj in find("todo", selector):
-        obj.__deleted__ = True
-        save(obj)
-        event.reply("ok")
-        break
-
-
-Command.add(dne)
-
-
 def log(event):
     if not event.rest:
         _nr = 0

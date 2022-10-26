@@ -45,7 +45,8 @@ great for giving objects peristence by having their state stored in files::
 
 
 from .cls import Class
-from .dbs import Db, allobj, find, fns, fntime, hook, last
+from .col import Collection
+from .dbs import Db, allobj, find, fns, fntime, hook, last, match, select
 from .dft import Default
 from .fnc import name, printable
 from .jsn import ObjectDecoder, ObjectEncoder, dump, dumps, load, loads, save
@@ -67,6 +68,7 @@ from op import wdr
 def __dir__():
     return (
             'Class',
+            'Collection',
             'Db',
             'Default',
             'Object',
@@ -89,6 +91,7 @@ def __dir__():
             'load',
             'loads',
             'locked',
+            'match',
             'name',
             'obj',
             'permission',
@@ -97,6 +100,7 @@ def __dir__():
             'save',
             'scan',
             'scandir',
+            "select",
             'setwd',
             'spl',
             'update',

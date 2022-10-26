@@ -10,6 +10,7 @@ import _thread
 
 from .obj import Object, items, kind, update
 from .cls import Class
+from .col import Collection
 from .jsn import hook
 from .wdr import Wd
 from .utl import fns, fntime, locked
@@ -31,60 +32,46 @@ def __dir__():
 class Db():
 
     @staticmethod
-    def all(otp, timed=None):
-        result = []
+    def all(otp, selector=None, timed=None):
+        res = []
         for fnm in fns(Wd.getpath(otp), timed):
             obj = hook(fnm)
-            if "__deleted__" in obj and obj.__deleted__:
+            if selector and not search(obj, selector):
                 continue
-            result.append((fnm, obj))
-        if not result:
-            return []
-        return result
+            res.append((fnm, obj))
+        return res
 
     @staticmethod
     def find(otp, selector=None, index=None, timed=None):
         if selector is None:
             selector = {}
         _nr = -1
-        result = []
+        res = []
         for fnm in fns(Wd.getpath(otp), timed):
             obj = hook(fnm)
             if selector and not search(obj, selector):
                 continue
-            if "__deleted__" in obj and obj.__deleted__:
-                continue
             _nr += 1
             if index is not None and _nr != index:
                 continue
-            result.append((fnm, obj))
-        return result
+            res.append((fnm, obj))
+        return res
 
     @staticmethod
-    def last(otp):
-        objs = Db.all(otp)
-        if objs:
-            fnn, obj =  objs[-1]
-            return (fnn, obj)
-        return (None, None)
-
-    @staticmethod
-    def match(otp, selector=None, index=None, timed=None):
+    def last(otp, selector=None, index=None, timed=None):
         res = sorted(
                      Db.find(otp, selector, index, timed), key=lambda x: fntime(x[0]))
         if res:
             return res[-1]
         return (None, None)
 
-
-def allobj(name, timed=None):
+def allobj(name, selector=None, timed=None):
     names = Class.full(name)
     if not names:
         names = Wd.types(name)
     result = []
-    dbs = Db()
     for nme in names:
-        for fnm, obj in dbs.all(nme, timed):
+        for fnm, obj in Db.all(nme, selector, timed):
             result.append((fnm, obj))
     return result
 
@@ -93,20 +80,35 @@ def find(name, selector=None, index=None, timed=None):
     names = Class.full(name)
     if not names:
         names = Wd.types(name)
-    dbs = Db()
     result = []
     for nme in names:
-        for fnm, obj in dbs.find(nme, selector, index, timed):
+        for fnm, obj in Db.find(nme, selector, index, timed):
             result.append((fnm, obj))
     return result
 
 
 def last(obj):
-    dbs = Db()
-    _path, _obj = dbs.last(kind(obj))
+    _path, _obj = Db.last(kind(obj))
     if _obj:
         update(obj, _obj)
 
+
+def match(name, selector=None):
+    names = Class.full(name)
+    if not names:
+        names = Wd.types(name)
+    for nme in names:
+        for item in Db.last(nme, selector):
+            return item
+    return None
+
+
+def select(obj, selector):
+    result = sorted(allobj(kind(obj), selector), key=lambda x: fntime(x[0]))
+    if result:
+        return result[0]
+    return []
+   
 
 def search(obj, selector):
     res = False

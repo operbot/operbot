@@ -13,7 +13,7 @@ import traceback
 import time
 
 
-from op import Class, Default, Object, name, register
+from op import Class, Default, Object, Wd, name, register
 
 
 Cfg = Default()
@@ -356,6 +356,11 @@ def parse(txt):
     if "v" in prs.opts:
         prs.verbose = True
     return prs
+
+def savepid():
+    k = open(os.pah.join(Wd.workdir, 'operbot.pid'), "w", encoding='utf-8')
+    k.write(str(os.getpid()))
+    k.close()
 
 
 def scandir(path, func):

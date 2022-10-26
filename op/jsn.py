@@ -88,6 +88,7 @@ def dump(obj, opath):
         )
     return opath
 
+
 def dumps(obj):
     return json.dumps(obj, cls=ObjectEncoder)
 

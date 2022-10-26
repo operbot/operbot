@@ -12,11 +12,7 @@ import sys
 sys.path.insert(0, os.getcwd())
 
 
-def getlist():
-    return [x.strip() for x in open("CFG", "r").readlines()[-1].split(",")]
-
-
-TODO = getlist()
+TODO = ["op", "operbot"]
 
 
 def popen(txt):

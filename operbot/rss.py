@@ -16,8 +16,8 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Db, Default, Object
-from op import find, fntime, last, printable, save
+from op import Class, Collection, Db, Default, Object
+from op import find, fntime, last, printable, save, match, select
 from op import dump, edit, elapsed, register, spl, update
 
 
@@ -136,7 +136,6 @@ class Fetcher(Object):
         return thrs
 
     def start(self, repeat=True):
-        "start the rss fetching loop."
         last(Fetcher.seen)
         if repeat:
             repeater = Repeater(300.0, self.run)
@@ -280,23 +279,6 @@ def nme(event):
 
 
 Command.add(nme)
-
-
-def rem(event):
-    if not event.args:
-        event.reply("rem <stringinurl>")
-        return
-    selector = {"rss": event.args[0]}
-    got = []
-    for fnm, feed in find("rss", selector):
-        feed.__deleted__ = True
-        got.append((fnm, feed))
-    for fnm, feed in got:
-        dump(feed, fnm)
-    event.reply("ok")
-
-
-Command.add(rem)
 
 
 def rss(event):
