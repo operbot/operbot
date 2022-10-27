@@ -103,13 +103,6 @@ def match(name, selector=None):
     return None
 
 
-def select(obj, selector):
-    result = sorted(allobj(kind(obj), selector), key=lambda x: fntime(x[0]))
-    if result:
-        return result[0]
-    return []
-   
-
 def search(obj, selector):
     res = False
     select = Object(selector)

@@ -84,6 +84,14 @@ attrs2 = (
 
 class TestObject(unittest.TestCase):
 
+    def test_collection(self):
+        col = Collection()
+        self.assertTrue(not col)
+
+    def test_match(self):
+        mtc = match("op.obj.Object", {"txt": "test"})
+        self.assertTrue(not mtc)
+
     def test_allobj(self):
         objs = allobj("op.obj.Object")
         self.assertTrue(objs)

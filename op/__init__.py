@@ -46,7 +46,7 @@ great for giving objects peristence by having their state stored in files::
 
 from .cls import Class
 from .col import Collection
-from .dbs import Db, allobj, find, fns, fntime, hook, last, match, select
+from .dbs import Db, allobj, find, fns, fntime, hook, last, match
 from .dft import Default
 from .fnc import name, printable
 from .jsn import ObjectDecoder, ObjectEncoder, dump, dumps, load, loads, save
@@ -100,7 +100,6 @@ def __dir__():
             'save',
             'scan',
             'scandir',
-            "select",
             'setwd',
             'spl',
             'update',

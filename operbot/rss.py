@@ -16,9 +16,9 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Collection, Db, Default, Object
-from op import find, fntime, last, printable, save, match, select
-from op import dump, edit, elapsed, register, spl, update
+from op import Class, Db, Default, Object
+from op import find, fntime, last, printable, save
+from op import edit, elapsed, register, spl, update
 
 
 from operbot.run import Bus, Command, Cfg, Repeater, launch
