@@ -27,6 +27,8 @@ sys.path.insert(0, os.path.join(curdir, "..", ".."))
 # -- Options for GENERIC output ---------------------------------------------
 
 
+import op
+
 project = __name__
 master_doc = 'index'
 version = '%s' % __version__
@@ -42,7 +44,7 @@ modindex_common_prefix = [""]
 keep_warnings = False
 templates_path=['_templates']
 add_function_parentheses = False
-add_module_names = False
+add_module_names = True
 show_authors = False
 pygments_style = 'colorful'
 extensions=[
@@ -58,11 +60,11 @@ extensions=[
 # -- Options for HTML output -------------------------------------------------
 
 
-html_title = "Prosecutor. Court. Reconsider OTP-CR-117/19."
+html_title = "operator bot"
 html_style = 'genocide.css'
 html_static_path = ["_static"]
-html_css_files = ["genocide.css",]
-html_short_title = "GENOCIDE %s" % __version__
+html_css_files = ["operbot.css",]
+html_short_title = "OPERBOT %s" % __version__
 html_sidebars = {
     '**': [
         'about.html',
@@ -73,11 +75,11 @@ html_sidebars = {
 }
 html_theme = "alabaster"
 html_theme_options = {
-    'github_user': 'bthate',
+    'github_user': 'operbot',
     'github_repo': __name__,
     'github_button': False,
     'github_banner': False,
-    'logo': 'skull.jpg',
+    'logo': 'operbotsmile.png',
     'link': '#000',
     'link_hover': '#000',
     'nosidebar': True,
@@ -85,13 +87,13 @@ html_theme_options = {
     'show_relbar_top': False,
     'sidebar_width': 0,
 }
-html_favicon = "skull.jpg"
+html_favicon = "operbotsmile.png"
 html_extra_path = []
 html_last_updated_fmt = '%Y-%b-%d'
 html_additional_pages = {}
 html_domain_indices = False
-html_use_index = False
-html_split_index = False
+html_use_index = True
+html_split_index = True
 html_show_sourcelink = False
 html_show_sphinx = False
 html_show_copyright = False
@@ -99,12 +101,6 @@ html_copy_source = False
 html_use_opensearch = 'http://%s.rtfd.io/' % __name__
 html_file_suffix = '.html'
 htmlhelp_basename = 'testdoc'
-
-intersphinx_mapping = {
-                       'python': ('https://docs.python.org/3', 'objects.inv'),
-                       'sphinx': ('http://sphinx.pocoo.org/', None),
-                      }
-intersphinx_cache_limit=1
 
 rst_prolog = '''.. image:: operline.png
     :width: 100%
@@ -137,3 +133,8 @@ doctest_flags=doctest.REPORT_UDIFF
 nitpick_ignore=[
                 ('py:class', 'builtins.BaseException'),
                ]
+intersphinx_mapping = {
+                       'python': ('https://docs.python.org/3', 'objects.inv'),
+                       'sphinx': ('http://sphinx.pocoo.org/', None),
+                      }
+intersphinx_cache_limit=1
