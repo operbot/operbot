@@ -357,6 +357,7 @@ def parse(txt):
         prs.verbose = True
     return prs
 
+
 def savepid():
     k = open(os.pah.join(Wd.workdir, 'operbot.pid'), "w", encoding='utf-8')
     k.write(str(os.getpid()))

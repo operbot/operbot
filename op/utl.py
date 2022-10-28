@@ -115,7 +115,7 @@ def fns(path, timed=None):
                     continue
                 opath = opath.split("store")[-1][1:]
                 res.append(opath)
-    return sorted(res, key=fntime)
+    return res
 
 
 def fntime(path):

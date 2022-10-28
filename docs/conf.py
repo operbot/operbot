@@ -14,7 +14,7 @@ sys.path.insert(0, curdir)
 sys.path.insert(0, curdir + os.sep + '..' )
 
 
-__version__ = "103"
+__version__ = "104"
 
 
 needs_sphinx = '1.1'

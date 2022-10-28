@@ -230,10 +230,12 @@ def dpl(event):
         event.reply("dpl <stringinurl> <item1,item2>")
         return
     setter = {"display_list": event.args[1]}
+    print(setter)
     names = Class.full("rss")
+    print(names)
     if names:
-        db = Db()
-        _fn, feed = db.match(names[0], {"rss": event.args[0]})
+        _fn, feed = Db.last(names[0], {"rss": event.args[0]})
+        print(_fn, feed)
         if feed:
             edit(feed, setter)
             save(feed)

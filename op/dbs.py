@@ -45,14 +45,14 @@ class Db():
     def find(otp, selector=None, index=None, timed=None):
         if selector is None:
             selector = {}
-        _nr = -1
+        nmr = -1
         res = []
         for fnm in fns(Wd.getpath(otp), timed):
             obj = hook(fnm)
             if selector and not search(obj, selector):
                 continue
-            _nr += 1
-            if index is not None and _nr != index:
+            nmr += 1
+            if index is not None and nmr != index:
                 continue
             res.append((fnm, obj))
         return res
@@ -82,15 +82,15 @@ def find(name, selector=None, index=None, timed=None):
         names = Wd.types(name)
     result = []
     for nme in names:
-        for fnm, obj in Db.find(nme, selector, index, timed):
-            result.append((fnm, obj))
+        for item in Db.find(nme, selector, index, timed):
+            result.append((item[0], item[1]))
     return result
 
 
 def last(obj):
-    _path, _obj = Db.last(kind(obj))
-    if _obj:
-        update(obj, _obj)
+    path, ooo = Db.last(kind(obj))
+    if ooo:
+        update(obj, ooo)
 
 
 def match(name, selector=None):

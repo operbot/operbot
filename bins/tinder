@@ -16,7 +16,7 @@ sys.path.insert(0, os.getcwd())
 
 from op import Object, Wd,  elapsed, keys, name, printable
 from operbot.run import Command, Event, Handler, parse, scandir, scan
-from operbot.run import Cfg
+from operbot.run import Cfg, launch
 
 
 Cfg.debug = True
@@ -74,6 +74,7 @@ def consume(evts):
     fixed = []
     res = []
     for evt in evts:
+        print(evt)
         evt.wait()
         fixed.append(evt)
     for fix in fixed:
@@ -109,8 +110,9 @@ def payload(cli):
             evt.txt = cmd + " " + ex
             evt.orig = repr(cli)
             evt.parse()
-            #c.put(e)
-            cli.handle(evt)
+            print(evt)
+            cli.put(evt)
+            #cli.handle(evt)
             events.append(evt)
             _nr += 1
     return _nr
@@ -141,12 +143,13 @@ def main():
     scandir("operbot", importer)
     print("commands: " +  ",".join(sorted(Command.cmd)))
     cli = CLI()
-    cli.start()
+    #cli.start()
     nrs = cfg.index or 20
     res = 1
     thrs = []
     starttime = time.time()
     for _nr in range(nrs):
+        #thrs.append(launch(payload(cli)))
         payload(cli)
     if thrs:
         for thr in thrs:
