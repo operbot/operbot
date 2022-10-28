@@ -12,12 +12,14 @@ curdir = os.getcwd()
 
 sys.path.insert(0, curdir)
 sys.path.insert(0, curdir + os.sep + '..' )
+sys.path.insert(0, curdir + os.sep + '..'  + os.sep + "..")
 
 
 __version__ = "104"
 
 
-needs_sphinx = '1.1'
+needs_sphinx='1.7'
+
 nitpick_ignore = [
                 ('py:class', 'builtins.BaseException'),
                ]
@@ -86,7 +88,8 @@ master_doc = 'index'
 language = ''
 today = ''
 today_fmt = ''
-exclude_patterns = ['_build', "_sources", "_templates"]
+#exclude_patterns = ['_build', "_sources", "_templates"]
+exclude_patterns = ['_build', '_templates', '_source', 'Thumbs.db', '.DS_Store']
 default_role = ''
 add_function_parentheses = False
 add_module_names = False
