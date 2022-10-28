@@ -61,7 +61,7 @@ html_favicon = "opersmile.png"
 html_extra_path = []
 html_last_updated_fmt = '%Y-%b-%d'
 html_additional_pages = {}
-html_domain_indices = False
+html_domain_indices = True
 html_sidebars = {
     '**': [
         'about.html',
