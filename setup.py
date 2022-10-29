@@ -19,7 +19,7 @@ setup(
     long_description_content_type="text/x-rst",
     license="Public Domain",
     install_requires=["objectprogramming"],
-    packages=["operbot"],
+    packages=["op", "operbot"],
     scripts=[
              "bin/operbot",
              "bin/operbotcmd",
