@@ -18,7 +18,7 @@ setup(
     long_description=read(),
     long_description_content_type="text/x-rst",
     license="Public Domain",
-    install_requires=["objectprogramming"],
+    #install_requires=["objectprogramming"],
     packages=["op", "operbot"],
     scripts=[
              "bin/operbot",
