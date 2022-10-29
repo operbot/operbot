@@ -43,8 +43,8 @@ source_encoding = 'utf-8-sig'
 modindex_common_prefix = [""]
 keep_warnings = False
 templates_path=['_templates']
-add_function_parentheses = False
-add_module_names = True
+add_function_parentheses = True
+add_module_names = False
 show_authors = False
 pygments_style = 'colorful'
 extensions=[
@@ -61,7 +61,7 @@ extensions=[
 
 
 html_title = "operator bot"
-html_style = 'genocide.css'
+html_style = 'operator.css'
 html_static_path = ["_static"]
 html_css_files = ["operbot.css",]
 html_short_title = "OPERBOT %s" % __version__
