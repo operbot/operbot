@@ -41,9 +41,9 @@ exclude_patterns = ['_build', '_templates', '_source', 'Thumbs.db', '.DS_Store']
 source_suffix = '.rst'
 source_encoding = 'utf-8-sig'
 modindex_common_prefix = [""]
-keep_warnings = True
+keep_warnings = False
 templates_path=['_templates']
-add_function_parentheses = True
+add_function_parentheses = False
 add_module_names = False
 show_authors = False
 pygments_style = 'colorful'
@@ -92,8 +92,8 @@ html_extra_path = []
 html_last_updated_fmt = '%Y-%b-%d'
 html_additional_pages = {}
 html_domain_indices = False
-html_use_index = True
-html_split_index = True
+html_use_index = False
+html_split_index = False
 html_show_sourcelink = False
 html_show_sphinx = False
 html_show_copyright = False
@@ -101,6 +101,13 @@ html_copy_source = False
 html_use_opensearch = 'http://%s.rtfd.io/' % __name__
 html_file_suffix = '.html'
 htmlhelp_basename = 'testdoc'
+
+intersphinx_mapping = {
+                       'python': ('https://docs.python.org/3', 'objects.inv'),
+                       'sphinx': ('http://sphinx.pocoo.org/', None),
+                      }
+intersphinx_cache_limit=1
+
 
 rst_prolog = '''.. image:: operline.png
     :width: 100%
@@ -133,8 +140,3 @@ doctest_flags=doctest.REPORT_UDIFF
 nitpick_ignore=[
                 ('py:class', 'builtins.BaseException'),
                ]
-intersphinx_mapping = {
-                       'python': ('https://docs.python.org/3', 'objects.inv'),
-                       'sphinx': ('http://sphinx.pocoo.org/', None),
-                      }
-intersphinx_cache_limit=1
