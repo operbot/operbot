@@ -46,7 +46,10 @@ class CLI(Handler):
 
 def main():
     cdir(Wd.workdir)
-    permission(Wd.workdir)
+    try:
+        permission(Wd.workdir)
+    except Exception as ex:
+        print(str(ex))
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
     update(Cfg, cfg)
