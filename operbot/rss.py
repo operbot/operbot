@@ -16,7 +16,7 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Db, Default, Object
+from op import Class, Db, Default, Ignore, Object
 from op import find, fntime, last, printable, save
 from op import edit, elapsed, register, spl, update
 
@@ -131,8 +131,9 @@ class Fetcher(Object):
 
     def run(self):
         thrs = []
-        for _fn, obj in find("rss"):
-            thrs.append(launch(self.fetch, obj))
+        for fnm, obj in find("rss"):
+            if not Ignore.check(fnm):
+                thrs.append(launch(self.fetch, obj))
         return thrs
 
     def start(self, repeat=True):
@@ -285,15 +286,17 @@ Command.add(nme)
 
 def rss(event):
     if not event.rest:
-        _nr = 0
-        for _fn, feed in find("rss"):
+        nrs = 0
+        for fnm, feed in find("rss"):
+            if Ignore.check(fnm):
+                continue
             event.reply("%s %s %s" % (
-                                      _nr,
+                                      nrs,
                                       printable(feed),
-                                      elapsed(time.time() - fntime(_fn)))
+                                      elapsed(time.time() - fntime(fnm)))
                                      )
-            _nr += 1
-        if not _nr:
+            nrs += 1
+        if not nrs:
             event.reply("no rss feed found.")
         return
     url = event.args[0]

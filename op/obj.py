@@ -62,7 +62,10 @@ def keys(obj):
 
 
 def kind(obj):
-    return str(type(obj)).split()[-1][1:-2]
+    kin = str(type(obj)).split()[-1][1:-2]
+    if kin == "type":
+        kin = obj.__name__
+    return kin
 
 
 def register(obj, key, value):

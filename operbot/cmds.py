@@ -35,10 +35,14 @@ Class.add(Todo)
 
 def alw(event):
     if not event.rest:
-         event.reply("alw <txt>")
-         return
+        if Ignore.skip:
+            event.reply(" ".join(Ignore.skip))
+            return
+        event.reply("alw <txt>")
+        return
     Ignore.remove(event.rest)
-
+    save(Ignore)
+    event.reply("ok")
 
 def cmd(event):
     event.reply(",".join(sorted(Command.cmd)))
@@ -49,9 +53,14 @@ Command.add(cmd)
 
 def ign(event):
     if not event.rest:
-         event.reply("ign <txt>")
-         return
+        if Ignore.skip:
+            event.reply(" ".join(Ignore.skip))
+            return
+        event.reply("ign <txt>")
+        return
     Ignore.add(event.rest)
+    save(Ignore)
+    event.reply("ok")
 
 def log(event):
     if not event.rest:

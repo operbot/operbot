@@ -4,7 +4,7 @@
 "ignore"
 
 
-from op import Object
+from op.obj import Object
 
 
 class Ignore(Object):
@@ -14,6 +14,13 @@ class Ignore(Object):
     @staticmethod
     def add(txt):
         Ignore.skip.append(txt)
+
+    @staticmethod
+    def check(txt):
+        for skipped in Ignore.skip:
+            if skipped in txt:
+                return True
+        return False
 
     @staticmethod
     def remove(txt):

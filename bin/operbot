@@ -15,7 +15,7 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op import Class, Wd, keys, printable, update
+from op import Class, Ignore, Wd, keys, last, printable, update
 
 
 from operbot import cmds, irc, rss
@@ -131,6 +131,7 @@ def main():
     cfg = parse(txt)
     update(Cfg, cfg)
     banner(cfg)
+    last(Ignore)
     bot = IRC()
     bot.start()
     print(printable(bot.cfg, "nick,channel,server,port,sasl"))

@@ -49,6 +49,7 @@ from .col import Collection
 from .dbs import Db, allobj, find, fns, fntime, hook, last, match
 from .dft import Default
 from .fnc import name, printable
+from .ign import Ignore
 from .jsn import ObjectDecoder, ObjectEncoder, dump, dumps, load, loads, save
 from .obj import *
 from .utl import cdir, elapsed, locked, permission, spl
@@ -71,6 +72,7 @@ def __dir__():
             'Collection',
             'Db',
             'Default',
+            'Ignore',
             'Object',
             'ObjectDecoder',
             'ObjectEncoder',
