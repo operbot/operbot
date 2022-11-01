@@ -48,9 +48,6 @@ def cmd(event):
     event.reply(",".join(sorted(Command.cmd)))
 
 
-Command.add(cmd)
-
-
 def ign(event):
     if not event.rest:
         if Ignore.skip:
@@ -79,9 +76,6 @@ def log(event):
     event.reply("ok")
 
 
-Command.add(log)
-
-
 def tdo(event):
     if not event.rest:
         nmr = 0
@@ -97,9 +91,6 @@ def tdo(event):
     obj.txt = event.rest
     save(obj)
     event.reply("ok")
-
-
-Command.add(tdo)
 
 
 def thr(event):
@@ -123,11 +114,5 @@ def thr(event):
         event.reply("no threads running")
 
 
-Command.add(thr)
-
-
 def upt(event):
     event.reply(elapsed(time.time()-starttime))
-
-
-Command.add(upt)

@@ -15,7 +15,7 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op import Class, Ignore, Wd, keys, last, printable, update
+from op import Class, Deleted, Ignore, Wd, keys, last, printable, update
 
 
 from operbot import cmds, irc, rss
@@ -132,6 +132,8 @@ def main():
     update(Cfg, cfg)
     banner(cfg)
     last(Ignore)
+    last(Deleted)
+    print(dir(Deleted))
     bot = IRC()
     bot.start()
     print(printable(bot.cfg, "nick,channel,server,port,sasl"))

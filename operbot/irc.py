@@ -601,9 +601,6 @@ def cfg(event):
         event.reply("ok")
 
 
-Command.add(cfg)
-
-
 def dlt(event):
     if not event.args:
         event.reply("dlt <username>")
@@ -614,9 +611,6 @@ def dlt(event):
         save(obj)
         event.reply("ok")
         break
-
-
-Command.add(dlt)
 
 
 def met(event):
@@ -638,9 +632,6 @@ def met(event):
     event.reply("ok")
 
 
-Command.add(met)
-
-
 def mre(event):
     if not event.channel:
         event.reply("channel is not set.")
@@ -660,9 +651,6 @@ def mre(event):
     event.reply("%s more in cache" % size)
 
 
-Command.add(mre)
-
-
 def pwd(event):
     if len(event.args) != 2:
         event.reply("pwd <nick> <password>")
@@ -672,6 +660,3 @@ def pwd(event):
     base = base64.b64encode(enc)
     dcd = base.decode("ascii")
     event.reply(dcd)
-
-
-Command.add(pwd)

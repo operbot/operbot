@@ -11,7 +11,8 @@ import _thread
 from .obj import Object, items, kind, update
 from .cls import Class
 from .col import Collection
-from .jsn import hook
+from .ign import Ignore
+from .jsn import hook, save
 from .wdr import Wd
 from .utl import fns, fntime, locked
 
@@ -31,23 +32,16 @@ def __dir__():
 
 class Db():
 
-    @staticmethod
-    def all(otp, selector=None, timed=None):
-        res = []
-        for fnm in fns(Wd.getpath(otp), timed):
-            obj = hook(fnm)
-            if selector and not search(obj, selector):
-                continue
-            res.append((fnm, obj))
-        return res
 
     @staticmethod
-    def find(otp, selector=None, index=None, timed=None):
+    def find(otp, selector=None, index=None, timed=None, deleted=False):
         if selector is None:
             selector = {}
         nmr = -1
         res = []
         for fnm in fns(Wd.getpath(otp), timed):
+            if not deleted and Deleted.check(fnm):
+                continue
             obj = hook(fnm)
             if selector and not search(obj, selector):
                 continue
@@ -65,13 +59,36 @@ class Db():
             return res[-1]
         return (None, None)
 
+
+class Deleted(Object):
+
+    deny = []
+
+    @staticmethod
+    def add(txt):
+        Deleted.deny.append(txt)
+        save(Deleted)
+
+    @staticmethod
+    def check(txt):
+        for skipped in Deleted.deny:
+            if skipped in txt:
+                return True
+        return False
+
+    @staticmethod
+    def remove(txt):
+        Deleted.deny.remove(txt)
+        save(Deleted)
+
+
 def allobj(name, selector=None, timed=None):
     names = Class.full(name)
     if not names:
         names = Wd.types(name)
     result = []
     for nme in names:
-        for fnm, obj in Db.all(nme, selector, timed):
+        for fnm, obj in Db.find(nme, selector, timed, True):
             result.append((fnm, obj))
     return result
 
@@ -90,6 +107,7 @@ def find(name, selector=None, index=None, timed=None):
 def last(obj):
     path, ooo = Db.last(kind(obj))
     if ooo:
+        print(dir(ooo))
         update(obj, ooo)
 
 

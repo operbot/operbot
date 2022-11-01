@@ -16,12 +16,12 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Db, Default, Ignore, Object
+from op import Class, Db, Default, Deleted, Ignore, Object
 from op import find, fntime, last, printable, save
 from op import edit, elapsed, register, spl, update
 
 
-from operbot.run import Bus, Command, Cfg, Repeater, launch
+from operbot.run import Bus, Cfg, Repeater, launch
 
 
 def __dir__():
@@ -233,15 +233,12 @@ def dpl(event):
     setter = {"display_list": event.args[1]}
     names = Class.full("rss")
     if names:
-        _fn, feed = Db.last(names[0], {"rss": event.args[0]})
-        print(_fn, feed)
+        fnm, feed = Db.last(names[0], {"rss": event.args[0]})
         if feed:
+            Deleted.add(fnm)
             edit(feed, setter)
             save(feed)
             event.reply("ok")
-
-
-Command.add(dpl)
 
 
 def ftc(event):
@@ -260,26 +257,34 @@ def ftc(event):
         return
 
 
-Command.add(ftc)
-
-
 def nme(event):
     if len(event.args) != 2:
         event.reply("nme <stringinurl> <name>")
         return
     selector = {"rss": event.args[0]}
-    _nr = 0
+    nrs = 0
     got = []
-    for _fn, feed in find("rss", selector):
-        _nr += 1
+    for fnm, feed in find("rss", selector):
+        nrs += 1
         feed.name = event.args[1]
-        got.append(feed)
-    for feed in got:
+        got.append((fnm, feed))
+    for fnm, feed in got:
+        Deleted.add(fnm)
         save(feed)
     event.reply("ok")
 
 
-Command.add(nme)
+def rem(event):
+    if len(event.args) != 1:
+        event.reply("rem <stringinurl>")
+        return
+    selector = {"rss": event.args[0]}
+    nrs = 0
+    got = []
+    for fnm, feed in find("rss", selector):
+        nrs += 1
+        Deleted.add(fnm)
+    event.reply("ok")
 
 
 def rss(event):
@@ -309,6 +314,3 @@ def rss(event):
     feed.rss = event.args[0]
     save(feed)
     event.reply("ok")
-
-
-Command.add(rss)
