@@ -26,13 +26,14 @@ class Object:
     def __init__(self, *args, **kwargs):
         object.__init__(self)
         if args:
-            try:
-                self.__dict__.update(vars(args[0]))
-            except TypeError:
-                self.__dict__.update(args[0])
+            val = args[0]
+            if isinstance(val, dict):
+                update(self, val)
+            elif isinstance(val, Object):
+                update(self, vars(val))
         if kwargs:
             self.__dict__.update(kwargs)
-            
+          
     def __iter__(self):
         return iter(self.__dict__)
 

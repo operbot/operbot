@@ -131,9 +131,9 @@ class Fetcher(Object):
 
     def run(self):
         thrs = []
-        for fnm, obj in find("rss"):
-            if not Ignore.check(fnm):
-                thrs.append(launch(self.fetch, obj))
+        for fnm, feed in find("rss"):
+            if not Ignore.check(feed.rss):
+                thrs.append(launch(self.fetch, feed))
         return thrs
 
     def start(self, repeat=True):
@@ -231,9 +231,7 @@ def dpl(event):
         event.reply("dpl <stringinurl> <item1,item2>")
         return
     setter = {"display_list": event.args[1]}
-    print(setter)
     names = Class.full("rss")
-    print(names)
     if names:
         _fn, feed = Db.last(names[0], {"rss": event.args[0]})
         print(_fn, feed)
@@ -288,7 +286,7 @@ def rss(event):
     if not event.rest:
         nrs = 0
         for fnm, feed in find("rss"):
-            if Ignore.check(fnm):
+            if Ignore.check(feed.rss):
                 continue
             event.reply("%s %s %s" % (
                                       nrs,
