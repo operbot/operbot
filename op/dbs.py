@@ -11,7 +11,7 @@ import _thread
 from .obj import Object, items, kind, update
 from .cls import Class
 from .col import Collection
-from .ign import Ignore
+from .dlt import Deleted
 from .jsn import hook, save
 from .wdr import Wd
 from .utl import fns, fntime, locked
@@ -32,15 +32,14 @@ def __dir__():
 
 class Db():
 
-
     @staticmethod
-    def find(otp, selector=None, index=None, timed=None, deleted=False):
+    def find(otp, selector=None, index=None, timed=None):
         if selector is None:
             selector = {}
         nmr = -1
-        res = []
+        res = Collection()
         for fnm in fns(Wd.getpath(otp), timed):
-            if not deleted and Deleted.check(fnm):
+            if Deleted.check(fnm):
                 continue
             obj = hook(fnm)
             if selector and not search(obj, selector):
@@ -48,38 +47,12 @@ class Db():
             nmr += 1
             if index is not None and nmr != index:
                 continue
-            res.append((fnm, obj))
+            res.add(fnm, obj)            
         return res
 
     @staticmethod
     def last(otp, selector=None, index=None, timed=None):
-        res = sorted(
-                     Db.find(otp, selector, index, timed), key=lambda x: fntime(x[0]))
-        if res:
-            return res[-1]
-        return (None, None)
-
-
-class Deleted(Object):
-
-    deny = []
-
-    @staticmethod
-    def add(txt):
-        Deleted.deny.append(txt)
-        save(Deleted)
-
-    @staticmethod
-    def check(txt):
-        for skipped in Deleted.deny:
-            if skipped in txt:
-                return True
-        return False
-
-    @staticmethod
-    def remove(txt):
-        Deleted.deny.remove(txt)
-        save(Deleted)
+        return Db.find(otp, selector, index, timed).last()
 
 
 def allobj(name, selector=None, timed=None):
@@ -97,17 +70,16 @@ def find(name, selector=None, index=None, timed=None):
     names = Class.full(name)
     if not names:
         names = Wd.types(name)
-    result = []
+    result = Collection()
     for nme in names:
-        for item in Db.find(nme, selector, index, timed):
-            result.append((item[0], item[1]))
+        res = Db.find(nme, selector, index, timed)
+        update(result, res)
     return result
 
 
 def last(obj):
-    path, ooo = Db.last(kind(obj))
+    ooo = Db.last(kind(obj))
     if ooo:
-        print(dir(ooo))
         update(obj, ooo)
 
 

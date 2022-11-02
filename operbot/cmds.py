@@ -8,7 +8,7 @@ import threading
 import time
 
 
-from op import Class, Ignore, Object, elapsed, find, fntime, save, update
+from op import Class, Object, elapsed, find, fntime, save, update
 from operbot.run import Command
 
 
@@ -33,31 +33,9 @@ class Todo(Log):
 Class.add(Todo)
 
 
-def alw(event):
-    if not event.rest:
-        if Ignore.skip:
-            event.reply(" ".join(Ignore.skip))
-            return
-        event.reply("alw <txt>")
-        return
-    Ignore.remove(event.rest)
-    save(Ignore)
-    event.reply("ok")
-
 def cmd(event):
     event.reply(",".join(sorted(Command.cmd)))
 
-
-def ign(event):
-    if not event.rest:
-        if Ignore.skip:
-            event.reply(" ".join(Ignore.skip))
-            return
-        event.reply("ign <txt>")
-        return
-    Ignore.add(event.rest)
-    save(Ignore)
-    event.reply("ok")
 
 def log(event):
     if not event.rest:

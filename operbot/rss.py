@@ -16,8 +16,8 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Db, Default, Deleted, Ignore, Object
-from op import find, fntime, last, printable, save
+from op import Class, Db, Default, Deleted, Object
+from op import find, fntime, items, last, printable, save
 from op import edit, elapsed, register, spl, update
 
 
@@ -131,9 +131,11 @@ class Fetcher(Object):
 
     def run(self):
         thrs = []
-        for fnm, feed in find("rss"):
-            if not Ignore.check(feed.rss):
-                thrs.append(launch(self.fetch, feed))
+        res = find("rss")
+        for fnm, feed in items(res):
+            if Deleted.check(fnm):
+                continue
+            thrs.append(launch(self.fetch, feed))
         return thrs
 
     def start(self, repeat=True):
@@ -235,7 +237,7 @@ def dpl(event):
     if names:
         fnm, feed = Db.last(names[0], {"rss": event.args[0]})
         if feed:
-            Deleted.add(fnm)
+            Deleted.add(fnm, feed)
             edit(feed, setter)
             save(feed)
             event.reply("ok")
@@ -264,7 +266,8 @@ def nme(event):
     selector = {"rss": event.args[0]}
     nrs = 0
     got = []
-    for fnm, feed in find("rss", selector):
+    res = find("rss", selector)
+    for fnm, feed in items(res):
         nrs += 1
         feed.name = event.args[1]
         got.append((fnm, feed))
@@ -281,18 +284,18 @@ def rem(event):
     selector = {"rss": event.args[0]}
     nrs = 0
     got = []
-    for fnm, feed in find("rss", selector):
+    res = find("rss", selector)
+    for fnm, feed in items(res):
         nrs += 1
-        Deleted.add(fnm)
+        Deleted.add(fnm, feed)
     event.reply("ok")
 
 
 def rss(event):
     if not event.rest:
         nrs = 0
-        for fnm, feed in find("rss"):
-            if Ignore.check(feed.rss):
-                continue
+        res = find("rss")
+        for fnm, feed in items(res):
             event.reply("%s %s %s" % (
                                       nrs,
                                       printable(feed),

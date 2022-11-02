@@ -33,6 +33,12 @@ class Object:
                 update(self, vars(val))
         if kwargs:
             self.__dict__.update(kwargs)
+
+    def __delitem__(self, key):
+        self.__dict__.__delitem__(key)
+
+    def __getitem__(self, key):
+        self.__dict__.__getitem__(key)
           
     def __iter__(self):
         return iter(self.__dict__)
@@ -42,6 +48,9 @@ class Object:
 
     def __str__(self):
         return str(self. __dict__)
+
+    def __setitem__(self, key, value):
+        self.__dict__.__setitem__(key, value)
 
 
 Class.add(Object)
