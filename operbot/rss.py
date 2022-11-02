@@ -235,9 +235,8 @@ def dpl(event):
     setter = {"display_list": event.args[1]}
     names = Class.full("rss")
     if names:
-        fnm, feed = Db.last(names[0], {"rss": event.args[0]})
+        feed = Db.last(names[0], {"rss": event.args[0]})
         if feed:
-            Deleted.add(fnm, feed)
             edit(feed, setter)
             save(feed)
             event.reply("ok")

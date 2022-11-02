@@ -5,6 +5,11 @@
 "Object"
 
 
+import datetime
+import os
+import uuid
+
+
 from .cls import Class
 
 
@@ -23,8 +28,15 @@ def __dir__():
 
 class Object:
 
+    __slots__ = ("__dict__", "__fnm__")
+
     def __init__(self, *args, **kwargs):
         object.__init__(self)
+        self.__fnm__ = os.path.join(
+            kind(self),
+            str(uuid.uuid4()),
+            os.sep.join(str(datetime.datetime.now()).split()),
+        )
         if args:
             val = args[0]
             if isinstance(val, dict):

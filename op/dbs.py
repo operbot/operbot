@@ -5,6 +5,7 @@
 "database"
 
 
+import os
 import _thread
 
 
@@ -14,7 +15,7 @@ from .col import Collection
 from .dlt import Deleted
 from .jsn import hook, save
 from .wdr import Wd
-from .utl import fns, fntime, locked
+from .utl import fntime, locked
 
 
 dblock = _thread.allocate_lock()
@@ -53,6 +54,35 @@ class Db():
     @staticmethod
     def last(otp, selector=None, index=None, timed=None):
         return Db.find(otp, selector, index, timed).last()
+
+
+def fns(name, timed=None):
+    if not name:
+        return []
+    assert Wd.workdir
+    p = os.path.join(Wd.workdir, "store", name) + os.sep
+    res = []
+    d = ""
+    for rootdir, dirs, _files in os.walk(p, topdown=False):
+        if dirs:
+            d = sorted(dirs)[-1]
+            if d.count("-") == 2:
+                dd = os.path.join(rootdir, d)
+                fls = sorted(os.listdir(dd))
+                if fls:
+                    p = os.path.join(dd, fls[-1])
+                    if (
+                        timed
+                        and "from" in timed
+                        and timed["from"]
+                        and fntime(p) < timed["from"]
+                    ):
+                        continue
+                    if timed and timed.to and fntime(p) > timed.to:
+                        continue
+                    res.append(p)
+    return sorted(res, key=fntime)
+
 
 
 def allobj(name, selector=None, timed=None):

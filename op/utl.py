@@ -88,49 +88,19 @@ def filesize(path):
     return os.stat(path)[6]
 
 
-def fns(path, timed=None):
-    if not path:
-        return []
-    if not os.path.exists(path):
-        return []
-    res = []
-    for rootdir, dirs, _files in os.walk(path, topdown=False):
-        for dname in  dirs:
-            ddd = os.path.join(rootdir, dname)
-            fls = sorted(os.listdir(ddd))
-            for fln in fls:
-                opath = os.path.join(ddd, fln)
-                if (
-                    timed
-                    and "from" in timed
-                    and timed["from"]
-                    and fntime(opath) < timed["from"]
-                   ):
-                    continue
-                if timed and timed.to and fntime(opath) > timed.to:
-                    continue
-                try:
-                    fntime(opath)
-                except ValueError:
-                    continue
-                opath = opath.split("store")[-1][1:]
-                res.append(opath)
-    return res
-
-
-def fntime(path):
-    after = 0
-    path = " ".join(path.split(os.sep)[-2:])
-    if "." in path:
-        path, after = path.rsplit(".")
-    tme = time.mktime(time.strptime(path, "%Y-%m-%d %H:%M:%S"))
-    if after:
-        try:
-            tme = tme + float(".%s"% after)
-        except ValueError:
-            pass
-    return tme
-
+def fntime(daystr):
+    daystr = daystr.replace("_", ":")
+    datestr = " ".join(daystr.split(os.sep)[-2:])
+    if "." in datestr:
+        datestr, rest = datestr.rsplit(".", 1)
+    else:
+        rest = ""
+    t = time.mktime(time.strptime(datestr, "%Y-%m-%d %H:%M:%S"))
+    if rest:
+        t += float("." + rest)
+    else:
+        t = 0
+    return t
 
 def fnclass(path):
     pth = []

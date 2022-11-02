@@ -107,12 +107,13 @@ def hook(path):
 
 def load(obj, opath):
     splitted = opath.split(os.sep)
-    stp = os.sep.join(splitted[-4:])
-    lpath = os.path.join(Wd.workdir, "store", stp)
+    fnm = os.sep.join(splitted[-4:])
+    lpath = os.path.join(Wd.workdir, "store", fnm)
     if os.path.exists(lpath):
         with open(lpath, "r", encoding="utf-8") as ofile:
             res = json.load(ofile, cls=ObjectDecoder)
             update(obj, res)
+    obj.__fnm__ = fnm
 
 
 def loads(jss):
@@ -120,11 +121,9 @@ def loads(jss):
 
 
 def save(obj):
-    stp = os.path.join(
-                       kind(obj),
-                       os.sep.join(str(datetime.datetime.now()).split())
-                      )
-    opath = Wd.getpath(stp)
+    prv = os.sep.join(obj.__fnm__.split(os.sep)[:2])
+    obj.__fnm__ = os.path.join(prv, os.sep.join(str(datetime.datetime.now()).split()))
+    opath = Wd.getpath(obj.__fnm__)
     dump(obj, opath)
     os.chmod(opath, 0o444)
-    return stp
+    return opath
