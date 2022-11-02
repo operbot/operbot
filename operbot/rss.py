@@ -16,7 +16,7 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Db, Default, Deleted, Object
+from op import Class, Db, Default, Object
 from op import find, fntime, items, last, printable, save
 from op import edit, elapsed, register, spl, update
 
@@ -133,8 +133,6 @@ class Fetcher(Object):
         thrs = []
         res = find("rss")
         for fnm, feed in items(res):
-            if Deleted.check(fnm):
-                continue
             thrs.append(launch(self.fetch, feed))
         return thrs
 
@@ -271,7 +269,6 @@ def nme(event):
         feed.name = event.args[1]
         got.append((fnm, feed))
     for fnm, feed in got:
-        Deleted.add(fnm)
         save(feed)
     event.reply("ok")
 
@@ -285,8 +282,8 @@ def rem(event):
     got = []
     res = find("rss", selector)
     for fnm, feed in items(res):
+        feed.__deleted__ = True
         nrs += 1
-        Deleted.add(fnm, feed)
     event.reply("ok")
 
 

@@ -40,9 +40,9 @@ class Db():
         nmr = -1
         res = Collection()
         for fnm in fns(Wd.getpath(otp), timed):
-            if Deleted.check(fnm):
-                continue
             obj = hook(fnm)
+            if obj.__deleted__:
+                continue
             if selector and not search(obj, selector):
                 continue
             nmr += 1
