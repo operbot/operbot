@@ -8,7 +8,7 @@ import threading
 import time
 
 
-from op import Class, Object, elapsed, find, fntime, save, update
+from op import Class, Object, elapsed, find, fntime, items, save, update
 from operbot.run import Command
 
 
@@ -57,11 +57,11 @@ def log(event):
 def tdo(event):
     if not event.rest:
         nmr = 0
-        for _fn, obj in find("todo"):
+        for fnm, obj in items(find("todo")):
             event.reply("%s %s %s" % (
                                       nmr,
                                       obj.txt,
-                                      elapsed(time.time() - fntime(_fn)))
+                                      elapsed(time.time() - fntime(fnm)))
                                      )
             nmr += 1
         return

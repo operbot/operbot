@@ -19,7 +19,7 @@ import _thread
 
 
 from op import Class, Default, Object, Wd
-from op import keys, last, locked, printable
+from op import items, keys, last, locked, printable
 from op import edit, fntime, find, save, update
 from op import elapsed, register
 
@@ -606,7 +606,7 @@ def dlt(event):
         event.reply("dlt <username>")
         return
     selector = {"user": event.args[0]}
-    for _fn, obj in find("user", selector):
+    for _fn, obj in items(find("user", selector)):
         obj.__deleted__ = True
         save(obj)
         event.reply("ok")

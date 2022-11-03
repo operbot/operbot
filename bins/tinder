@@ -110,9 +110,9 @@ def payload(cli):
             evt.txt = cmd + " " + ex
             evt.orig = repr(cli)
             evt.parse()
-            print(evt)
-            cli.put(evt)
-            #cli.handle(evt)
+            #print(evt)
+            #cli.put(evt)
+            cli.handle(evt)
             events.append(evt)
             _nr += 1
     return _nr
