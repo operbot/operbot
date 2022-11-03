@@ -122,12 +122,15 @@ class TestObject(unittest.TestCase):
 
     def test_allobj(self):
         objs = allobj("object")
-        print(objs)
-        self.assertTrue("op.col.Collection" in str(type(objs)))
+        if objs:
+            self.assertTrue("op.col.Collection" in objs[0])
+        self.assertTrue(True)
 
     def test_find(self):
         objs = find("object")
-        self.assertTrue(objs)
+        if objs:
+            self.assertTrue("op.col.Collection" in objs[0])
+        self.assertTrue(True)
 
     def test_default(self):
         dft = Default()
