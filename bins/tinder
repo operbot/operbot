@@ -74,7 +74,6 @@ def consume(evts):
     fixed = []
     res = []
     for evt in evts:
-        print(evt)
         evt.wait()
         fixed.append(evt)
     for fix in fixed:
