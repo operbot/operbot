@@ -8,6 +8,7 @@
 import op
 import os
 import unittest
+import _thread
 
 
 from op import *
@@ -16,50 +17,72 @@ from op import *
 Wd.workdir = ".test"
 
 
-FN = "store/op.obj.Object/2022-04-11/22:40:31.259218"
+FN = "op.obj.Object/c13c5369-8ada-44a9-80b3-4641986f09df/2022-04-11/22:40:31.259218"
 VALIDJSON = '{"test": "bla"}'
+
+
+testlock = _thread.allocate_lock()
 
 
 attrs1 = (
             'Class',
+            'Collection',
             'Db',
             'Default',
             'Object',
             'ObjectDecoder',
             'ObjectEncoder',
             'Wd',
-            'edit',
+            'allobj',
+            'cdir',
+            'cls',
+            'dbs',
+            'dft',
             'dump',
             'dumps',
+            'edit',
+            'elapsed',
             'find',
-            'format',
-            'get',
+            'fnc',
+            'fns',
+            'fntime',
+            'hook',
             'items',
-            'iter',
+            'jsn',
             'keys',
             'kind',
             'last',
             'load',
             'loads',
-            'nme',
+            'locked',
+            'match',
+            'name',
+            'obj',
+            'permission',
+            'printable',
             'register',
             'save',
-            'search',
-            'search',
+            'setwd',
+            'spl',
             'update',
-            'values'
-)
+            'utl',
+            'values',
+            'wdr'
+     )
 
 attrs2 = (
           '__class__',
           '__delattr__',
+          '__delitem__',
           '__dict__',
           '__dir__',
           '__doc__',
           '__eq__',
+          '__fnm__',
           '__format__',
           '__ge__',
           '__getattribute__',
+          '__getitem__',
           '__gt__',
           '__hash__',
           '__init__',
@@ -75,14 +98,19 @@ attrs2 = (
           '__reduce_ex__',
           '__repr__',
           '__setattr__',
+          '__setitem__',
           '__sizeof__',
+          '__slots__',
           '__str__',
           '__subclasshook__',
-          '__weakref__'
          )
 
 
 class TestObject(unittest.TestCase):
+
+    def setUp(self):
+        o = Object()
+        save(o)
 
     def test_collection(self):
         col = Collection()
@@ -93,8 +121,9 @@ class TestObject(unittest.TestCase):
         self.assertTrue(not mtc)
 
     def test_allobj(self):
-        objs = allobj("op.obj.Object")
-        self.assertTrue(objs)
+        objs = allobj("object")
+        print(objs)
+        self.assertTrue("op.col.Collection" in str(type(objs)))
 
     def test_find(self):
         objs = find("object")
@@ -106,7 +135,7 @@ class TestObject(unittest.TestCase):
 
     def test_name(self):
         obj = Object()
-        self.assertEqual(name(obj), "op.obj.Object")    
+        self.assertEqual(name(obj), "Object")    
 
     def test_decoder(self):
         obj = ObjectDecoder().decode('{"bla": "mekker"}')
@@ -122,7 +151,7 @@ class TestObject(unittest.TestCase):
         self.assertEqual(elapsed(60.0), "1m")
 
     def test_locked(self):
-        @locked
+        @locked(testlock)
         def test():
             return 1
         self.assertTrue(test(), 1)
@@ -134,7 +163,7 @@ class TestObject(unittest.TestCase):
     def test_permission(self):
         obj = Object()
         path = save(obj)
-        self.assertTrue(permission(path))
+        self.assertTrue(permission(Wd.getpath(path)))
 
     def test_setwd(self):
         setwd(".test2")
@@ -353,7 +382,10 @@ class TestDb(unittest.TestCase):
     def test_fns(self):
         obj = Object()
         save(obj)
-        self.assertTrue("Object" in fns(Wd.getpath("op.obj.Object"))[0])
+        fnms = fns("op.obj.Object")
+        if fnms:
+            self.assertTrue("op.obj.Object"  in fnms[0])
+        self.assertTrue(True)
 
     def test_hook(self):
         obj = Object()

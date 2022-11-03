@@ -26,13 +26,15 @@ def __dir__():
            )
 
 
+__all__ = __dir__()
+
+
 class Object:
 
-    __slots__ = ("__deleted__", "__dict__", "__fnm__")
+    __slots__ = ("__dict__", "__fnm__")
 
     def __init__(self, *args, **kwargs):
         object.__init__(self)
-        self.__deleted__ = False
         self.__fnm__ = os.path.join(
             kind(self),
             str(uuid.uuid4()),

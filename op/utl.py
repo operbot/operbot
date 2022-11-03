@@ -76,9 +76,7 @@ def elapsed(seconds, short=True):
         txt += "%sm" % minutes
     if hours and short and txt:
         return txt
-    if sec == 0:
-        txt += "0s"
-    else:
+    if sec != 0:
         txt += "%ss" % int(sec)
     txt = txt.strip()
     return txt
@@ -138,9 +136,13 @@ def locked(lock):
 
 
 def permission(ddir, username="operbot", group="operbot", umode=0o700):
-    pwdline = pwd.getpwnam(username)
-    uid = pwdline.pw_uid
-    gid = pwdline.pw_gid
+    try:
+        pwdline = pwd.getpwnam(username)
+        uid = pwdline.pw_uid
+        gid = pwdline.pw_gid
+    except KeyError:
+        uid = os.getuid()
+        gid = os.getgid()
     stats = os.stat(ddir)
     if stats[ST_UID] != uid:
         os.chown(ddir, uid, gid)

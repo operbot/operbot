@@ -8,14 +8,13 @@
 import datetime
 import json
 import os
-import uuid
 
 
 from json import JSONDecoder, JSONEncoder
 
 
 from .cls import Class
-from .obj import Object, kind, update
+from .obj import Object, update
 from .utl import cdir, fnclass
 from .wdr import Wd
 
@@ -126,4 +125,4 @@ def save(obj):
     opath = Wd.getpath(obj.__fnm__)
     dump(obj, opath)
     os.chmod(opath, 0o444)
-    return opath
+    return obj.__fnm__

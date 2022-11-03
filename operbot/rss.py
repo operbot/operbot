@@ -18,7 +18,7 @@ from urllib.request import Request, urlopen
 
 from op import Class, Db, Default, Object
 from op import find, fntime, items, last, printable, save
-from op import edit, elapsed, register, spl, update
+from op import edit, elapsed, register, spl, update, values
 
 
 from operbot.run import Bus, Cfg, Repeater, launch
@@ -132,7 +132,7 @@ class Fetcher(Object):
     def run(self):
         thrs = []
         res = find("rss")
-        for fnm, feed in items(res):
+        for feed in values(res):
             thrs.append(launch(self.fetch, feed))
         return thrs
 
@@ -162,18 +162,18 @@ class Parser(Object):
 
 
     @staticmethod
-    def parse(txt, items="title,link"):
+    def parse(txt, item="title,link"):
         res = []
         for line in txt.split("<item>"):
             line = line.strip()
             obj = Object()
-            for item in spl(items):
-                register(obj, item, Parser.getitem(line, item))
+            for itm in spl(item):
+                register(obj, itm, Parser.getitem(line, itm))
             res.append(obj)
         return res
 
 
-def getfeed(url, items):
+def getfeed(url, item):
     if Cfg.debug:
         return [Object(), Object()]
     try:
@@ -182,7 +182,7 @@ def getfeed(url, items):
         return [Object(), Object()]
     if not result:
         return [Object(), Object()]
-    return Parser.parse(str(result.data, "utf-8"), items)
+    return Parser.parse(str(result.data, "utf-8"), item)
 
 
 def gettinyurl(url):
@@ -278,12 +278,10 @@ def rem(event):
         event.reply("rem <stringinurl>")
         return
     selector = {"rss": event.args[0]}
-    nrs = 0
-    got = []
     res = find("rss", selector)
-    for fnm, feed in items(res):
+    for _fn, feed in items(res):
         feed.__deleted__ = True
-        nrs += 1
+        save(feed)
     event.reply("ok")
 
 

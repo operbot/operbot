@@ -48,7 +48,6 @@ from .cls import Class
 from .col import Collection
 from .dbs import Db, allobj, find, fns, fntime, hook, last, match
 from .dft import Default
-from .dlt import Deleted
 from .fnc import name, printable
 from .jsn import ObjectDecoder, ObjectEncoder, dump, dumps, load, loads, save
 from .obj import *
@@ -72,23 +71,28 @@ def __dir__():
             'Collection',
             'Db',
             'Default',
-            'Deleted',
             'Object',
             'ObjectDecoder',
             'ObjectEncoder',
             'Wd',
             'allobj',
+            'cdir',
             'cls',
             'dbs',
             'dft',
             'dump',
             'dumps',
             'edit',
+            'elapsed',
             'find',
             'fnc',
+            'fns',
+            'fntime',
+            'hook',
             'items',
             'jsn',
             'keys',
+            'kind',
             'last',
             'load',
             'loads',
@@ -100,8 +104,6 @@ def __dir__():
             'printable',
             'register',
             'save',
-            'scan',
-            'scandir',
             'setwd',
             'spl',
             'update',
@@ -109,3 +111,6 @@ def __dir__():
             'values',
             'wdr'
            )
+
+
+__all__ = __dir__()

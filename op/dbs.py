@@ -12,7 +12,6 @@ import _thread
 from .obj import Object, items, kind, update
 from .cls import Class
 from .col import Collection
-from .dlt import Deleted
 from .jsn import hook, save
 from .wdr import Wd
 from .utl import fntime, locked
@@ -41,7 +40,7 @@ class Db():
         res = Collection()
         for fnm in fns(Wd.getpath(otp), timed):
             obj = hook(fnm)
-            if obj.__deleted__:
+            if "__deleted__" in obj and obj.__deleted__:
                 continue
             if selector and not search(obj, selector):
                 continue
@@ -82,7 +81,6 @@ def fns(name, timed=None):
                         continue
                     res.append(p)
     return sorted(res, key=fntime)
-
 
 
 def allobj(name, selector=None, timed=None):
