@@ -10,11 +10,7 @@
 
     <center>
     <b>
-
-**S O U R C E**
-
-.. raw:: html
-
+    S O U R C E
     </b>
     </center>
     <br>

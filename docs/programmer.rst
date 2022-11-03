@@ -11,11 +11,7 @@
 
     <center>
     <b>
-
-**P R O G R A M M E R**
-
-.. raw:: html
-
+    P R O G R A M M E R
     </b>
     </center>
     <br>

@@ -1,17 +1,16 @@
 .. _about:
 
+.. raw:: html
+
+    <br>
+
 .. title:: about
 
 .. raw:: html
 
-    <br>
     <center>
     <b>
-
-**A B O U T**
-
-.. raw:: html
-
+    A B O U T
     </b>
     </center>
     <br>

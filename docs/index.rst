@@ -5,9 +5,16 @@
 
   <br>
 
-
 .. title:: write your own commands
 
+.. raw:: html
+
+    <center>
+    <b>
+    O P E R B O T
+    </b>
+    </center>
+    <br>
 
 **NAME**
 
@@ -47,20 +54,15 @@
  Paths carry the type in the path name what makes reconstruction from filename
  easier then reading type from the object.
 
-
 .. raw:: html
 
-    <br>
     <center>
     <b>
-
-**only include your code is the path to "secure".**
-
-.. raw:: html
-
+    only include your code is the path to "secure"
     </b>
     </center>
     <br>
+
 
 **CONFIGURATION**
 
@@ -118,7 +120,6 @@
 **COPYRIGHT**
 
  ``operbot`` is placed in the Public Domain. No Copyright, No License.
-
 
 .. toctree::
     :hidden:
