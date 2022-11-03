@@ -9,20 +9,6 @@
 .. title:: write your own commands
 
 
-.. raw:: html
-
-    <center>
-    <b>
-
-**H O M E**
-
-.. raw:: html
-
-    </b>
-    </center>
-    <br>
-
-
 **NAME**
 
 
@@ -61,8 +47,20 @@
  Paths carry the type in the path name what makes reconstruction from filename
  easier then reading type from the object.
 
- **only include your own written code should be the path to "secure".**
 
+.. raw:: html
+
+    <br>
+    <center>
+    <b>
+
+**only include your code is the path to "secure".**
+
+.. raw:: html
+
+    </b>
+    </center>
+    <br>
 
 **CONFIGURATION**
 
@@ -70,7 +68,7 @@
 
  **irc**
 
- | ``operbot cfg server=<server> channel=<channel> nick=<nick>``
+ | ``operbot cfg server=<server> channel=<channel>``
 
  | (*) default channel/server is #operbot on localhost
 
@@ -119,7 +117,7 @@
 
 **COPYRIGHT**
 
- **OPERBOT** is placed in the Public Domain. No Copyright, No License.
+ ``operbot`` is placed in the Public Domain. No Copyright, No License.
 
 
 .. toctree::

@@ -1,4 +1,4 @@
-# OPERBOT - ioperator bot
+# OPERBOT - operator bot
 # -*- coding: utf-8 -*-
 #
 
@@ -26,8 +26,6 @@ sys.path.insert(0, os.path.join(curdir, "..", ".."))
 
 # -- Options for GENERIC output ---------------------------------------------
 
-
-import op
 
 project = __name__
 master_doc = 'index'
@@ -92,8 +90,8 @@ html_extra_path = []
 html_last_updated_fmt = '%Y-%b-%d'
 html_additional_pages = {}
 html_domain_indices = False
-html_use_index = False
-html_split_index = False
+html_use_index = True
+html_split_index = True
 html_show_sourcelink = False
 html_show_sphinx = False
 html_show_copyright = False
@@ -118,7 +116,7 @@ rst_prolog = '''.. image:: operline.png
 
     <center><b>
 
-:ref:`about <about>` - :ref:`manual <manual>` - :ref:`programmer <programmer>` - :ref:`source <source>` - `pypi <http://pypi.org/project/operbot>`_ - `github <http://github.com/operbot/operbot>`_ - `sponsor <http://operbot.rtfd.io>`_ - `index <genindex-all.html>`_
+:ref:`programmer <programmer>` - :ref:`source <source>` - `index <genindex-all.html>`_ - `pypi <http://pypi.org/project/operbot>`_ - `github <http://github.com/operbot/operbot>`_
 
 .. raw:: html
 

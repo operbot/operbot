@@ -34,4 +34,16 @@ that are read-only so thus should provide (disk) persistence more chance.
 Paths carry the type in the path name what makes reconstruction from filename
 easier then reading type from the object.
 
-**only include your own written code should be the path to "secure".**
+.. raw:: html
+
+    <br>
+    <center>
+    <b>
+
+**only include your code is the path to "secure".**
+
+.. raw:: html
+
+    </b>
+    </center>
+    <br>
