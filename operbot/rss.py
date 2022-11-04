@@ -18,10 +18,11 @@ from urllib.request import Request, urlopen
 
 from op import Class, Db, Default, Object
 from op import find, fntime, items, last, printable, save
-from op import edit, elapsed, register, spl, update, values
+from op import edit, register, update, values
 
 
 from operbot.run import Bus, Cfg, Repeater, launch
+from operbot.utl import elapsed, spl
 
 
 def __dir__():
@@ -131,8 +132,7 @@ class Fetcher(Object):
 
     def run(self):
         thrs = []
-        res = find("rss")
-        for feed in values(res):
+        for feed in find("rss"):
             thrs.append(launch(self.fetch, feed))
         return thrs
 
@@ -261,14 +261,11 @@ def nme(event):
         event.reply("nme <stringinurl> <name>")
         return
     selector = {"rss": event.args[0]}
-    nrs = 0
     got = []
-    res = find("rss", selector)
-    for fnm, feed in items(res):
-        nrs += 1
+    for feed in  find("rss", selector):
         feed.name = event.args[1]
-        got.append((fnm, feed))
-    for fnm, feed in got:
+        got.append(feed)
+    for feed in got:
         save(feed)
     event.reply("ok")
 
@@ -278,8 +275,7 @@ def rem(event):
         event.reply("rem <stringinurl>")
         return
     selector = {"rss": event.args[0]}
-    res = find("rss", selector)
-    for _fn, feed in items(res):
+    for feed in find("rss", selector):
         feed.__deleted__ = True
         save(feed)
     event.reply("ok")
@@ -288,12 +284,11 @@ def rem(event):
 def rss(event):
     if not event.rest:
         nrs = 0
-        res = find("rss")
-        for fnm, feed in items(res):
+        for feed in find("rss"):
             event.reply("%s %s %s" % (
                                       nrs,
                                       printable(feed),
-                                      elapsed(time.time() - fntime(fnm)))
+                                      elapsed(time.time() - fntime(feed.__fnm__)))
                                      )
             nrs += 1
         if not nrs:

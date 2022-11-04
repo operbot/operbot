@@ -8,8 +8,9 @@ import threading
 import time
 
 
-from op import Class, Object, elapsed, find, fntime, items, save, update
+from op import Class, Object, find, fntime, items, save, update
 from operbot.run import Command
+from operbot.utl import elapsed
 
 
 starttime = time.time()

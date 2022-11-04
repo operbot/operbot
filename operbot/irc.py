@@ -19,12 +19,13 @@ import _thread
 
 
 from op import Class, Default, Object, Wd
-from op import items, keys, last, locked, printable
+from op import items, keys, last, printable
 from op import edit, fntime, find, save, update
-from op import elapsed, register
+from op import register
 
 
 from operbot.run import Command, Event, Handler, launch
+from operbot.utl import elapsed, locked
 
 
 Wd.workdir = os.path.expanduser("~/.op")
