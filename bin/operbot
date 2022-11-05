@@ -15,19 +15,26 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op import Class, Wd, keys, last, printable, update
+from opr.obj import Class, Wd, keys, last, printable, update
+from opr.hdl import Command
+from opr.evt import Event
+from opr.hdl import Handler
+from opr.prs import parse
+
+
+from opr import Cfg, scan
+
+
+from operbot.irc import Config, IRC
+from operbot.rss import Fetcher
 
 
 from operbot import cmds, irc, rss
-from operbot.irc import Config, IRC
-from operbot.rss import Fetcher
-from operbot.run import Cfg
-from operbot.run import Command, Event, Handler, parse, scan
 
 
 Config.nick = "operbot"
 Config.channel = "#operbot"
-Config.realname = "program your own commands"
+Config.realname = "operator bot"
 Config.username = "operbot"
 
 

@@ -8,8 +8,9 @@ import socket
 import time
 
 
-from op import Class, Object, last
-from operbot.run import Bus, launch
+from opr.hdl import Bus
+from opr.obj import Class, Object, last
+from opr.thr import launch
 
 
 def __dir__():

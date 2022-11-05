@@ -16,13 +16,15 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from op import Class, Db, Default, Object
-from op import find, fntime, items, last, printable, save
-from op import edit, register, update, values
+from opr.obj import Class, Db, Default, Object
+from opr.obj import find, fntime, items, last, printable, save
+from opr.obj import edit, register, update, values
+from opr.hdl import Bus
+from opr.thr import Repeater, launch
+from opr.utl import elapsed, spl
 
 
-from operbot.run import Bus, Cfg, Repeater, launch
-from operbot.utl import elapsed, spl
+from opr import Cfg
 
 
 def __dir__():

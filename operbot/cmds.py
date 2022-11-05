@@ -8,9 +8,9 @@ import threading
 import time
 
 
-from op import Class, Object, find, fntime, items, save, update
-from operbot.run import Command
-from operbot.utl import elapsed
+from opr.hdl import Command
+from opr.obj import Class, Object, find, fntime, items, save, update
+from opr.utl import elapsed
 
 
 starttime = time.time()
@@ -40,14 +40,14 @@ def cmd(event):
 
 def log(event):
     if not event.rest:
-        _nr = 0
-        for _fn, obj in find("log"):
+        nmr = 0
+        for obj in find("log"):
             event.reply("%s %s %s" % (
-                                      _nr,
+                                      nmr,
                                       obj.txt,
-                                      elapsed(time.time() - fntime(_fn)))
+                                      elapsed(time.time() - fntime(obj.__fnm__)))
                                      )
-            _nr += 1
+            nmr += 1
         return
     obj = Log()
     obj.txt = event.rest
@@ -58,12 +58,12 @@ def log(event):
 def tdo(event):
     if not event.rest:
         nmr = 0
-        for fnm, obj in items(find("todo")):
+        for obj in find("todo"):
             event.reply("%s %s %s" % (
                                       nmr,
                                       obj.txt,
-                                      elapsed(time.time() - fntime(fnm)))
-                                     )
+                                      elapsed(time.time() - fntime(obj.__fnm__))
+                                     ))
             nmr += 1
         return
     obj = Todo()
@@ -80,7 +80,7 @@ def thr(event):
         obj = Object()
         update(obj, vars(thread))
         if getattr(obj, "sleep", None):
-            uptime = obj.sleep - int(time.time() - obj.state.latest)
+            uptime = obj.sleep - int(time.time() - obj.state["latest"])
         else:
             uptime = int(time.time() - obj.starttime)
         result.append((uptime, thread.getName()))

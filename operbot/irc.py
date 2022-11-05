@@ -18,23 +18,24 @@ import threading
 import _thread
 
 
-from op import Class, Default, Object, Wd
-from op import items, keys, last, printable
-from op import edit, fntime, find, save, update
-from op import register
-
-
-from operbot.run import Command, Event, Handler, launch
-from operbot.utl import elapsed, locked
-
-
-Wd.workdir = os.path.expanduser("~/.op")
-
-
-starttime = time.time()
+from opr.evt import Event
+from opr.obj import Class, Default, Object
+from opr.obj import items, keys, last, printable
+from opr.obj import edit, fntime, find, save, update
+from opr.obj import register
+from opr.hdl import Command, Handler
+from opr.thr import launch
+from opr.utl import elapsed, locked
 
 
 saylock = _thread.allocate_lock()
+
+
+def init():
+    irc = IRC()
+    irc.start()
+    print(printable(irc.cfg, "nick,channel,server,port,sasl"))
+    return irc
 
 
 class NoUser(Exception):
@@ -44,17 +45,17 @@ class NoUser(Exception):
 
 class Config(Default):
 
-    channel = "#objectprogramming"
+    channel = "#operbot"
     control = "!"
-    nick = "op"
+    nick = "operbot"
     password = ""
     port = 6667
-    realname = "object programming"
+    realname = "operator bot"
     sasl = False
     server = "localhost"
     servermodes = ""
     sleep = 60
-    username = "op"
+    username = "operbot"
     users = False
 
     def __init__(self):
@@ -607,7 +608,7 @@ def dlt(event):
         event.reply("dlt <username>")
         return
     selector = {"user": event.args[0]}
-    for _fn, obj in items(find("user", selector)):
+    for obj in find("user", selector):
         obj.__deleted__ = True
         save(obj)
         event.reply("ok")
@@ -616,15 +617,15 @@ def dlt(event):
 
 def met(event):
     if not event.rest:
-        _nr = 0
-        for _fn, obj in find("user"):
+        nmr = 0
+        for obj in find("user"):
             event.reply("%s %s %s %s" % (
-                                         _nr,
+                                         nmr,
                                          obj.user,
                                          obj.perms,
-                                         elapsed(time.time() - fntime(_fn)))
+                                         elapsed(time.time() - fntime(obj.__fnm__)))
                                         )
-            _nr += 1
+            nmr += 1
         return
     user = User()
     user.user = event.rest
