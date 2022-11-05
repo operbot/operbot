@@ -22,9 +22,9 @@ setup(
     packages=["operbot"],
     scripts=[
              "bin/operbot",
-             "bin/operbotcmd",
-             "bin/operbotsrv",
-             "bin/operbotd"
+             "bin/opercmd",
+             "bin/opersrv",
+             "bin/operd"
             ],
     classifiers=[
         "Development Status :: 3 - Alpha",
