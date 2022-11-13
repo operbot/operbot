@@ -8,10 +8,7 @@ import sys
 import unittest
 
 
-from op import Object
-
-
-from operbot.run import Cfg, Handler, Command, command
+from op import Cfg, Command, Handler, Object, Command, command
 
 
 evts = []

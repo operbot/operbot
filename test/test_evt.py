@@ -4,7 +4,7 @@
 import unittest
 
 
-from operbot.run import Event
+from op import Event
 
 
 class TestEvent(unittest.TestCase):

@@ -8,13 +8,12 @@
 import unittest
 
 
-from operbot.run import Command
+from op import Command, scan
 from operbot import irc
 
 
 class TestScan(unittest.TestCase):
 
     def test_scan(self):
-        iii = irc.IRC()
-        iii.scan(irc)
+        scan(irc)
         self.assertTrue("cfg" in Command.cmd)

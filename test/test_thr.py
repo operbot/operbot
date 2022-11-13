@@ -4,7 +4,7 @@
 import unittest
 
 
-from operbot.run import Thread
+from op import Thread
 
 
 def test():
