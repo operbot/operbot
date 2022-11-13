@@ -1,53 +1,11 @@
 # This file is placed in the Public Domain.
 # pylint: disable=R,C,W,C0302
 
-"""object programming runtime
+
+"object"
 
 
-The ``opr`` package provides an Object class, that allows for save/load
-to/from json files on disk. Objects can be searched with database
-functions and uses read-only files to improve persistence and a type in
-filename for reconstruction. Methods are factored out into functions to
-have a clean namespace to read JSON data into.
-
-basic usage is this:
-
->>> import opr
->>> o = opr.Object()
->>> o.key = "value"
->>> o.key
->>> 'value'
-
-Objects try to mimic a dictionary while trying to be an object with normal
-attribute access as well. hidden methods are provided, the methods are
-factored out into functions like get, items, keys, register, set, update
-and values.
-
-load/save from/to disk:
-
->>> from opr import Object, load, save
->>> o = Object()
->>> o.key = "value"
->>> p = save(o)
->>> obj = Object()
->>> load(obj, p)
->>> obj.key
->>> 'value'
-
-great for giving objects peristence by having their state stored in files:
-
->>> from opr import Object, save
->>> o = Object()
->>> save(o)
->>> 'opr.obj.Object/c13c5369-8ada-44a9-80b3-4641986f09df/2021-08-31/15:31:05.717063'
-
-"""
-
-
-__version__ = "3"
-
-
-## imports
+## import
 
 
 import datetime
@@ -60,15 +18,15 @@ import pwd
 import queue
 import threading
 import time
-import traceback
 import types
 import uuid
+import _thread
 
 
 from stat import ST_UID, ST_MODE, S_IMODE
 
 
-## defines
+## define
 
 
 def __dir__():
@@ -95,16 +53,44 @@ def __dir__():
             'load',
             'loads',
             'match',
-            'name',
             'printable',
             'register',
             'save',
             'update',
             'values',
+            'write'
            )
 
 
 __all__ = __dir__()
+
+
+
+def locked(lock):
+
+    noargs = False
+
+    def lockeddec(func, *args, **kwargs):
+
+        def lockedfunc(*args, **kwargs):
+            lock.acquire()
+            if args or kwargs:
+                locked.noargs = True
+            res = None
+            try:
+                res = func(*args, **kwargs)
+            finally:
+                lock.release()
+            return res
+
+        lockeddec.__wrapped__ = func
+        lockeddec.__doc__ = func.__doc__
+        return lockedfunc
+
+    return lockeddec
+
+
+disklock = _thread.allocate_lock()
 
 
 ## object
@@ -112,7 +98,9 @@ __all__ = __dir__()
 
 class Object:
 
+
     __slots__ = ("__dict__", "__fnm__")
+
 
     def __init__(self, *args, **kwargs):
         object.__init__(self)
@@ -123,7 +111,9 @@ class Object:
         )
         if args:
             val = args[0]
-            if isinstance(val, dict):
+            if isinstance(val, zip):
+                update(self, dict(val))
+            elif isinstance(val, dict):
                 update(self, val)
             elif isinstance(val, Object):
                 update(self, vars(val))
@@ -183,21 +173,6 @@ def kind(obj):
     return kin
 
 
-def name(obj):
-    typ = type(obj)
-    if isinstance(typ, types.ModuleType):
-        return obj.__name__
-    if "__self__" in dir(obj):
-        return "%s.%s" % (obj.__self__.__class__.__name__, obj.__name__)
-    if "__class__" in dir(obj) and "__name__" in dir(obj):
-        return "%s.%s" % (obj.__class__.__name__, obj.__name__)
-    if "__class__" in dir(obj):
-        return obj.__class__.__name__
-    if "__name__" in dir(obj):
-        return obj.__name__
-    return None
-
-
 def printable(obj, args="", skip="", plain=False):
     res = []
     keyz = []
@@ -226,7 +201,7 @@ def printable(obj, args="", skip="", plain=False):
             txt = '%s=%s' % (key, value)
         res.append(txt)
     txt = " ".join(res)
-    return txt.rstrip()
+    return txt.strip()
 
 
 def register(obj, key, value):
@@ -243,6 +218,7 @@ def values(obj):
 
 
 ## json
+
 
 
 class ObjectDecoder(json.JSONDecoder):
@@ -294,12 +270,14 @@ class ObjectEncoder(json.JSONEncoder):
         return json.JSONEncoder.iterencode(self, o, *args, **kwargs)
 
 
+@locked(disklock)
 def dump(obj, opath):
     cdir(opath)
     with open(opath, "w", encoding="utf-8") as ofile:
         json.dump(
             obj.__dict__, ofile, cls=ObjectEncoder, indent=4, sort_keys=True
         )
+    os.chmod(opath, 0o444)
     return opath
 
 
@@ -307,6 +285,7 @@ def dumps(obj):
     return json.dumps(obj, cls=ObjectEncoder)
 
 
+@locked(disklock)
 def load(obj, opath):
     splitted = opath.split(os.sep)
     fnm = os.sep.join(splitted[-4:])
@@ -327,8 +306,21 @@ def save(obj):
     obj.__fnm__ = os.path.join(prv, os.sep.join(str(datetime.datetime.now()).split()))
     opath = Wd.getpath(obj.__fnm__)
     dump(obj, opath)
-    os.chmod(opath, 0o444)
     return obj.__fnm__
+
+
+@locked(disklock)
+def write(obj, path=None):
+    opath = Wd.getpath(path or obj.__fnm__)
+    cdir(opath)
+    if os.path.exists(opath):
+        os.chmod(opath, 0o666)
+    with open(opath, "w", encoding="utf-8") as ofile:
+        json.dump(
+            obj.__dict__, ofile, cls=ObjectEncoder, indent=4, sort_keys=True
+        )
+    os.chmod(opath, 0o444)
+    return opath
 
 
 ## database
@@ -342,7 +334,7 @@ class Db:
             selector = {}
         nmr = -1
         res = []
-        for fnm in fns(Wd.getpath(otp), timed):
+        for fnm in fns(otp, timed):
             obj = hook(fnm)
             if deleted and "__deleted__" in obj and obj.__deleted__:
                 continue
@@ -397,7 +389,7 @@ def fns(otp, timed=None):
                     if timed and timed.to and fntime(p) > timed.to:
                         continue
                     res.append(p)
-    return sorted(res, key=fntime)
+    return sorted(res, key=lambda x: fntime(x))
 
 def fntime(daystr):
     daystr = daystr.replace("_", ":")
@@ -440,6 +432,7 @@ def last(obj):
     ooo = Db.last(kind(obj))
     if ooo:
         update(obj, ooo)
+        obj.__fnm__ = ooo.__fnm__
 
 
 def match(otp, selector=None):
@@ -501,7 +494,7 @@ class Class:
 
 class Wd:
 
-    workdir = ".opr"
+    workdir = ".op"
 
     @staticmethod
     def get():
@@ -533,6 +526,9 @@ class Wd:
             if fnm not in res:
                 res.append(fnm)
         return res
+
+
+## utility
 
 
 def cdir(path):

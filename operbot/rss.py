@@ -1,7 +1,11 @@
 # This file is placed in the Public Domain.
+# pylint: disable=R0903,R1732,C0209,C0115,C0116
 
 
 "rich site syndicate"
+
+
+## import
 
 
 import html.parser
@@ -16,15 +20,13 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from opr.obj import Class, Db, Default, Object
-from opr.obj import find, fntime, items, last, printable, save
-from opr.obj import edit, register, update, values
-from opr.hdl import Bus
-from opr.thr import Repeater, launch
-from opr.utl import elapsed, spl
+from op import Class, Db, Default, Object, write
+from op import find, fntime, last, printable, save
+from op import edit, register, update
+from op import Bus, Cfg, Repeater, elapsed, launch, spl
 
 
-from opr import Cfg
+## define
 
 
 def __dir__():
@@ -48,6 +50,9 @@ def init():
     fetcher = Fetcher()
     fetcher.start()
     return fetcher
+
+
+## class
 
 
 class Feed(Default):
@@ -122,7 +127,7 @@ class Fetcher(Object):
                 save(fed)
             objs.append(fed)
         if objs:
-            save(Fetcher.seen)
+            write(Fetcher.seen)
         txt = ""
         name = getattr(feed, "name")
         if name:
@@ -173,6 +178,9 @@ class Parser(Object):
                 register(obj, itm, Parser.getitem(line, itm))
             res.append(obj)
         return res
+
+
+## utility
 
 
 def getfeed(url, item):
@@ -228,6 +236,9 @@ def useragent(txt):
     return "Mozilla/5.0 (X11; Linux x86_64) " + txt
 
 
+## command
+
+
 def dpl(event):
     if len(event.args) < 2:
         event.reply("dpl <stringinurl> <item1,item2>")
@@ -239,13 +250,10 @@ def dpl(event):
         if feed:
             edit(feed, setter)
             save(feed)
-            event.reply("ok")
+            event.done()
 
 
 def ftc(event):
-    if Cfg.debug:
-        event.reply("not fetching, debug is enabled")
-        return
     res = []
     thrs = []
     fetcher = Fetcher()
@@ -269,7 +277,7 @@ def nme(event):
         got.append(feed)
     for feed in got:
         save(feed)
-    event.reply("ok")
+    event.done()
 
 
 def rem(event):
@@ -280,7 +288,7 @@ def rem(event):
     for feed in find("rss", selector):
         feed.__deleted__ = True
         save(feed)
-    event.reply("ok")
+    event.done()
 
 
 def rss(event):
@@ -307,4 +315,4 @@ def rss(event):
     feed = Rss()
     feed.rss = event.args[0]
     save(feed)
-    event.reply("ok")
+    event.done()

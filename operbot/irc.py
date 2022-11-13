@@ -1,9 +1,12 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,R0201,C0413,R0902,R0903,W0201,W0613
-# pylint: disable=R0912,R0915,R0904,W0221 
+# pylint: disable=C0115,C0116,C0413,R0902,R0903,W0201,W0613
+# pylint: disable=E1101,R0912,R0915,R0904,W0221,C0209
 
- 
+
 "irc"
+
+
+## import
 
 
 import base64
@@ -18,14 +21,32 @@ import threading
 import _thread
 
 
-from opr.evt import Event
-from opr.obj import Class, Default, Object
-from opr.obj import items, keys, last, printable
-from opr.obj import edit, fntime, find, save, update
-from opr.obj import register
-from opr.hdl import Command, Handler
-from opr.thr import launch
-from opr.utl import elapsed, locked
+from op import Class, Default, Object, update
+from op import edit, fntime, find, keys, last, printable, register, save
+from op import Command, Event, Handler, elapsed, launch, locked, name
+
+
+## define
+
+
+def __dir__():
+    return (
+            'Config',
+            'IRC',
+            'cfg',
+            'dlt',
+            'init',
+            'met',
+            'mre',
+            'pwd'
+           )
+
+
+__all__ = __dir__()
+
+
+NAME = "operbot"
+REALNAME = "operator bot"
 
 
 saylock = _thread.allocate_lock()
@@ -34,8 +55,10 @@ saylock = _thread.allocate_lock()
 def init():
     irc = IRC()
     irc.start()
-    print(printable(irc.cfg, "nick,channel,server,port,sasl"))
     return irc
+
+
+## class
 
 
 class NoUser(Exception):
@@ -45,17 +68,17 @@ class NoUser(Exception):
 
 class Config(Default):
 
-    channel = "#operbot"
+    channel = "#%s" % NAME
     control = "!"
-    nick = "operbot"
+    nick = "%s" % NAME
     password = ""
     port = 6667
-    realname = "operator bot"
+    realname = "%s" % REALNAME
     sasl = False
     server = "localhost"
     servermodes = ""
     sleep = 60
-    username = "operbot"
+    username = "%s" % NAME
     users = False
 
     def __init__(self):
@@ -72,9 +95,6 @@ class Config(Default):
         self.sleep = Config.sleep
         self.username = Config.username
         self.users = Config.users
-
-
-Class.add(Config)
 
 
 class IEvent(Event):
@@ -150,9 +170,9 @@ class Output(Object):
                 _nr += 1
                 self.dosay(channel, txt)
 
-    def size(self, name):
+    def size(self, channel):
         if name in self.cache:
-            return len(self.cache[name])
+            return len(self.cache[channel])
         return 0
 
     def start(self):
@@ -200,7 +220,7 @@ class IRC(Handler, Output):
         self.register("PRIVMSG", self.privmsg)
         self.register("QUIT", self.quit)
         self.register("command", Command.handle)
-        
+
     def announce(self, txt):
         for channel in self.channels:
             self.say(channel, txt)
@@ -585,7 +605,7 @@ class User(Object):
             update(self, val)
 
 
-Class.add(User)
+## command
 
 
 def cfg(event):
@@ -600,7 +620,7 @@ def cfg(event):
     else:
         edit(config, event.sets)
         save(config)
-        event.reply("ok")
+        event.done()
 
 
 def dlt(event):
@@ -611,7 +631,7 @@ def dlt(event):
     for obj in find("user", selector):
         obj.__deleted__ = True
         save(obj)
-        event.reply("ok")
+        event.done()
         break
 
 
@@ -631,7 +651,7 @@ def met(event):
     user.user = event.rest
     user.perms = ["USER"]
     save(user)
-    event.reply("ok")
+    event.done()
 
 
 def mre(event):
@@ -662,3 +682,10 @@ def pwd(event):
     base = base64.b64encode(enc)
     dcd = base.decode("ascii")
     event.reply(dcd)
+
+
+## runtime
+
+
+Class.add(Config)
+Class.add(User)

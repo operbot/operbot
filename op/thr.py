@@ -1,22 +1,38 @@
 # This file is placed in the Public Domain.
 # pylint: disable=R,C,W,C0302
 
-"threads"
+
+"thread"
 
 
-__version__ = "104"
+## import
 
 
-## imports
-
-
+import os
 import queue
 import threading
 import time
+import traceback
 import types
 
 
-## classes
+## define
+
+
+def __dir__():
+    return (
+            'Thread',
+            'Timer',
+            'Repeater',
+            'launch',
+            'name'
+           ) 
+
+
+__all__ = __dir__()
+
+
+## class
 
 
 class Thread(threading.Thread):
@@ -55,7 +71,6 @@ class Thread(threading.Thread):
             self._evt = args[0]
         self.starttime = time.time()
         self._result = func(*args)
-
 
 class Timer:
 
@@ -99,6 +114,16 @@ class Repeater(Timer):
 
 
 ## utility
+
+
+def from_exception(exc, txt="", sep=" "):
+    result = []
+    for frm in traceback.extract_tb(exc.__traceback__):
+        fnm = os.sep.join(frm.filename.split(os.sep)[-2:])
+        result.append(f"{fnm}:{frm.lineno}")
+    nme = name(exc)
+    res = sep.join(result)
+    return f"{txt} {res} {nme}: {exc}"
 
 
 def launch(func, *args, **kwargs):

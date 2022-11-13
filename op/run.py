@@ -1,61 +1,55 @@
-#!/usr/bin/env python3
 # This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116,C0209,W0212,W1514,R1732
+
+"runtime"
+
+
+## import
 
 
 import atexit
 import os
 import readline
 import rlcompleter
-import signal
 import sys
 import termios
 import time
 
 
-sys.path.insert(0, os.getcwd())
+from .obj import Default, keys, update
+from .hdl import Command, parse
+from .thr import name
 
 
-from op import Class, Wd, keys, last, printable, update
-from op import Cfg, Command, Event, Handler, parse, scan
-from operbot import cmds, irc, rss
+## define
 
 
-Wd.workdir = os.path.expanduser("~/.operbot")
+Cfg = Default()
 
 
-scan(cmds)
-scan(irc)
-scan(rss)
+def __dir__():
+    return (
+            "banner",
+            "daemon",
+            'from_exception',
+            "setcompleter",
+            "wrap"
+           )
 
 
-class Console(Handler):
+__all__ = __dir__()
 
-    @staticmethod
-    def announce(txt):
-        pass
 
-    @staticmethod
-    def handle(event):
-        Command.handle(event)
-        event.wait()
-
-    def poll(self):
-        event = Event()
-        event.txt = input("> ")
-        event.orig = repr(self)
-        return event
-
-    @staticmethod
-    def raw(txt):
-        print(txt)
+## class
 
 
 class Completer(rlcompleter.Completer):
 
     def __init__(self, options):
         super().__init__()
+        self.matches = []
         self.options = options
- 
+
     def complete(self, text, state):
         if state == 0:
             if text:
@@ -68,34 +62,50 @@ class Completer(rlcompleter.Completer):
             return None
 
 
-def banner(cfg):
+## utility
+
+
+def banner(name):
     print(
-          "OPERBOT started at %s %s" % (
-                                     time.ctime(time.time()).replace("  ", " "),
-                                     printable(cfg, "debug,verbose")
-                                    )
+          "%s started at %s" % (
+                                name.upper(),
+                                time.ctime(time.time()).replace("  ", " "),
+                               )
          )
 
 
-def boot():
-    signal.signal(signal.SIGHUP, hup)
+def boot(name):
     setcompleter(keys(Command.cmd))
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
     update(Cfg, cfg)
-    banner(cfg)
+    banner(name)
     return cfg
 
-def hup(_sig, _frame):
-    print("signal 15 called")
-    sys.stdout.flush()
+
+def daemon(silent=False):
+    pid = os.fork()
+    if pid != 0:
+        os._exit(0)
+    os.setsid()
+    os.umask(0)
+    sis = open("/dev/null", 'r')
+    os.dup2(sis.fileno(), sys.stdin.fileno())
+    if silent:
+        sos = open("/dev/null", 'a+')
+        ses = open("/dev/null", 'a+')
+        os.dup2(sos.fileno(), sys.stdout.fileno())
+        os.dup2(ses.fileno(), sys.stderr.fileno())
 
 
-def isopt(ostr):
-    for opt in ostr:
-        if opt in Cfg.opts:
-            return True
-    return False
+def from_exception(exc, txt="", sep=" "):
+    result = []
+    for frm in traceback.extract_tb(exc.__traceback__):
+        fnm = os.sep.join(frm.filename.split(os.sep)[-2:])
+        result.append(f"{fnm}:{frm.lineno}")
+    nme = name(exc)
+    res = sep.join(result)
+    return f"{txt} {res} {nme}: {exc}"
 
 
 def setcompleter(optionlist):
@@ -121,15 +131,3 @@ def wrap(func):
         if gotterm:
             termios.tcsetattr(fds, termios.TCSADRAIN, old)
 
-
-def main():
-    boot()
-    bot = irc.init()
-    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    rss.init()
-    csl = Console()
-    csl.start()
-    csl.wait()
-        
-
-wrap(main)

@@ -21,14 +21,11 @@
     :toctree: 
     :template: module.rst
 
-    op.cls		class
-    op.dbs		database
-    op.dft 		default
-    op.fnc		function
-    op.jsn		json
-    op.obj		object
-    op.utl		utility
-    op.wdr		workdir
+    op.hdl	handler
+    op.obj	object
+    op.run	runtime
+    op.thr	thread
+    op.utl	utility
 
 **OPERBOT**
 
@@ -38,5 +35,6 @@
 
     operbot.cmds	commands
     operbot.irc		internet relay chat
+    operbot.mbx		mailbox
     operbot.rss		rich site syndicate
     operbot.udp		udp to irc relay
