@@ -302,7 +302,8 @@ def scandir(path, func):
         except IndexError:
             pname = path
         mname = fnm.split(os.sep)[-1][:-3]
-        res.append(func(pname, mname))
+        path2 = os.path.join(path, fnm)
+        res.append(func(pname, mname, path2))
     return res
 
 

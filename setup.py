@@ -1,11 +1,32 @@
 # This file is placed in the Public Domain.
 
 
+"setuptools"
+
+
+import os
+
+
 from setuptools import setup
 
 
 def read():
     return open("README.rst", "r").read()
+
+
+def uploadlist(dir):
+    upl = []
+    for file in os.listdir(dir):
+        if not file or file.startswith('.'):
+            continue
+        d = dir + os.sep + file
+        if os.path.isdir(d):   
+            upl.extend(uploadlist(d))
+        else:
+            if file.endswith(".pyc") or file.startswith("__pycache"):
+                continue
+            upl.append(d)
+    return upl
 
 
 setup(
@@ -18,13 +39,20 @@ setup(
     long_description=read(),
     long_description_content_type="text/x-rst",
     license="Public Domain",
-    packages=["op", "operbot"],
+    packages=["operbot"],
     scripts=[
              "bin/operbot",
              "bin/operbotcmd",
              "bin/operbotctl",
              "bin/operbotd"
             ],
+    include_package_data=True,
+    data_files=[
+                ("share/operbot", ["README.rst", "files/operbot.service",]),
+                ("share/doc/operbot/", uploadlist("docs")),
+                ("share/doc/operbot/_static/", uploadlist("docs/_static")),
+                ("share/doc/operbot/_templates/", uploadlist("docs/_templates")),
+               ],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: Public Domain",

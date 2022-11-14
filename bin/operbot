@@ -11,6 +11,7 @@ __version__ = "105"
 
 import atexit
 import importlib
+import importlib.util
 import os
 import readline
 import rlcompleter
@@ -108,13 +109,15 @@ def from_exception(exc, txt="", sep=" "):
     return f"{txt} {res} {nme}: {exc}"
 
 
-def importer(pname, mname):
+def importer(pname, mname, path):
     modname = "%s.%s" % (pname, mname)
-    mod = importlib.import_module(modname, pname)
+    spec = importlib.util.spec_from_file_location(mname, path)
+    if spec:
+        mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
     scan(mod)
 
-
-def init(pname, mname):
+def init(pname, mname, path):
     modname = "%s.%s" % (pname, mname)
     mod = importlib.import_module(modname, pname)
     if "init" in dir(mod):
