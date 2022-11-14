@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+# This file is placed in the Public Domain.
+
+
+"write your own commands"
+
+
+import os
+import readline
+import signal
+import sys
+import termios
+import time
+
+
+from operbot.obj import Wd, cdir, keys, permission, printable, update
+from operbot.run import Cfg, Event, Handler, command, parse, scan
+from operbot.rss import Fetcher
+
+
+from operbot import cmds, irc, rss
+
+
+Wd.workdir = os.path.expanduser("~/.operbot/")
+
+
+scan(cmds)
+scan(irc)
+scan(rss)
+
+
+class CLI(Handler):
+
+    @staticmethod
+    def raw(txt):
+        print(txt)
+
+
+def ver(event):
+    event.reply("OPERBOT %s" % __version__)
+
+
+def main():
+    cdir(Wd.workdir)
+    try:
+        permission(Wd.workdir)
+    except Exception as ex:
+        print(str(ex))
+    Command.add(ver)
+    txt = ' '.join(sys.argv[1:])
+    cfg = parse(txt)
+    update(Cfg, cfg)
+    cli = CLI()
+    command(cli, cfg.otxt)
+
+
+main()
