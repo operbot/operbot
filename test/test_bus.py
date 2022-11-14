@@ -28,7 +28,6 @@ class TestBus(unittest.TestCase):
         self.assertTrue(clt in Bus.objs)
 
     def test_announce(self):
-        print(Bus.objs)
         Bus.announce("test")
         self.assertTrue(clt.gotcha)
 
