@@ -11,11 +11,7 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from op.obj import Object, keys, update
-from op.fnc import printable
-from op.dbs import find, fntime
-from op.wdr import Wd
-from op.utl import cdir, elapsed
+from op import Object, Wd, cdir, elapsed, find, fntime, keys, printable, update
 
 
 def fnd():
@@ -36,16 +32,16 @@ def fnd():
     if len(sys.argv) > 3:
          update(gets, [x.split("==") for x in sys.argv[1:]])
     res = list(find(otype, gets))
-    _nr = 0
-    for _fn, obj in res:
+    nmr = 0
+    for obj in res:
         txt = "%s %s %s" % (
-                            str(_nr),
+                            str(nmr),
                             printable(obj, keys(obj)),
-                            elapsed(time.time()-fntime(_fn))
+                            elapsed(time.time()-fntime(obj.__fnm__))
                            )
-        _nr += 1
+        nmr += 1
         print(txt)
-    if not _nr:
+    if not nmr:
         print("no result")
 
 

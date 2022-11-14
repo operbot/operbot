@@ -1,11 +1,8 @@
 # This file is placed in the Public Domain.
-# pylint: disable=R0903,C0209,C0115,C0116,W0212
+# pylint: disable=C0115,C0116,R0903,C0209,W0212
 
 
 "mailbox"
-
-
-## import
 
 
 import mailbox
@@ -13,12 +10,9 @@ import os
 import time
 
 
-from op.obj import Class, Object
-from op.obj import find, fntime, printable, save, update
-from op.utl import elapsed
-
-
-## define
+from .obj import Class, Object
+from .obj import find, fntime, printable, save, update
+from .utl import elapsed
 
 
 def __dir__():
@@ -63,8 +57,6 @@ monthint = {
 }
 
 
-## class
-
 
 class Email(Object):
 
@@ -75,8 +67,6 @@ class Email(Object):
 
 Class.add(Email)
 
-
-## utility
 
 
 def to_date(date):
@@ -113,9 +103,6 @@ def to_date(date):
                         except (IndexError, KeyError):
                             ddd = ""
     return ddd
-
-
-## command
 
 
 def cor(event):

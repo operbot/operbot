@@ -1,21 +1,17 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116.R0903
+# pylint: disable=C0115,C0116,R0903
 
 
 "udp to irc relay"
-
-
-## import
 
 
 import socket
 import time
 
 
-from op import Bus, Class, Object, last, launch
-
-
-## define
+from .hdl import Bus
+from .obj import Class, Object, last
+from .thr import launch
 
 
 def __dir__():
@@ -34,8 +30,6 @@ def init():
     udp.start()
     return udp
 
-
-## class
 
 
 class Cfg(Object):
@@ -84,9 +78,6 @@ class UDP(Object):
     def start(self):
         last(self.cfg)
         launch(self.server)
-
-
-## runtime
 
 
 Class.add(Cfg)

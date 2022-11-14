@@ -5,16 +5,11 @@
 "find"
 
 
-## import
-
-
 import time
 
 
-from op import Wd, elapsed, find, fntime, keys, printable
-
-
-## command
+from .obj import Wd, find, fntime, keys, printable
+from .utl import elapsed
 
 
 def fnd(event):
