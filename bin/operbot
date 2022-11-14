@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116,C0209,W0221,W0201,E0611
+
+
+"program your own commands"
+
+
+__version__ = "105"
 
 
 import atexit
+import importlib
 import os
 import readline
 import rlcompleter
@@ -12,15 +20,18 @@ import termios
 import time
 
 
-sys.path.insert(0, os.getcwd())
+from operbot.hdl import Callback, Cfg, Command, Event, Handler
+from operbot.hdl import command, parse, scan, scandir
+from operbot.obj import Wd, keys, printable, update
 
 
-from op import Class, Wd, keys, last, printable, update
-from op import Cfg, Command, Event, Handler, parse, scan
 from operbot import cmds, irc, rss
 
 
 Wd.workdir = os.path.expanduser("~/.operbot")
+
+
+starttime = time.time()
 
 
 scan(cmds)
@@ -28,14 +39,15 @@ scan(irc)
 scan(rss)
 
 
-class Console(Handler):
+class CLI(Handler):
 
-    @staticmethod
-    def announce(txt):
-        pass
+    def raw(self, txt):
+        print(txt)
 
-    @staticmethod
-    def handle(event):
+
+class Console(CLI):
+
+    def handle(self, event):
         Command.handle(event)
         event.wait()
 
@@ -45,17 +57,14 @@ class Console(Handler):
         event.orig = repr(self)
         return event
 
-    @staticmethod
-    def raw(txt):
-        print(txt)
-
 
 class Completer(rlcompleter.Completer):
 
     def __init__(self, options):
         super().__init__()
+        self.matches = []
         self.options = options
- 
+
     def complete(self, text, state):
         if state == 0:
             if text:
@@ -71,31 +80,45 @@ class Completer(rlcompleter.Completer):
 def banner(cfg):
     print(
           "OPERBOT started at %s %s" % (
-                                     time.ctime(time.time()).replace("  ", " "),
-                                     printable(cfg, "debug,verbose")
-                                    )
+                                      time.ctime(time.time()).replace("  ", " "),
+                                      printable(cfg, "debug,verbose")
+                                     )
          )
 
 
 def boot():
-    signal.signal(signal.SIGHUP, hup)
     setcompleter(keys(Command.cmd))
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
+    if "i" in cfg.opts:
+        cfg.irc = True
+    if "r" in cfg.opts:
+        cfg.rss = True
     update(Cfg, cfg)
-    banner(cfg)
     return cfg
 
-def hup(_sig, _frame):
-    print("signal 15 called")
-    sys.stdout.flush()
+
+def from_exception(exc, txt="", sep=" "):
+    result = []
+    for frm in traceback.extract_tb(exc.__traceback__):
+        fnm = os.sep.join(frm.filename.split(os.sep)[-2:])
+        result.append(f"{fnm}:{frm.lineno}")
+    nme = name(exc)
+    res = sep.join(result)
+    return f"{txt} {res} {nme}: {exc}"
 
 
-def isopt(ostr):
-    for opt in ostr:
-        if opt in Cfg.opts:
-            return True
-    return False
+def importer(pname, mname):
+    modname = "%s.%s" % (pname, mname)
+    mod = importlib.import_module(modname, pname)
+    scan(mod)
+
+
+def init(pname, mname):
+    modname = "%s.%s" % (pname, mname)
+    mod = importlib.import_module(modname, pname)
+    if "init" in dir(mod):
+        mod.init()
 
 
 def setcompleter(optionlist):
@@ -103,6 +126,10 @@ def setcompleter(optionlist):
     readline.set_completer(completer.complete)
     readline.parse_and_bind("tab: complete")
     atexit.register(lambda: readline.set_completer(None))
+
+
+def ver(event):
+    event.reply("OPERBOT %s" % __version__)
 
 
 def wrap(func):
@@ -120,16 +147,30 @@ def wrap(func):
     finally:
         if gotterm:
             termios.tcsetattr(fds, termios.TCSADRAIN, old)
+        for err in Callback.errors:
+            print(from_exception(err))
 
 
 def main():
-    boot()
-    bot = irc.init()
-    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    rss.init()
-    csl = Console()
-    csl.start()
-    csl.wait()
-        
+    cfg = boot()
+    scandir("mod", importer)
+    Command.add(ver)
+    if cfg.txt:
+         cli = CLI()
+         return command(cli, cfg.otxt)
+    if cfg.irc:
+        banner(cfg)
+        scandir("mod", init)
+        bot = irc.init()
+        print(printable(bot.cfg, "nick,channel,server,port,sasl"))
+    if cfg.rss:
+        rss.init()
+    if cfg.console:
+        csl = Console()
+        csl.start()
+        csl.wait()
+    return None
+
 
 wrap(main)
+ 

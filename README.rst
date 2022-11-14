@@ -1,9 +1,11 @@
 README
 ######
 
+
 **NAME**
 
-``operbot`` - operator bot, write your own commands.
+
+``OPERBOT`` - operator bot, write your own commands.
 
 
 **SYNOPSIS**
@@ -13,9 +15,11 @@ README
 | ``operbot <cmd> [key=value] [key==value]``
 |
 
+
 **DESCRIPTION**
 
-``operbot`` is a solid, non hackable bot, intended to be programmable in a
+
+``OPERBOT`` is a solid, non hackable bot, intended to be programmable in a
 static, only code, no popen, fixed imports and no reading modules from a
 directory, to not have a directory to read modules from to add
 commands to the bot but include the own programmed modules directly into the
@@ -24,17 +28,21 @@ runable. Reading random code from a directory is what gets avoided. As
 experience tells os.popen and __import__, importlib are also avoided, direct
 imports in the code is what is used.
 
-``operbot`` stores it's data on disk where objects are time versioned and the
+``OPERBOT`` stores it's data on disk where objects are time versioned and the
 last version saved on disk is served to the user layer. Files are JSON dumps
 that are read-only so thus should provide (disk) persistence. Paths carry the
 type in the path name what makes reconstruction from filename easier then
 reading type from the object.
 
-``operbot`` has some functionality, mostly feeding RSS feeds into a irc
+``OPERBOT`` has some functionality, mostly feeding RSS feeds into a irc
 channel. It can do some logging of txt and take note of things todo.
-This should be the bot where you build your own one from ;]
+
+
+**This should be the bot where you build your own one from ;]**
+
 
 **INSTALL**
+
 
 | ``pip3 install operbot --upgrade --force-reinstall``
 |
@@ -68,7 +76,9 @@ This should be the bot where you build your own one from ;]
 | ``operbot rss <url>``
 |
 
+
 **RUNNING**
+
 
 this part shows how to run ``operbot``.
 
@@ -122,7 +132,9 @@ you can add a -r option to have the rss fetcher started.
 | ``>``
 |
 
+
 **COMMANDS**
+
 
 here is a short description of the commands.
 
@@ -147,9 +159,11 @@ here is a short description of the commands.
 | ``ver`` - show version
 |
 
+
 **PROGRAMMING**
 
-The ``op`` package provides an Object class, that mimics a dict while using
+
+The ``operbot`` package provides an Object class, that mimics a dict while using
 attribute access and provides a save/load to/from json files on disk.
 Objects can be searched with database functions and uses read-only files
 to improve persistence and a type in filename for reconstruction. Methods are
@@ -157,7 +171,7 @@ factored out into functions to have a clean namespace to read JSON data into.
 
 basic usage is this::
 
->>> from op.spc import Object
+>>> from operbot import Object
 >>> o = Object()
 >>> o.key = "value"
 >>> o.key
@@ -170,7 +184,7 @@ and values.
 
 load/save from/to disk::
 
->>> from op.spc import Object, load, save
+>>> from operbot import Object, load, save
 >>> o = Object()
 >>> o.key = "value"
 >>> p = save(o)
@@ -181,15 +195,41 @@ load/save from/to disk::
 
 great for giving objects peristence by having their state stored in files::
 
- >>> from op.spc import Object, save
- >>> o = Object()
- >>> save(o)
- 'op.obj.Object/2021-08-31/15:31:05.717063'
+>>> from operbot import Object, save
+>>> o = Object()
+>>> save(o)
+'operbot.rss.Rss/94b1bcc4-31f4-4a02-be71-284f08d9c459/2022-11-02/'
+
+**SYSTEMD**
+
+to run the bot after reboot, install the service file and start the service
+by enabling it with ``--now``.
+
+$ ``sudo cp /usr/local/share/operbot/operbot.service /etc/systemd/system``
+$ ``sudo systemctl enable operbot --now``
+
+(*) default channel/server is #operbot on localhost
+
+use ``operbotctl`` instead of the use ``operbot`` program
+
+$ ``sudo operbotctl cfg server=<server> channel=<channel> nick=<nick>``
+$ ``sudo operbotctl pwd <nickservnick> <nickservpass>``
+$ ``sudo operbotctl cfg password=<outputfrompwd>``
+$ ``sudo operbotctl cfg users=True``
+$ ``sudo operbotctl met <userhost>``
+$ ``sudo operbotctl rss <url>``
+
+
+**back after reboot is a must**
+
 
 **AUTHOR**
 
+
 Bart Thate - operbot100@gmail.com
 
+
 **COPYRIGHT**
+
 
 ``operbot`` is placed in the Public Domain. No Copyright, No License.

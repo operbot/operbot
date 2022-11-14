@@ -10,9 +10,9 @@ import os
 import time
 
 
-from .obj import Class, Object
-from .obj import find, fntime, printable, save, update
-from .utl import elapsed
+from operbot.obj import Class, Object
+from operbot.obj import find, fntime, printable, save, update
+from operbot.utl import elapsed
 
 
 def __dir__():

@@ -43,8 +43,10 @@ def __dir__():
 __all__ = __dir__()
 
 
-NAME = "gcide"
-REALNAME = "Court. Prosecutor. Reconsider OTP-CR-117/19."
+NAME = "operbot"
+REALNAME = "program your own commands"
+
+
 saylock = _thread.allocate_lock()
 
 

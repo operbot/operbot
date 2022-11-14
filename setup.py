@@ -21,9 +21,9 @@ setup(
     packages=["op", "operbot"],
     scripts=[
              "bin/operbot",
-             "bin/opercmd",
-             "bin/opersrv",
-             "bin/operd"
+             "bin/operbotcmd",
+             "bin/operbotctl",
+             "bin/operbotd"
             ],
     classifiers=[
         "Development Status :: 3 - Alpha",

@@ -4,7 +4,7 @@
 import unittest
 
 
-from op import Handler
+from operbot import Handler
 
 
 class TestHandler(unittest.TestCase):
