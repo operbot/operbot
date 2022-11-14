@@ -10,6 +10,7 @@ import re
 import threading
 import time
 import urllib
+import _thread
 
 
 from urllib.error import HTTPError, URLError
@@ -22,7 +23,7 @@ from .obj import find, fntime, last, printable, save
 from .obj import edit, register, update
 from .hdl import Bus
 from .thr import Repeater, launch
-from .utl import elapsed, spl
+from .utl import elapsed, locked, spl
 
 
 def __dir__():
@@ -46,6 +47,9 @@ def init():
     fetcher = Fetcher()
     fetcher.start()
     return fetcher
+
+
+fetchlock = _thread.allocate_lock()
 
 
 class Feed(Default):
@@ -99,10 +103,12 @@ class Fetcher(Object):
             result += " - "
         return result[:-2].rstrip()
 
+    @locked(fetchlock)
     def fetch(self, feed):
         counter = 0
         objs = []
-        for obj in reversed(list(getfeed(feed.rss, feed.display_list))):
+        res = reversed(list(getfeed(feed.rss, feed.display_list)))
+        for obj in res:
             fed = Feed()
             update(fed, obj)
             update(fed, feed)

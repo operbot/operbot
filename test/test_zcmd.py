@@ -1,17 +1,17 @@
 # This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116
 
 
-"test commands"
+"command tests"
 
 
-import sys
 import unittest
 
 
-from op import Cfg, Command, Handler, Object, Command, command
+from operbot import Cfg, Command, Event, Handler, Object
 
 
-evts = []
+events = []
 skip = ["cfg",]
 
 
@@ -27,43 +27,38 @@ param.thr = [""]
 
 class CLI(Handler):
 
-    "test cli class"
-
-    @staticmethod
-    def raw(txt):
+    def raw(self, txt):
         if Cfg.verbose:
-            sys.stdout.write(txt)
-            sys.stdout.flush()
+            print(txt)
 
 
-cli = CLI()
-
-
-def consume(events):
+def consume(evt):
     fixed = []
-    res = []
-    for evt in events:
-        evt.wait()
-        fixed.append(evt)
-    for evt in fixed:
+    for _e in evt:
+        _e.wait()
+        fixed.append(_e)
+    for fix in fixed:
         try:
-            events.remove(evt)
+            evt.remove(fix)
         except ValueError:
             continue
-    return res
 
 
 class TestCommands(unittest.TestCase):
 
-    "commands test class."
-
     def test_commands(self):
+        cli = CLI()
         cmds = sorted(Command.cmd)
         for cmd in cmds:
             if cmd in skip:
                 continue
             for ex in getattr(param, cmd, ""):
-                evt = command(cli, cmd + " " + ex)
-                evts.append(evt)
-        consume(evts)
-        self.assertTrue(not evts)
+                evt = Event()
+                evt.channel = "#bot"
+                evt.orig = repr(cli)
+                txt = cmd + " " + ex
+                evt.txt = txt.strip()
+                cli.handle(evt)
+                events.append(evt)
+        consume(events)
+        self.assertTrue(not events)

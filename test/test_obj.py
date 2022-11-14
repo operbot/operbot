@@ -1,5 +1,5 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0116,C0411,C2801,R0904,C0015
+# pylint: disable=E1101,C0116,C0411,C2801,R0904,C0115
 
 
 "object"
@@ -157,7 +157,7 @@ class TestObject(unittest.TestCase):
         self.assertTrue(Object().__module__, "op")
 
     def test_kind(self):
-        self.assertEqual(kind(Object()), "op.obj.Object")
+        self.assertEqual(kind(Object()), "operbot.obj.Object")
 
     def test_repr(self):
         self.assertTrue(update(Object(),

@@ -1,10 +1,14 @@
 # This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116
+
+
+"event"
 
 
 import unittest
 
 
-from operbot import Event
+from operbot.hdl import Event
 
 
 class TestEvent(unittest.TestCase):

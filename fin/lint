@@ -36,5 +36,13 @@ def loop(path, txt):
         os.chdir("..")
 
 
+def popen(txt, silent=False):
+    for line in os.popen(txt).readlines():
+        if silent:
+            continue
+        print(line.strip())
+
+
 if __name__ == "__main__":
+    popen("fin/clean")
     loop(os.getcwd(), "pylint --recursive y *")
