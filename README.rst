@@ -203,21 +203,22 @@ great for giving objects peristence by having their state stored in files::
 **SYSTEMD**
 
 to run the bot after reboot, install the service file and start the service
-by enabling it with ``--now``.
+by enabling it with ``--now``::
 
-$ ``sudo cp /usr/local/share/operbot/operbot.service /etc/systemd/system``
-$ ``sudo systemctl enable operbot --now``
 
-(*) default channel/server is #operbot on localhost
+ $ ``sudo cp /usr/local/share/operbot/operbot.service /etc/systemd/system``
+ $ ``sudo systemctl enable operbot --now``
 
-use ``operbotctl`` instead of the use ``operbot`` program
+ (*) default channel/server is #operbot on localhost
 
-$ ``sudo operbotctl cfg server=<server> channel=<channel> nick=<nick>``
-$ ``sudo operbotctl pwd <nickservnick> <nickservpass>``
-$ ``sudo operbotctl cfg password=<outputfrompwd>``
-$ ``sudo operbotctl cfg users=True``
-$ ``sudo operbotctl met <userhost>``
-$ ``sudo operbotctl rss <url>``
+ use ``operbotctl`` instead of the use ``operbot`` program
+
+ $ ``sudo operbotctl cfg server=<server> channel=<channel> nick=<nick>``
+ $ ``sudo operbotctl pwd <nickservnick> <nickservpass>``
+ $ ``sudo operbotctl cfg password=<outputfrompwd>``
+ $ ``sudo operbotctl cfg users=True``
+ $ ``sudo operbotctl met <userhost>``
+ $ ``sudo operbotctl rss <url>``
 
 
 **back after reboot is a must**
