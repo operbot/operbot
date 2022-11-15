@@ -36,4 +36,6 @@ else:
     name = sys.argv[1]    
 
 popen("python3 -mvirtualenv --system-site-packages env")
-popen(f"env/bin/pip3 install {name} -f dist --upgrade --force-reinstall --no-cache-dir --no-deps")
+s = f"env/bin/pip3 install {name} -f dist --upgrade --force-reinstall --no-cache-dir --no-deps"
+print(s)
+popen(s)

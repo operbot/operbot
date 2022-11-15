@@ -10,19 +10,27 @@ import skip
 import sys
 
 
-from skip import popen
+from skip import SKIP, doskip, popen
 
 
-skip.SKIP = ["---", "Your code"]
+try:
+    SKIP = [x.strip() for x in open("fin/skip.cfg", "r").read().split(",")]
+    print(SKIP)
+except:
+    pass
 
 
 def loop(path, txt):
-    for fnn in os.listdir(path):
-        if not os.path.isdir(fnn):
+    for tdo in os.listdir(path):
+        if not os.path.isdir(tdo):
             continue
-        if not os.path.exists("%s/__init__.py" % fnn):
+        if doskip(tdo):
             continue
-        os.chdir(fnn)
+        ppp = os.path.join(path, tdo)
+        print("linting %s" % ppp)
+        os.chdir(ppp)
+        #for fnm in os.listdir(ppp):
+        sys.stdout.flush()
         popen(txt)
         sys.stdout.flush()
         os.chdir("..")
