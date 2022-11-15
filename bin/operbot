@@ -27,7 +27,7 @@ sys.path.insert(0, os.getcwd())
 from operbot.hdl import Callback, Cfg, Command, Event, Handler
 from operbot.hdl import command, parse, scan, scandir
 from operbot.obj import Wd, keys, printable, update
-from operbot.utl import name
+from operbot.thr import name
 
 
 from operbot import cmds, irc, rss
