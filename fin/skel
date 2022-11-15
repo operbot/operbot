@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+# This file is placed in the Public Domain.
+
+
+"skel for operbot"
+
+
+import os
+import pathlib
+import pwd
+import sys
+
+
+SKIP = ["already exists",]
+
+
+def cdir(path):
+    if os.path.exists(path):
+        return
+    if not path.endswith(os.sep):
+        path = os.path.dirname(path)
+    pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+
+
+def doskip(txt):
+    if not txt.strip():
+        return True
+    for skp in SKIP:
+        if skp in txt:
+            return True
+    return False
+
+
+def permission(ddir, username, group=None, umode=0o700):
+    group = group or username
+    try:
+        pwdline = pwd.getpwnam(username)
+        uid = pwdline.pw_uid
+        gid = pwdline.pw_gid
+    except KeyError:
+        uid = os.getuid()
+        gid = os.getgid()
+    stats = os.stat(ddir)
+    if stats[ST_UID] != uid:
+        os.chown(ddir, uid, gid)
+    if S_IMODE(stats[ST_MODE]) != umode:
+        os.chmod(ddir, umode)
+    return True
+
+
+def popen(txt, silent=False):
+    for line in os.popen(txt).readlines():
+        if silent:
+            continue
+        print(line.strip())
+
+
+def main():
+    if len(sys.argv) != 2:
+        print("skel <name>")
+        return
+    name = sys.argv[1]
+    workdir = "/home/%s/" % name
+    popen("groupadd -f %s" % name)
+    popen("useradd -g %s -m %s -d /home" % (name, name))
+    permission(workdir, name)
+    print("done")
+
+
+main()
