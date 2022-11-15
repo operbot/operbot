@@ -1,32 +1,27 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
+# pylint: disable=C0115,C0116,C0209,W0212,W0703,W1514,R1732
+
+
+"write your own commands"
+
+
+__version__ = "105"
 
 
 import os
-import readline
-import signal
 import sys
-import termios
-import time
 
 
-from operbot import Wd, keys, printable, update
-from operbot.run import Event, command, parse, scan
-from operbot.run import Cfg
-from operbot.irc import Config, IRC
-from operbot.rss import Fetcher
+from operbot import Wd, cdir
+from operbot.hdl import Command, scan
+from operbot.utl import permission, wait
 
 
 from operbot import cmds, irc, rss
 
 
-Config.nick = "operbotd"
-Config.channel = "#operbot"
-Config.realname = "program your own commands"
-Config.username = "operbotd"
-
-
-Wd.workdir = os.path.expanduser("~/.operbot")
+Wd.workdir = "/var/lib/operbot/"
 
 
 scan(cmds)
@@ -54,13 +49,15 @@ def ver(event):
 
 def main():
     daemon()
-    permission(Wd.workdir)
+    cdir(Wd.workdir)
+    try:
+        permission(Wd.workdir, "operbot")
+    except Exception as ex:
+        print(str(ex))
     Command.add(ver)
-    bot = IRC()
-    bot.start()
-    fetcher = Fetcher()
-    fetcher.start()
-    bot.wait()
-        
+    irc.init()
+    rss.init()
+    wait()
+
 
 main()

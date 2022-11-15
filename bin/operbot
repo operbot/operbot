@@ -3,7 +3,7 @@
 # pylint: disable=C0115,C0116,C0209,W0221,W0201,E0611
 
 
-"program your own commands"
+"write your own commands"
 
 
 __version__ = "105"
@@ -165,8 +165,8 @@ def main():
     if cfg.txt:
          cli = CLI()
          return command(cli, cfg.otxt)
+    banner(cfg)
     if cfg.irc:
-        banner(cfg)
         scandir("mod", init)
         bot = irc.init()
         print(printable(bot.cfg, "nick,channel,server,port,sasl"))

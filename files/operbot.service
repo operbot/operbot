@@ -1,5 +1,5 @@
 [Unit]
-Description= OPERBOT - write your own commands
+Description=OPERBOT - write your own commands
 After=multi-user.target
 
 [Service]

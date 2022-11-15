@@ -13,15 +13,14 @@ import termios
 import time
 
 
-from operbot.obj import Wd, cdir, keys, permission, printable, update
-from operbot.run import Cfg, Event, Handler, command, parse, scan
-from operbot.rss import Fetcher
-
+from operbot.obj import Wd, cdir, keys, printable, update
+from operbot.hdl import Cfg, Command, Event, Handler, command, parse, scan
+from operbot.utl import permission
 
 from operbot import cmds, irc, rss
 
 
-Wd.workdir = os.path.expanduser("~/.operbot/")
+Wd.workdir = "/var/lib/operbot/"
 
 
 scan(cmds)
@@ -43,7 +42,7 @@ def ver(event):
 def main():
     cdir(Wd.workdir)
     try:
-        permission(Wd.workdir)
+        permission(Wd.workdir, "operbot")
     except Exception as ex:
         print(str(ex))
     Command.add(ver)
