@@ -6,19 +6,14 @@
 
 
 import os
+import skip
 import sys
 
 
-SKIP = ["---", "Your code"]
+from skip import popen
 
 
-def doskip(txt):
-    if not txt.strip():
-        return True
-    for skp in SKIP:
-        if skp in txt:
-            return True
-    return False
+skip.SKIP = ["---", "Your code"]
 
 
 def loop(path, txt):
@@ -28,19 +23,9 @@ def loop(path, txt):
         if not os.path.exists("%s/__init__.py" % fnn):
             continue
         os.chdir(fnn)
-        for line in os.popen(txt).readlines():
-            if doskip(line):
-                continue
-            print(line.rstrip())
-            sys.stdout.flush()
+        popen(txt)
+        sys.stdout.flush()
         os.chdir("..")
-
-
-def popen(txt, silent=False):
-    for line in os.popen(txt).readlines():
-        if silent:
-            continue
-        print(line.strip())
 
 
 if __name__ == "__main__":

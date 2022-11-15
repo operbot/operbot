@@ -1,3 +1,6 @@
+# This file is placed in the Public Domain
+
+
 [Unit]
 Description=OPERBOT - write your own commands
 After=multi-user.target

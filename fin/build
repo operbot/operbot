@@ -8,10 +8,7 @@
 import os
 
 
-def popen(txt):
-    "run command"
-    for line in os.popen(txt).readlines():
-        print(line.strip())
+from skip import popen
 
 
 popen("python3 setup.py sdist bdist_wheel")

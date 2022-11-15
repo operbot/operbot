@@ -9,7 +9,11 @@ import os
 import sys
 
 
-SKIP = ["env"]
+from skip import SKIP, popen
+
+
+SKIP.extend(["env"])
+
 
 def loop(path, txt):
     for fnn in os.listdir(path):

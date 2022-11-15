@@ -9,6 +9,9 @@ import os
 import time
 
 
+from skip import popen
+
+
 starttime = time.time()
 
 
@@ -50,11 +53,6 @@ def elapsed(seconds, short=True):
     txt = txt.strip()
     return txt
 
-
-
-def popen(txt):
-    for line in os.popen(txt).readlines():
-        print(line.strip())
 
 
 print("FIN started at %s" % time.ctime(time.time()).replace("  ", " "))

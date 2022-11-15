@@ -5,7 +5,7 @@ README
 **NAME**
 
 
-``OPERBOT`` - operator bot, write your own commands.
+``OPERBOT`` - write your own commands
 
 
 **SYNOPSIS**

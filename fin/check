@@ -2,10 +2,13 @@
 # This file is placed in the Public Domain.
 
 
-"check for blurp"
+"check"
 
 
 import os
+
+
+from skip import popen
 
 
 ALL = [
@@ -31,9 +34,6 @@ SKIP = [
        ]
 
 
-TXT  = "grep -R %s"
-
-
 def doskip(txt, skiplist=[]):
     for skip in skiplist:
         if skip in txt:
@@ -41,13 +41,12 @@ def doskip(txt, skiplist=[]):
     return False
 
 
-def main():
-    for txt in ALL:
-        greptxt = TXT % txt
-        for line in os.popen(greptxt).readlines():
-            if doskip(line, SKIP):
-                continue
-            print(line.rstrip())
+def popen(txt):
+    for line in os.popen(txt).readlines():
+        if doskip(line, SKIP):
+            continue
+        print(line.strip())
 
 
-main()
+for txt in ALL:
+    popen("grep -R %s" % txt)

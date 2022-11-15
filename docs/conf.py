@@ -1,6 +1,5 @@
-# OPERBOT - operator bot
+# OPERBOT - write your own commands
 # -*- coding: utf-8 -*-
-#
 
 
 "write your own commands"
