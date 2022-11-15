@@ -15,17 +15,6 @@
     </center>
     <br>
 
-**Object Programming**
-
-.. autosummary::
-    :toctree: 
-    :template: module.rst
-
-    op.hdl	handler
-    op.obj	object
-    op.run	runtime
-    op.thr	thread
-    op.utl	utility
 
 **OPERBOT**
 
@@ -34,7 +23,9 @@
     :template: module.rst
 
     operbot.cmds	commands
+    operbot.hdl		handler
     operbot.irc		internet relay chat
-    operbot.mbx		mailbox
+    operbot.obj		object
     operbot.rss		rich site syndicate
-    operbot.udp		udp to irc relay
+    operbot.thr		thread
+    operbot.utl		utility

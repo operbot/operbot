@@ -14,9 +14,16 @@ def popen(txt):
         print(line.rstrip())
 
 
+popen("rm -fR ~/.cache/pip")
+
+
+if not os.path.exists("dist"):
+    popen("fin/build")
+
 
 if not os.path.exists("env"):
     popen("python3 -mvirtualenv --system-site-packages env")
     #popen('env/bin/python3 env/bin/pip3 install -I "Jinja2==3.0.0" "mock==1.0.1" "pillow>5.4.1" "alabaster>=0.7,<0.8,!=0.7.5" "commonmark==0.8.1" "recommonmark==0.5.0" "sphinx<2" "sphinx-rtd-theme<0.5" "readthedocs-sphinx-ext<2.2"')
+    popen('env/bin/python3 env/bin/pip3 install -I "Jinja2==3.0.0" "mock==1.0.1" "pillow>5.4.1" "alabaster>=0.7,<0.8,!=0.7.5" "commonmark==0.8.1" "recommonmark==0.5.0" "sphinx<2" "sphinx-rtd-theme<0.5" "readthedocs-sphinx-ext<2.2"')
 popen("env/bin/pip3 install %s -f dist --upgrade --force-reinstall --no-cache-dir --no-deps" % "operbot")
-popen("env/bin/python3 env/bin/sphinx-build /usr/local/share/doc/operbot html")
+popen("env/bin/python3 env/bin/sphinx-build docs html")

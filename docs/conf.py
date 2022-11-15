@@ -3,11 +3,11 @@
 #
 
 
-"operator bot"
+"write your own commands"
 
 
 __name__ = "operbot"
-__version__ = "104"
+__version__ = "105"
 
 
 import doctest
@@ -58,7 +58,7 @@ extensions=[
 # -- Options for HTML output -------------------------------------------------
 
 
-html_title = "operator bot"
+html_title = "write your own commands"
 html_style = 'operator.css'
 html_static_path = ["_static"]
 html_css_files = ["operbot.css",]
@@ -77,7 +77,7 @@ html_theme_options = {
     'github_repo': __name__,
     'github_button': False,
     'github_banner': False,
-    'logo': 'operbotsmile.png',
+    'logo': 'opersmile.png',
     'link': '#000',
     'link_hover': '#000',
     'nosidebar': True,
@@ -85,7 +85,7 @@ html_theme_options = {
     'show_relbar_top': False,
     'sidebar_width': 0,
 }
-html_favicon = "operbotsmile.png"
+html_favicon = "opersmile.png"
 html_extra_path = []
 html_last_updated_fmt = '%Y-%b-%d'
 html_additional_pages = {}
