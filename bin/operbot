@@ -110,7 +110,7 @@ def from_exception(exc, txt="", sep=" "):
         result.append(f"{fnm}:{frm.lineno}")
     nme = name(exc)
     res = sep.join(result)
-    return f"{txt} {res} {nme}: {exc}"
+    return f"{txt} {res} {nme}: {exc}".strip()
 
 
 def importer(pname, mname, path):

@@ -119,6 +119,58 @@ class Command(Object):
         delattr(Command.cmd, cmd)
 
 
+class Handler(Callback):
+
+    def __init__(self):
+        Callback.__init__(self)
+        self.queue = queue.Queue()
+        self.stopped = threading.Event()
+        self.stopped.clear()
+        self.register("event", Command.handle)
+        Bus.add(self)
+
+    @staticmethod
+    def add(cmd):
+        Command.add(cmd)
+
+    def announce(self, txt):
+        self.raw(txt)
+
+    def handle(self, event):
+        self.dispatch(event)
+
+    def loop(self):
+        while not self.stopped.set():
+            launch(self.handle, self.poll())
+
+    def poll(self):
+        return self.queue.get()
+
+    def put(self, event):
+        self.queue.put_nowait(event)
+
+    def raw(self, txt):
+        raise NotImplementedError("raw")
+
+    def restart(self):
+        self.stop()
+        self.start()
+
+    def say(self, channel, txt):
+        self.raw(txt)
+
+    def stop(self):
+        self.stopped.set()
+
+    def start(self):
+        self.stopped.clear()
+        launch(self.loop)
+
+    def wait(self):
+        while 1:
+            time.sleep(1.0)
+
+
 class Parsed(Default):
 
     def __init__(self):
@@ -204,58 +256,6 @@ class Event(Parsed):
 
     def wait(self):
         self.__ready__.wait()
-
-
-class Handler(Callback):
-
-    def __init__(self):
-        Callback.__init__(self)
-        self.queue = queue.Queue()
-        self.stopped = threading.Event()
-        self.stopped.clear()
-        self.register("event", Command.handle)
-        Bus.add(self)
-
-    @staticmethod
-    def add(cmd):
-        Command.add(cmd)
-
-    def announce(self, txt):
-        self.raw(txt)
-
-    def handle(self, event):
-        self.dispatch(event)
-
-    def loop(self):
-        while not self.stopped.set():
-            self.handle(self.poll())
-
-    def poll(self):
-        return self.queue.get()
-
-    def put(self, event):
-        self.queue.put_nowait(event)
-
-    def raw(self, txt):
-        raise NotImplementedError("raw")
-
-    def restart(self):
-        self.stop()
-        self.start()
-
-    def say(self, channel, txt):
-        self.raw(txt)
-
-    def stop(self):
-        self.stopped.set()
-
-    def start(self):
-        self.stopped.clear()
-        launch(self.loop)
-
-    def wait(self):
-        while 1:
-            time.sleep(1.0)
 
 
 def command(cli, txt, event=None):

@@ -9,7 +9,7 @@ import os
 import time
 
 
-from skip import popen
+from skip import popen, skip
 
 
 starttime = time.time()
@@ -56,16 +56,10 @@ def elapsed(seconds, short=True):
 
 
 print("FIN started at %s" % time.ctime(time.time()).replace("  ", " "))
-print("\ncleaning\n")
 popen("fin/clean")
-print("\nlinting\n")
-popen("fin/lint")
-print("\ntesting\n")
-popen("fin/test")
-print("\ncreating environment\n")
-print("\nbuilding\n")
-popen("fin/build")
-popen("fin/env")
-print("\nchecking\n")
-popen("twine check dist/*")
+skip("fin/lint")
+skip("fin/test")
+skip("fin/build")
+skip("fin/env")
+skip("twine check dist/*")
 print("\ndone %s" % elapsed(time.time() - starttime))

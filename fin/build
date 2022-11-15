@@ -5,9 +5,6 @@
 "build"
 
 
-import os
-
-
 from skip import popen
 
 

@@ -26,7 +26,11 @@ def doskip(txt, skip=SKIP):
 
 def popen(txt, skip=SKIP):
     for line in os.popen(txt).readlines():
+        print(line.rstrip())
+
+
+def skip(txt, skip=SKIP):
+    for line in os.popen(txt).readlines():
         if doskip(line, skip):
             continue
-        print(line.strip())
-        sys.stdout.flush()
+        print(line.rstrip())
