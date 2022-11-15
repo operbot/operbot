@@ -5,25 +5,15 @@
 "env"
 
 
-## import
-
-
 import os
 
 
-## utility
+name = os.getcwd()
 
 
 def popen(txt):
-    "run command"
     for line in os.popen(txt).readlines():
         print(line.strip())
-
-
-## runtime
-
-
-name = os.getcwd()
 
 
 if not os.path.exists("dist"):

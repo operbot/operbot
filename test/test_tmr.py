@@ -8,7 +8,7 @@
 import unittest
 
 
-from gcide import Timer
+from operbot import Timer
 
 
 def test():

@@ -19,12 +19,12 @@ import _thread
 
 
 from .obj import Class, Default, Object
-from .obj import keys, last, printable
+from .obj import keys, last, locked, printable
 from .obj import edit, fntime, find, save, update
 from .obj import register
 from .hdl import Command, Event, Handler
 from .thr import launch
-from .utl import elapsed, locked
+from .utl import elapsed
 
 
 def __dir__():

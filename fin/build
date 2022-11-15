@@ -5,13 +5,7 @@
 "build"
 
 
-## import
-
-
 import os
-
-
-## utility
 
 
 def popen(txt):
@@ -20,8 +14,4 @@ def popen(txt):
         print(line.strip())
 
 
-## runtime
-
-
-popen("python3 setup.py sdist")
-#popen("python3 -m pip install .")
+popen("python3 setup.py sdist bdist_wheel")

@@ -21,6 +21,9 @@ import termios
 import time
 
 
+sys.path.insert(0, os.getcwd())
+
+
 from operbot.hdl import Callback, Cfg, Command, Event, Handler
 from operbot.hdl import command, parse, scan, scandir
 from operbot.obj import Wd, keys, printable, update
@@ -116,6 +119,7 @@ def importer(pname, mname, path):
         mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     scan(mod)
+
 
 def init(pname, mname, path):
     modname = "%s.%s" % (pname, mname)

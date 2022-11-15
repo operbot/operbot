@@ -44,5 +44,4 @@ def popen(txt, silent=False):
 
 
 if __name__ == "__main__":
-    popen("fin/clean")
-    loop(os.getcwd(), "pylint --recursive y *")
+    loop(os.getcwd(), "pylint *")

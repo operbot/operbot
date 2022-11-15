@@ -1,5 +1,5 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,W0703,W0201,R0902,R0903,W0613
+# pylint: disable=C0115,C0116,W0703,W0201,R0902,R0903,W0613,R0201
 
 
 "handler"
@@ -259,7 +259,7 @@ class Handler(Callback):
 
 
 def command(cli, txt, event=None):
-    evt = (event and event()) or Event()
+    evt = (event() if event else Event())
     evt.parse(txt)
     evt.orig = repr(cli)
     cli.handle(evt)

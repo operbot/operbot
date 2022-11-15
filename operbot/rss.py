@@ -20,10 +20,10 @@ from urllib.request import Request, urlopen
 
 from .obj import Class, Db, Default, Object, write
 from .obj import find, fntime, last, printable, save
-from .obj import edit, register, update
+from .obj import edit, locked, register, update
 from .hdl import Bus
 from .thr import Repeater, launch
-from .utl import elapsed, locked, spl
+from .utl import elapsed, spl
 
 
 def __dir__():

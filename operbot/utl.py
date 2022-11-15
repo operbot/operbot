@@ -20,7 +20,6 @@ def __dir__():
             'debian',
             'elapsed',
             'filesize',
-            'locked',
             'permission',
             'spl',
             'touch',
@@ -77,30 +76,6 @@ def elapsed(seconds, short=True):
 
 def filesize(path):
     return os.stat(path)[6]
-
-
-def locked(lock):
-
-    noargs = False
-
-    def lockeddec(func, *args, **kwargs):
-
-        def lockedfunc(*args, **kwargs):
-            lock.acquire()
-            if args or kwargs:
-                locked.noargs = True
-            res = None
-            try:
-                res = func(*args, **kwargs)
-            finally:
-                lock.release()
-            return res
-
-        lockeddec.__wrapped__ = func
-        lockeddec.__doc__ = func.__doc__
-        return lockedfunc
-
-    return lockeddec
 
 
 def permission(ddir, username, group=None, umode=0o700):

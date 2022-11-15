@@ -9,42 +9,43 @@ import os
 
 
 ALL = [
-       "__import__",
+       "__import__\(",
        "__main__",
        "__version__",
        '"## "',
-       "popen",
+       "popen\(",
        "pkgutil",
        "importlib",
-       "print"
+       "print\("
       ]
 
 
 SKIP = [
         ".git",
-        "README",
-        "grep",
         "bin",
         "fin",
         "docs",
-        "printable",
-        "env"
+        "env",
+        "README",
+        "zcmd"
        ]
 
 
 TXT  = "grep -R %s"
 
 
+def doskip(txt, skiplist=[]):
+    for skip in skiplist:
+        if skip in txt:
+            return True
+    return False
+
+
 def main():
     for txt in ALL:
         greptxt = TXT % txt
         for line in os.popen(greptxt).readlines():
-            donext = False
-            for skip in SKIP:
-                if skip in line:
-                    donext = True
-                    break
-            if donext:
+            if doskip(line, SKIP):
                 continue
             print(line.rstrip())
 

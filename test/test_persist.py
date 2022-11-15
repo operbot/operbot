@@ -8,7 +8,7 @@
 import unittest
 
 
-from gcide import Object
+from operbot import Object
 
 
 class TestPersist(unittest.TestCase):
