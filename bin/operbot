@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,C0209,W0221,W0201,E0611
+# pylint: disable=C0115,C0116,C0209,W0221,W0201,E0611,C0413, W0613
 
 
 "write your own commands"
@@ -15,10 +15,10 @@ import importlib.util
 import os
 import readline
 import rlcompleter
-import signal
 import sys
 import termios
 import time
+import traceback
 
 
 sys.path.insert(0, os.getcwd())
@@ -27,6 +27,7 @@ sys.path.insert(0, os.getcwd())
 from operbot.hdl import Callback, Cfg, Command, Event, Handler
 from operbot.hdl import command, parse, scan, scandir
 from operbot.obj import Wd, keys, printable, update
+from operbot.utl import name
 
 
 from operbot import cmds, irc, rss
@@ -113,17 +114,17 @@ def from_exception(exc, txt="", sep=" "):
 
 
 def importer(pname, mname, path):
-    modname = "%s.%s" % (pname, mname)
+    mod = None
     spec = importlib.util.spec_from_file_location(mname, path)
     if spec:
         mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    scan(mod)
+        spec.loader.exec_module(mod)
+        scan(mod)
+    return mod
 
 
-def init(pname, mname, path):
-    modname = "%s.%s" % (pname, mname)
-    mod = importlib.import_module(modname, pname)
+def init(pname, mname, path=None):
+    mod = importer(pname, mname, path)
     if "init" in dir(mod):
         mod.init()
 
@@ -163,8 +164,8 @@ def main():
     scandir("mod", importer)
     Command.add(ver)
     if cfg.txt:
-         cli = CLI()
-         return command(cli, cfg.otxt)
+        cli = CLI()
+        return command(cli, cfg.otxt)
     banner(cfg)
     if cfg.irc:
         scandir("mod", init)
