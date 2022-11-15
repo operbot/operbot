@@ -43,8 +43,8 @@ def main():
     cdir(Wd.workdir)
     try:
         permission(Wd.workdir, "operbot")
-    except Exception as ex:
-        print(str(ex))
+    except PermissionError:
+        pass
     Command.add(ver)
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
