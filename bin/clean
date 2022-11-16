@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+# This file is placed in the Public Domain
+
+
+"clean"
+
+
+import os
+
+
+def popen(txt):
+    for line in os.popen(txt).readlines():
+        print(line.rstrip())
+
+
+popen("rm -fRv build dist MANIFEST *.egg-info")
+popen("rm -fv *~ bin/*~")
+popen("rm -fRv .test .pytest_cache")
+popen("rm -fRv html docs/operbot*.rst docs/op*.rst")
