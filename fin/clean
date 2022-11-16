@@ -8,9 +8,7 @@
 from skip import popen
 
 
-popen("rm -fRv build dist MANIFEST *.egg-info")
-popen("rm -fv *~")
-popen("rm -fRv .test .pytest_cache")
-popen("rm -fRv html docs/operbot*.rst docs/op*.rst")
+popen("bin/clean")
+popen("rm -fR fin/*~")
 popen("fin/loop . rm -fRv \*~")
 popen("fin/loop . rm -fR __pycache__")

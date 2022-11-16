@@ -3,7 +3,7 @@
 # pylint: disable=C0114,C0115,C0116,C0209,C0413
 
 
-__version__ = "105"
+__version__ = "106"
 
 
 "write your own commands"
