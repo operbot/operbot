@@ -302,7 +302,7 @@ def write(obj):
 class Db:
 
     @staticmethod
-    def find(otp, selector=None, index=None, timed=None, deleted=False):
+    def find(otp, selector=None, index=None, timed=None, deleted=True):
         if selector is None:
             selector = {}
         nmr = -1
@@ -390,7 +390,7 @@ def hook(path):
     return obj
 
 
-def find(otp, selector=None, index=None, timed=None, deleted=False):
+def find(otp, selector=None, index=None, timed=None, deleted=True):
     names = Class.full(otp)
     if not names:
         names = Wd.types(otp)
