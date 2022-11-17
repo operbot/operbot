@@ -46,9 +46,9 @@ setup(
                ],
     scripts=[
              "bin/operbot",
-             "bin/operbotcmd",
-             "bin/operbotctl",
-             "bin/operbotd"
+             "bin/opercmd",
+             "bin/operctl",
+             "bin/operd"
             ],
     classifiers=[
         "Development Status :: 3 - Alpha",

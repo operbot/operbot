@@ -3,30 +3,25 @@
 # pylint: disable=C0115,C0116,C0209,W0212,W0703,W1514,R1732
 
 
-"write your own commands"
+"feeding rss into your irc channel"
 
 
-__version__ = "106"
+__version__ = "123"
 
 
 import os
 import sys
 
 
-from operbot import Wd, cdir
-from operbot.hdl import Command, scan
-from operbot.utl import permission, wait
+from rssbot.obj import Wd, cdir, lower, permission
+from rssbot.hdl import Callback, Command, scan
+from rssbot.utl import wait
 
 
-from operbot import cmds, irc, rss
+from rssbot import irc, rss
 
 
-Wd.workdir = "/var/lib/operbot/"
-
-
-scan(cmds)
-scan(irc)
-scan(rss)
+Wd.workdir = "/var/lib/rssbot/"
 
 
 def daemon():
@@ -43,21 +38,22 @@ def daemon():
     os.dup2(ses.fileno(), sys.stderr.fileno())
 
 
-def ver(event):
-    event.reply("OPERBOT %s" % __version__)
+def wrap(func):
+    try:
+        func()
+    except (EOFError, KeyboardInterrupt):
+        print("")
+    finally:
+        for err in Callback.errors:
+            traceback.print_exc(err)
 
 
 def main():
     daemon()
-    cdir(Wd.workdir)
-    try:
-        permission(Wd.workdir, "operbot")
-    except PermissionError:
-        pass
-    Command.add(ver)
+    #lower("rssbot")
     irc.init()
     rss.init()
     wait()
 
 
-main()
+wrap(main)

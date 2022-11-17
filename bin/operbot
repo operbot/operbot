@@ -167,12 +167,10 @@ def main():
         cli = CLI()
         return command(cli, cfg.otxt)
     banner(cfg)
-    if cfg.irc:
-        scandir("mod", init)
-        bot = irc.init()
-        print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    if cfg.rss:
-        rss.init()
+    scandir("mod", init)
+    bot = irc.init()
+    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
+    rss.init()
     if cfg.console:
         csl = Console()
         csl.start()
