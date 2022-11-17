@@ -12,7 +12,7 @@ import threading
 import time
 
 
-from .obj import Class, Default, Object, register
+from .obj import Class, Default, Object, register, update
 from .thr import launch
 from .utl import elapsed
 
@@ -33,6 +33,9 @@ def __dir__():
 
 
 __all__ = __dir__()
+
+
+Cfg = Default()
 
 
 class Bus(Object):
@@ -80,7 +83,7 @@ class Callback(Object):
             event.ready()
             return
         try:
-            func(event)
+            event.__thr__ = launch(func, event)
         except Exception as ex:
             Callback.errors.append(ex)
             event.ready()
@@ -141,7 +144,7 @@ class Handler(Callback):
 
     def loop(self):
         while not self.stopped.set():
-            launch(self.handle, self.poll())
+            self.handle(self.poll())
 
     def poll(self):
         return self.queue.get()
@@ -229,6 +232,7 @@ class Event(Parsed):
     def __init__(self):
         Parsed.__init__(self)
         self.__ready__ = threading.Event()
+        self.__thr__ = None
         self.control = "!"
         self.createtime = time.time()
         self.result = []
@@ -255,6 +259,8 @@ class Event(Parsed):
             Bus.say(self.orig, self.channel, txt)
 
     def wait(self):
+        for thr in self._thrs:
+            thr.join()
         self.__ready__.wait()
 
 
@@ -271,8 +277,13 @@ def parse(txt):
     prs.parse(txt)
     if "c" in prs.opts:
         prs.console = True
+    if "d" in prs.opts:
+        prs.debug = True
     if "v" in prs.opts:
         prs.verbose = True
+    if "x" in prs.opts:
+        prs.exec = True
+    update(Cfg, prs)
     return prs
 
 
@@ -305,6 +316,3 @@ def scandir(path, func):
         path2 = os.path.join(path, fnm)
         res.append(func(pname, mname, path2))
     return res
-
-
-Cfg = Default()

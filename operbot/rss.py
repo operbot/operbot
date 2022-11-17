@@ -21,7 +21,7 @@ from urllib.request import Request, urlopen
 from .obj import Class, Db, Default, Object, write
 from .obj import find, fntime, last, printable, save
 from .obj import edit, locked, register, update
-from .hdl import Bus
+from .hdl import Bus, Cfg, Command
 from .thr import Repeater, launch
 from .utl import elapsed, spl
 
@@ -34,6 +34,7 @@ def __dir__():
         "Seen",
         "debug",
         "init",
+        "cmd",
         "dpl",
         "ftc",
         "nme",
@@ -180,6 +181,8 @@ class Parser(Object):
 
 
 def getfeed(url, item):
+    if Cfg.debug:
+        return [Object(), Object()]
     try:
         result = geturl(url)
     except (ValueError, HTTPError, URLError):
@@ -228,6 +231,10 @@ def unescape(text):
 
 def useragent(txt):
     return "Mozilla/5.0 (X11; Linux x86_64) " + txt
+
+
+def cmd(event):
+    event.reply(",".join(sorted(Command.cmd)))
 
 
 def dpl(event):

@@ -9,6 +9,7 @@ import getpass
 import os
 import pwd
 import time
+import traceback
 import types
 
 
@@ -20,7 +21,6 @@ def __dir__():
             'debian',
             'elapsed',
             'filesize',
-            'permission',
             'spl',
             'touch',
             'user',
@@ -76,23 +76,6 @@ def elapsed(seconds, short=True):
 
 def filesize(path):
     return os.stat(path)[6]
-
-
-def permission(ddir, username, group=None, umode=0o700):
-    group = group or username
-    try:
-        pwdline = pwd.getpwnam(username)
-        uid = pwdline.pw_uid
-        gid = pwdline.pw_gid
-    except KeyError:
-        uid = os.getuid()
-        gid = os.getgid()
-    stats = os.stat(ddir)
-    if stats[ST_UID] != uid:
-        os.chown(ddir, uid, gid)
-    if S_IMODE(stats[ST_MODE]) != umode:
-        os.chmod(ddir, umode)
-    return True
 
 
 def spl(txt):

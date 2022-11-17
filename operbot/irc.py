@@ -43,8 +43,8 @@ def __dir__():
 __all__ = __dir__()
 
 
-NAME = "operbot"
-REALNAME = "program your own commands"
+NAME = "rssbot"
+REALNAME = "feed rss into your irc channel"
 
 
 saylock = _thread.allocate_lock()
