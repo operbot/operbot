@@ -18,12 +18,13 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from .obj import Class, Db, Default, Object, write
-from .obj import find, fntime, last, printable, save
-from .obj import edit, locked, register, update
-from .hdl import Bus, Cfg, Command
-from .thr import Repeater, launch
-from .utl import elapsed, spl
+from .object import Class, Db, Default, Object, write
+from .object import find, fntime, last, printable, save
+from .object import edit, locked, register, update
+from .handler import Bus, Command
+from .run import Cfg
+from .thread import Repeater, launch
+from .util import elapsed, spl
 
 
 def __dir__():

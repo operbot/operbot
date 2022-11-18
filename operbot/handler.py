@@ -13,6 +13,7 @@ import time
 
 
 from .object import Class, Default, Object, register, update
+from .run import Cfg
 from .thread import launch
 from .util import elapsed
 

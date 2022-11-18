@@ -18,13 +18,13 @@ import threading
 import _thread
 
 
-from .obj import Class, Default, Object
-from .obj import keys, last, locked, printable
-from .obj import edit, fntime, find, save, update
-from .obj import register
-from .hdl import Command, Event, Handler
-from .thr import launch
-from .utl import elapsed
+from .object import Class, Default, Object
+from .object import keys, last, locked, printable
+from .object import edit, fntime, find, save, update
+from .object import register
+from .handler import Command, Event, Handler
+from .thread import launch
+from .util import elapsed
 
 
 def __dir__():
@@ -43,8 +43,8 @@ def __dir__():
 __all__ = __dir__()
 
 
-NAME = "rssbot"
-REALNAME = "feed rss into your irc channel"
+NAME = "operbot"
+REALNAME = "program your own commands"
 
 
 saylock = _thread.allocate_lock()

@@ -24,10 +24,11 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from operbot.hdl import Callback, Cfg, Command, Event, Handler
-from operbot.hdl import command, parse, scan, scandir
-from operbot.obj import Wd, keys, printable, update
-from operbot.thr import name
+from operbot.handler import Callback, Command, Event, Handler
+from operbot.handler import command, parse, scan, scandir
+from operbot.object import Wd, keys, printable, update
+from operbot.run import Cfg
+from operbot.thread import name
 
 
 from operbot import cmds, irc, rss
@@ -166,16 +167,15 @@ def main():
     if cfg.txt:
         cli = CLI()
         return command(cli, cfg.otxt)
-    banner(cfg)
-    scandir("mod", init)
-    bot = irc.init()
-    print(printable(bot.cfg, "nick,channel,server,port,sasl"))
-    rss.init()
-    if cfg.console:
+    if not Cfg.exec:
+        banner(Cfg)
+        scandir("mod", init)
+        bot = irc.init()
+        print(printable(bot.cfg, "nick,channel,server,port,sasl"))
+        rss.init()
         csl = Console()
         csl.start()
         csl.wait()
-    return None
 
 
 wrap(main)
