@@ -12,9 +12,9 @@ import threading
 import time
 
 
-from .obj import Class, Default, Object, register, update
-from .thr import launch
-from .utl import elapsed
+from .object import Class, Default, Object, register, update
+from .thread import launch
+from .util import elapsed
 
 
 def __dir__():
@@ -33,9 +33,6 @@ def __dir__():
 
 
 __all__ = __dir__()
-
-
-Cfg = Default()
 
 
 class Bus(Object):
