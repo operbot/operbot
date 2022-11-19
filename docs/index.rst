@@ -5,21 +5,19 @@
 
   <br>
 
+
 .. title:: write your own commands
+
 
 .. raw:: html
 
+
     <center>
     <b>
-    O P E R B O T
+    M A N U A L
     </b>
     </center>
     <br>
-
-
-.. image:: skullnr2.jpg
-    :width: 100%
-    :target: index.html
 
 
 **NAME**
@@ -62,6 +60,7 @@
 
 .. raw:: html
 
+    <br>
     <center>
     <b>
     only include your code is the path to "secure"

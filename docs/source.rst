@@ -23,9 +23,10 @@
     :template: module.rst
 
     operbot.cmds	commands
-    operbot.hdl		handler
+    operbot.handler	handler
     operbot.irc		internet relay chat
-    operbot.obj		object
+    operbot.object	object
     operbot.rss		rich site syndicate
-    operbot.thr		thread
-    operbot.utl		utility
+    operbot.run 	runtime
+    operbot.thread	thread
+    operbot.util	utility
