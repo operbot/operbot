@@ -1,7 +1,7 @@
 # This file is placed in the Public Domain.
 
 
-"""object programming runtime
+"""
 
 
 this module contains a big Object class that provides a clean, no methods,
@@ -11,8 +11,8 @@ the object, is easily being updated from a on disk stored json (dict).
 
 basic usage is this:
 
->>> import operbot
->>> o = operbot.Object()
+>>> import opl
+>>> o = opl.Object()
 >>> o.key = "value"
 >>> o.key
 'value'
@@ -22,7 +22,7 @@ like get, items, keys, register, set, update and values.
 
 load/save from/to disk:
 
->>> from operbot import Object, load, save
+>>> from opl import Object, load, save
 >>> o = Object()
 >>> o.key = "value"
 >>> p = save(o)
@@ -34,12 +34,12 @@ load/save from/to disk:
 big Objects can be searched with database functions and uses read-only files
 to improve persistence and a type in filename for reconstruction:
 
-'operbot.object.Object/11ee5f11bd874f1eaa9005980f9d7a94/2021-08-31/15:31:05.717063'
+'opl.object.Object/11ee5f11bd874f1eaa9005980f9d7a94/2021-08-31/15:31:05.717063'
 
->>> from opebot import Object, save
+>>> from opl import Object, save
 >>> o = Object()
 >>> save(o)  # doctest: +ELLIPSIS
-'operbot.object.Object/...'
+'opl.object.Object/...'
 
 great for giving objects peristence by having their state stored in files.
 
@@ -63,11 +63,11 @@ import uuid
 from stat import ST_UID, ST_MODE, S_IMODE
 
 
-from .handler import *
-from .object import *
+from .hdl import *
+from .obj import *
 from .run import *
-from .thread import *
-from .util import *
+from .thr import *
+from .utl import *
 
 
 def __dir__():

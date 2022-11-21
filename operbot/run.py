@@ -4,7 +4,13 @@
 "runtime"
 
 
-from .object import Default
+import time
+
+
+from .obj import Default
 
 
 Cfg = Default()
+
+
+starttime = time.time()

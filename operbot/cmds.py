@@ -1,8 +1,8 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0115,C0116,R0903,C0209
+# pylint: disable=E1101,R0903,C0115,C0116
 
 
-"commands"
+"command"
 
 
 import threading
@@ -11,11 +11,9 @@ import time
 
 from .handler import Bus, Command
 from .object import Class, Object, find, fntime, save, update
+from .run import starttime
 from .thread import name
 from .util import elapsed
-
-
-starttime = time.time()
 
 
 def __dir__():

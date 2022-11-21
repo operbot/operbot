@@ -1,15 +1,12 @@
-# This file is placed in the Public Domain
-
-
 [Unit]
 Description=OPERBOT - write your own commands
 After=multi-user.target
 
 [Service]
-Type=forking
-KillMode=mixed
-PrivateTmp=true
-DynamicUser=True
+Type=simple
+User=operbot
+Group=operbot
+DynamicUser=yes
 StateDirectory=operbot
 LogsDirectory=operbot
 CacheDirectory=operbot

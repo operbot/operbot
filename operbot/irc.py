@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,C0413,R0902,R0903,W0201,W0613
-# pylint: disable=E1101,R0912,R0915,R0904,W0221,C0209
+# pylint: disable=C0115,C0116,R0201,C0413,R0902,R0903,W0201,W0613
+# pylint: disable=E1101,R0912,R0915,R0904,W0221
 
 
 "irc"
@@ -19,9 +19,9 @@ import _thread
 
 
 from .object import Class, Default, Object
-from .object import keys, last, locked, printable
+from .object import keys, last, printable
 from .object import edit, fntime, find, save, update
-from .object import register
+from .object import locked, register
 from .handler import Command, Event, Handler
 from .thread import launch
 from .util import elapsed
@@ -44,7 +44,7 @@ __all__ = __dir__()
 
 
 NAME = "operbot"
-REALNAME = "program your own commands"
+REALNAME = "write your own commands"
 
 
 saylock = _thread.allocate_lock()
@@ -165,9 +165,9 @@ class Output(Object):
                 _nr += 1
                 self.dosay(channel, txt)
 
-    def size(self, channel):
-        if channel in self.cache:
-            return len(self.cache[channel])
+    def size(self, chan):
+        if chan in self.cache:
+            return len(self.cache[chan])
         return 0
 
     def start(self):
@@ -222,14 +222,14 @@ class IRC(Handler, Output):
 
     def auth(self, event):
         time.sleep(1.0)
-        self.raw("AUTHENTICATE %s" % self.cfg.password)
+        self.direct("AUTHENTICATE %s" % self.cfg.password)
 
     def cap(self, event):
         time.sleep(1.0)
         if self.cfg.password and "ACK" in event.arguments:
-            self.raw("AUTHENTICATE PLAIN")
+            self.direct("AUTHENTICATE PLAIN")
         else:
-            self.raw("CAP REQ :sasl")
+            self.direct("CAP REQ :sasl")
 
     @locked(saylock)
     def command(self, cmd, *args):
@@ -246,8 +246,8 @@ class IRC(Handler, Output):
                                   args[1],
                                   " ".join(args[2:]))
             )
-        if (time.time() - self.state.last) < 4.0:
-            time.sleep(4.0)
+        if (time.time() - self.state.last) < 5.0:
+            time.sleep(5.0)
         self.state.last = time.time()
 
     def connect(self, server, port=6667):
@@ -260,7 +260,7 @@ class IRC(Handler, Output):
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock = ctx.wrap_socket(sock)
             self.sock.connect((server, port))
-            self.raw("CAP LS 302")
+            self.command("CAP LS 302")
         else:
             addr = socket.getaddrinfo(server, port, socket.AF_INET)[-1][-1]
             self.sock = socket.create_connection(addr)
@@ -271,6 +271,9 @@ class IRC(Handler, Output):
             self.connected.set()
             return True
         return False
+
+    def direct(self, txt):
+        self.sock.send(bytes(txt+"\n", "utf-8"))
 
     def disconnect(self):
         self.sock.shutdown(2)
@@ -307,7 +310,7 @@ class IRC(Handler, Output):
         if cmd == "001":
             self.state.needconnect = False
             if self.cfg.servermodes:
-                self.raw("MODE %s %s" % (self.cfg.nick, self.cfg.servermodes))
+                self.command("MODE %s %s" % (self.cfg.nick, self.cfg.servermodes))
             self.zelf = evt.args[-1]
             self.joinall()
         elif cmd == "002":
@@ -326,11 +329,11 @@ class IRC(Handler, Output):
 
     def h903(self, event):
         time.sleep(1.0)
-        self.raw("CAP END")
+        self.command("CAP END")
 
     def h904(self, event):
         time.sleep(1.0)
-        self.raw("CAP END")
+        self.command("CAP END")
 
     def joinall(self):
         for channel in self.channels:
@@ -353,8 +356,8 @@ class IRC(Handler, Output):
         assert nck
         assert self.cfg.username
         assert self.cfg.realname
-        self.raw("NICK %s" % nck)
-        self.raw(
+        self.direct("NICK %s" % nck)
+        self.direct(
                  "USER %s %s %s :%s" % (self.cfg.username,
                  server,
                  server,
@@ -482,7 +485,7 @@ class IRC(Handler, Output):
                 self.sock.send(txt)
             except (ConnectionResetError, BrokenPipeError) as ex:
                 time.sleep(5.0)
-                self.state.errors.append(str(ex))
+                self.errors.append(ex)
                 self.stop()
         self.state.last = time.time()
         self.state.nrsend += 1

@@ -17,16 +17,17 @@ import sys
 from stat import ST_UID, ST_GID
 
 
-from operbot.obj import Wd, cdir, lower, permission, update
-from operbot.hdl import Cfg, Command, Handler, command, parse, scan
+from operbot.object import Wd, cdir, lower, permission, update
+from operbot.handler import Cfg, Command, Handler, command, parse, scan
 
 
-from operbot import irc, rss
+from operbot import cmds, irc, rss
 
 
 Wd.workdir = "/var/lib/operbot/"
 
 
+scan(cmds)
 scan(irc)
 scan(rss)
 
@@ -38,17 +39,7 @@ class CLI(Handler):
         print(txt)
 
 
-def cmd(event):
-    event.reply(",".join(sorted(Command.cmd)))
-
-
-def ver(event):
-    event.reply("OPERBOT %s" % __version__)
-
-
 def main():
-    Command.add(cmd)
-    Command.add(ver)
     txt = ' '.join(sys.argv[1:])
     cfg = parse(txt)
     update(Cfg, cfg)
