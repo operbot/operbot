@@ -53,7 +53,7 @@ channel. It can do some logging of txt and take note of things todo.
 
 **irc**
 
-|
+
 | ``operbot cfg server=<server> channel=<channel> nick=<nick>``
 |
 | (*) default channel/server is #operbot on localhost
@@ -61,21 +61,21 @@ channel. It can do some logging of txt and take note of things todo.
 
 **sasl**
 
-|
+
 | ``operbot pwd <nickservnick> <nickservpass>``
 | ``operbot cfg password=<outputfrompwd>``
 |
 
 **users**
 
-|
+
 | ``operbot cfg users=True``
 | ``operbot met <userhost>``
 |
 
 **rss**
 
-|
+
 | ``operbot rss <url>``
 |
 
@@ -90,14 +90,14 @@ this part shows how to run ``operbot``.
 without any arguments ``operbot`` doesn't respond, add arguments to have
 ``operbot`` execute a command:
 
-|
+
 | ``$ operbot``
 | ``$``
 |
 
 the ``cmd`` command shows you a list of available commands:
 
-|
+
 | ``$ operbot cmd``
 | ``cfg,cmd,dlt,dne,dpl,flt,fnd,ftc,log,met,mre,nme,pwd,rem,rss,tdo,thr,ver``
 |
@@ -106,7 +106,7 @@ the ``cmd`` command shows you a list of available commands:
 
 use the -c option to start the bot as a console.
 
-|
+
 | ``$ operbot -c``
 | ``OPERBOT started at Fri Sep 16 02:11:23 2022``
 | ``> cfg``
@@ -120,7 +120,7 @@ use the -c option to start the bot as a console.
 
 here is a short description of the commands.
 
-|
+
 | ``cfg`` - show the irc configuration, also edits the config
 | ``cmd`` - show all commands
 | ``dlt`` - remove a user
@@ -181,8 +181,7 @@ great for giving objects peristence by having their state stored in files::
 >>> from operbot import Object, save
 >>> o = Object()
 >>> save(o)
-::
- 'operbot.rss.Rss/94b1bcc4-31f4-4a02-be71-284f08d9c459/2022-11-02/'
+'operbot.object.Object/89efa5fd7ad9497b96fdcb5f01477320/2022-11-21/17:20:12.221192'
 
 **SYSTEMD**
 
