@@ -80,11 +80,7 @@ class Callback(Object):
         if not func:
             event.ready()
             return
-        try:
-            event.__thr__ = launch(func, event)
-        except Exception as ex:
-            Callback.errors.append(ex)
-            event.ready()
+        event.__thr__ = launch(func, event)
 
     def dispatch(self, event):
         self.callback(event)

@@ -7,7 +7,7 @@
 import time
 
 
-from .obj import Default
+from .object import Default
 
 
 Cfg = Default()

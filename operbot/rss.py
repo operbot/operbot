@@ -1,5 +1,5 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,R0903,C0209,R1732
+# pylint: disable=R0903,C0115,C0116
 
 
 "rich site syndicate"
@@ -10,7 +10,6 @@ import re
 import threading
 import time
 import urllib
-import _thread
 
 
 from urllib.error import HTTPError, URLError
@@ -20,8 +19,8 @@ from urllib.request import Request, urlopen
 
 from .object import Class, Db, Default, Object, write
 from .object import find, fntime, last, printable, save
-from .object import edit, locked, register, update
-from .handler import Bus, Command
+from .object import edit, register, update
+from .handler import Bus
 from .run import Cfg
 from .thread import Repeater, launch
 from .util import elapsed, spl
@@ -35,7 +34,6 @@ def __dir__():
         "Seen",
         "debug",
         "init",
-        "cmd",
         "dpl",
         "ftc",
         "nme",
@@ -49,9 +47,6 @@ def init():
     fetcher = Fetcher()
     fetcher.start()
     return fetcher
-
-
-fetchlock = _thread.allocate_lock()
 
 
 class Feed(Default):
@@ -105,12 +100,10 @@ class Fetcher(Object):
             result += " - "
         return result[:-2].rstrip()
 
-    @locked(fetchlock)
     def fetch(self, feed):
         counter = 0
         objs = []
-        res = reversed(list(getfeed(feed.rss, feed.display_list)))
-        for obj in res:
+        for obj in reversed(list(getfeed(feed.rss, feed.display_list))):
             fed = Feed()
             update(fed, obj)
             update(fed, feed)
@@ -183,7 +176,8 @@ class Parser(Object):
 
 def getfeed(url, item):
     if Cfg.debug:
-        return [Object(), Object()]
+        print("not fetching")
+        return []
     try:
         result = geturl(url)
     except (ValueError, HTTPError, URLError):
@@ -232,10 +226,6 @@ def unescape(text):
 
 def useragent(txt):
     return "Mozilla/5.0 (X11; Linux x86_64) " + txt
-
-
-def cmd(event):
-    event.reply(",".join(sorted(Command.cmd)))
 
 
 def dpl(event):
