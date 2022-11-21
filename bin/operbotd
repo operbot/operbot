@@ -1,24 +1,25 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,C0209,W0212,W0703,W1514,R1732
-
-
-"feeding rss into your irc channel"
+# pylint: disable=C0115,C0116,W0212,W0703
 
 
 __version__ = "107"
 
 
-import os
-import sys
+"feeding rss into your irc channel"
 
 
-from operbot.object import Wd, cdir, lower, permission
-from operbot.handler import Callback, Command, scan
+from operbot.object import Wd
+from operbot.handler import scan
 from operbot.util import wait
 
 
-from operbot import irc, rss
+from operbot import cmds, irc, rss
+
+
+scan(cmds)
+scan(irc)
+scan(rss)
 
 
 Wd.workdir = "/var/lib/operbot/"

@@ -3,7 +3,7 @@
 # pylint: disable=C0114,C0115,C0116,C0209,C0413
 
 
-__version__ = "123"
+__version__ = "107"
 
 
 "feeding rss into your irc channel"
@@ -14,11 +14,8 @@ import pwd
 import sys
 
 
-from stat import ST_UID, ST_GID
-
-
-from operbot.object import Wd, cdir, lower, permission, update
-from operbot.handler import Cfg, Command, Handler, command, parse, scan
+from operbot.object import Wd, cdir, update
+from operbot.handler import Cfg, Handler, command, parse, scan
 
 
 from operbot import cmds, irc, rss
@@ -40,11 +37,9 @@ class CLI(Handler):
 
 
 def main():
-    txt = ' '.join(sys.argv[1:])
-    cfg = parse(txt)
-    update(Cfg, cfg)
+    parse(' '.join(sys.argv[1:]))
     cli = CLI()
-    evt = command(cli, cfg.otxt)
+    evt = command(cli, Cfg.otxt)
     evt.wait()
 
 

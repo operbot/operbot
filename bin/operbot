@@ -6,7 +6,7 @@
 "write your own commands"
 
 
-__version__ = "106"
+__version__ = "107"
 
 
 import atexit

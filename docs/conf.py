@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 
-"write your own commands"
-
-
 __name__ = "operbot"
-__version__ = "105"
+__version__ = "107"
+
+
+"write your own commands"
 
 
 import doctest

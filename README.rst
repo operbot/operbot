@@ -38,22 +38,22 @@ reading type from the object.
 channel. It can do some logging of txt and take note of things todo.
 
 
-**This should be the bot where you build your own one from ;]**
-
 
 **INSTALL**
 
-
+|
 | ``pip3 install operbot --upgrade --force-reinstall``
 |
 
 **CONFIGURATION**
 
+|
 | configuration is done by calling the ``cfg`` command of ``operbot``
 | 
 
 **irc**
 
+|
 | ``operbot cfg server=<server> channel=<channel> nick=<nick>``
 |
 | (*) default channel/server is #operbot on localhost
@@ -61,18 +61,21 @@ channel. It can do some logging of txt and take note of things todo.
 
 **sasl**
 
+|
 | ``operbot pwd <nickservnick> <nickservpass>``
 | ``operbot cfg password=<outputfrompwd>``
 |
 
 **users**
 
+|
 | ``operbot cfg users=True``
 | ``operbot met <userhost>``
 |
 
 **rss**
 
+|
 | ``operbot rss <url>``
 |
 
@@ -103,41 +106,18 @@ use the -c option to start the bot as a console.
 
 | ``$ operbot -c``
 | ``OPERBOT started at Fri Sep 16 02:11:23 2022``
-| ``> thr``
-| ``Console.loop/1s``
-|
-
-**irc**
-
-use the -i option to start the irc client.
-
-
-| ``$ operbot -i``
-| ``OPERBOT started at Fri Sep 16 02:11:23 2022``
 | ``> cfg``
 | ``server=localhost port=6667 channel=#operbot nick=operbot cc=!``
 | ``> thr``
-| ``Console.loop(8s) IRC.keep(8s) IRC.loop(8s) IRC.output(8s) thr(8s)``
-| ``>`` 
+| ``Console.loop(8s) IRC.keep(8s) IRC.loop(8s) IRC.output(8s) thr(8s) Fetcher.run/4m59s````
 |
-
-**rss**
-
-you can add a -r option to have the rss fetcher started.
-
-| ``$ operbot -c -r``
-| ``OPERBOT started at Fri Sep 16 02:44:51 2022``
-| ``> thr``
-| ``Console.loop/1s Fetcher.run/4m59s``
-| ``>``
-|
-
 
 **COMMANDS**
 
 
 here is a short description of the commands.
 
+|
 | ``cfg`` - show the irc configuration, also edits the config
 | ``cmd`` - show all commands
 | ``dlt`` - remove a user
@@ -219,9 +199,6 @@ by enabling it with ``--now``::
  $ ``sudo operbotctl cfg users=True``
  $ ``sudo operbotctl met <userhost>``
  $ ``sudo operbotctl rss <url>``
-
-
-**back after reboot is a must**
 
 
 **AUTHOR**
