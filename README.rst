@@ -178,10 +178,10 @@ load/save from/to disk::
 
 great for giving objects peristence by having their state stored in files::
 
->>> from operbot import Object, save
->>> o = Object()
->>> save(o)
-'operbot.object.Object/89efa5fd7ad9497b96fdcb5f01477320/2022-11-21/17:20:12.221192'
+ >>> from operbot import Object, save
+ >>> o = Object()
+ >>> save(o)
+ operbot.object.Object/89efa5fd7ad9497b96fdcb5f01477320/2022-11-21/17:20:12.221192
 
 **SYSTEMD**
 
