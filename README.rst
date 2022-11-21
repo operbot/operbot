@@ -90,12 +90,14 @@ this part shows how to run ``operbot``.
 without any arguments ``operbot`` doesn't respond, add arguments to have
 ``operbot`` execute a command:
 
+|
 | ``$ operbot``
 | ``$``
 |
 
 the ``cmd`` command shows you a list of available commands:
 
+|
 | ``$ operbot cmd``
 | ``cfg,cmd,dlt,dne,dpl,flt,fnd,ftc,log,met,mre,nme,pwd,rem,rss,tdo,thr,ver``
 |
@@ -104,12 +106,13 @@ the ``cmd`` command shows you a list of available commands:
 
 use the -c option to start the bot as a console.
 
+|
 | ``$ operbot -c``
 | ``OPERBOT started at Fri Sep 16 02:11:23 2022``
 | ``> cfg``
 | ``server=localhost port=6667 channel=#operbot nick=operbot cc=!``
 | ``> thr``
-| ``Console.loop(8s) IRC.keep(8s) IRC.loop(8s) IRC.output(8s) thr(8s) Fetcher.run/4m59s````
+| ``Console.loop(8s) IRC.keep(8s) IRC.loop(8s) IRC.output(8s) thr(8s) Fetcher.run/4m59s``
 |
 
 **COMMANDS**
@@ -175,9 +178,10 @@ load/save from/to disk::
 
 great for giving objects peristence by having their state stored in files::
 
- >>> from operbot import Object, save
- >>> o = Object()
- >>> save(o)
+>>> from operbot import Object, save
+>>> o = Object()
+>>> save(o)
+::
  'operbot.rss.Rss/94b1bcc4-31f4-4a02-be71-284f08d9c459/2022-11-02/'
 
 **SYSTEMD**
