@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot.hdl import Handler
+from operbot.handler import Handler
 
 
 class TestHandler(unittest.TestCase):

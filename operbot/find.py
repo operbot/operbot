@@ -1,5 +1,5 @@
 # This file is placed in the Public Domain.
-# pylint: disable=R0903,C0103,C0114,C0115,C0116,C0209,W0622
+# pylint: disable=R0903,C0103,C0114,C0115,C0116,W0622
 
 
 "find"
@@ -8,8 +8,8 @@
 import time
 
 
-from .obj import Wd, find, fntime, keys, printable
-from .utl import elapsed
+from .object import Wd, find, fntime, keys, printable
+from .util import elapsed
 
 
 def fnd(event):

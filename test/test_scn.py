@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot.hdl import Command, scan
+from operbot.handler import Command, scan
 from operbot import irc
 
 
