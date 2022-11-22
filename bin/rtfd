@@ -18,7 +18,7 @@ popen("rm -fR ~/.cache/pip")
 
 
 if not os.path.exists("dist"):
-    popen("fin/build")
+    popen("python3 setup.py sdist")
 
 
 if not os.path.exists("env"):

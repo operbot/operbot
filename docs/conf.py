@@ -106,7 +106,7 @@ intersphinx_mapping = {
 intersphinx_cache_limit=1
 
 
-rst_prolog = '''.. image:: operline.png
+rst_prolog = '''.. image:: operlineblack.png
     :width: 100%
     :height: 2.3cm
     :target: index.html
