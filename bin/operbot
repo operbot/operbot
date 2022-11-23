@@ -161,12 +161,18 @@ def wrap(func):
 
 
 def main():
-    cfg = boot()
+    boot()
     scandir("mod", importer)
     Command.add(ver)
-    if cfg.txt:
+    if Cfg.txt:
         cli = CLI()
-        return command(cli, cfg.otxt)
+        return command(cli, Cfg.otxt)
+    if Cfg.console:
+        banner(Cfg)
+        csl = Console()
+        csl.start()
+        csl.wait()
+        return None
     if not Cfg.exec:
         banner(Cfg)
         scandir("mod", init)
@@ -176,6 +182,7 @@ def main():
         csl = Console()
         csl.start()
         csl.wait()
+        return None
 
 
 wrap(main)
