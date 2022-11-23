@@ -6,7 +6,7 @@
 "write your own commands"
 
 
-__version__ = "107"
+__version__ = "108"
 
 
 import atexit
@@ -37,6 +37,9 @@ from operbot import cmds, irc, rss
 Wd.workdir = os.path.expanduser("~/.operbot")
 
 
+errors = []
+
+
 starttime = time.time()
 
 
@@ -64,25 +67,6 @@ class Console(CLI):
         return event
 
 
-class Completer(rlcompleter.Completer):
-
-    def __init__(self, options):
-        super().__init__()
-        self.matches = []
-        self.options = options
-
-    def complete(self, text, state):
-        if state == 0:
-            if text:
-                self.matches = [s for s in self.options if s and s.startswith(text)]
-            else:
-                self.matches = self.options[:]
-        try:
-            return self.matches[state]
-        except IndexError:
-            return None
-
-
 def banner(cfg):
     print(
           "OPERBOT started at %s %s" % (
@@ -90,18 +74,6 @@ def banner(cfg):
                                       printable(cfg, "debug,verbose")
                                      )
          )
-
-
-def boot():
-    setcompleter(keys(Command.cmd))
-    txt = ' '.join(sys.argv[1:])
-    cfg = parse(txt)
-    if "i" in cfg.opts:
-        cfg.irc = True
-    if "r" in cfg.opts:
-        cfg.rss = True
-    update(Cfg, cfg)
-    return cfg
 
 
 def from_exception(exc, txt="", sep=" "):
@@ -112,6 +84,10 @@ def from_exception(exc, txt="", sep=" "):
     nme = name(exc)
     res = sep.join(result)
     return f"{txt} {res} {nme}: {exc}".strip()
+
+
+def print_exc(ex):
+    traceback.print_exception(type(ex), ex, ex.__traceback__)
 
 
 def importer(pname, mname, path):
@@ -130,15 +106,29 @@ def init(pname, mname, path=None):
         mod.init()
 
 
+
+class Completer(rlcompleter.Completer):
+
+    def __init__(self, options):
+        super().__init__()
+        self.options = options
+
+    def complete(self, text, state):
+        if state == 0:
+            if text:
+                self.matches = [s for s in self.options if s and s.startswith(text)]
+            else:
+                self.matches = self.options[:]
+        try:
+            return self.matches[state]
+        except IndexError:
+            return None
+
 def setcompleter(optionlist):
     completer = Completer(optionlist)
     readline.set_completer(completer.complete)
     readline.parse_and_bind("tab: complete")
     atexit.register(lambda: readline.set_completer(None))
-
-
-def ver(event):
-    event.reply("OPERBOT %s" % __version__)
 
 
 def wrap(func):
@@ -156,14 +146,21 @@ def wrap(func):
     finally:
         if gotterm:
             termios.tcsetattr(fds, termios.TCSADRAIN, old)
-        for err in Callback.errors:
-            print(from_exception(err))
+        for evt in Command.errors:
+             print_exc(evt.__exc__)
+
+def ver(event):
+    event.reply("OPERBOT %s" % __version__)
+
+
+Command.add(ver)
 
 
 def main():
-    boot()
+    cfg = parse(' '.join(sys.argv[1:]))
+    update(Cfg, cfg)
     scandir("mod", importer)
-    Command.add(ver)
+    setcompleter(Command.cmd)
     if Cfg.txt:
         cli = CLI()
         return command(cli, Cfg.otxt)

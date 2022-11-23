@@ -8,6 +8,7 @@
 import inspect
 import os
 import queue
+import sys
 import threading
 import time
 
@@ -34,6 +35,7 @@ def __dir__():
 
 
 __all__ = __dir__()
+
 
 
 class Bus(Object):
@@ -92,6 +94,7 @@ class Callback(Object):
 class Command(Object):
 
     cmd = Object()
+    errors = []
 
     @staticmethod
     def add(cmd):
@@ -107,9 +110,17 @@ class Command(Object):
             evt.parse()
         func = Command.get(evt.cmd)
         if func:
-            func(evt)
+            try:
+                func(evt)
+            except Exception as ex:
+                tb = sys.exc_info()[2]
+                evt.__exc__ = ex.with_traceback(tb)
+                Command.errors.append(evt)
+                evt.ready()
+                return None
             evt.show()
         evt.ready()
+        return None
 
     @staticmethod
     def remove(cmd):
@@ -231,7 +242,7 @@ class Event(Parsed):
         self.createtime = time.time()
         self.result = []
         self.type = "event"
-
+        
     def bot(self):
         return Bus.byorig(self.orig)
 
@@ -253,8 +264,8 @@ class Event(Parsed):
             Bus.say(self.orig, self.channel, txt)
 
     def wait(self):
-        for thr in self._thrs:
-            thr.join()
+        if self.__thr__:
+            self.__thr__.join()
         self.__ready__.wait()
 
 
