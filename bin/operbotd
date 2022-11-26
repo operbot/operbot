@@ -9,9 +9,8 @@ __version__ = "107"
 "feeding rss into your irc channel"
 
 
-from operbot.object import Wd
-from operbot.handler import scan
-from operbot.util import wait
+from opr.object import Wd
+from opr.handler import scan, wait
 
 
 from operbot import cmds, irc, rss

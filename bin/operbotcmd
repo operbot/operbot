@@ -14,11 +14,11 @@ import pwd
 import sys
 
 
-from operbot.object import Wd, cdir, update
-from operbot.handler import Cfg, Handler, command, parse, scan
+from opr.object import Wd, cdir, update
+from opr.handler import Cfg, Handler, command, parse, scan
 
 
-from operbot import cmds, irc, rss
+from opr import cmds, irc, rss
 
 
 Wd.workdir = "/var/lib/operbot/"

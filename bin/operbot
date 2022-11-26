@@ -24,11 +24,10 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from operbot.handler import Callback, Command, Event, Handler
-from operbot.handler import command, parse, scan, scandir
-from operbot.object import Wd, keys, printable, update
-from operbot.run import Cfg
-from operbot.thread import name
+from opr.handler import Callback, Cfg, Command, Event, Handler
+from opr.handler import command, parse, scan, scandir
+from opr.object import Wd, keys, printable, update
+from opr.thread import name
 
 
 from operbot import cmds, irc, rss
