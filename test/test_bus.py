@@ -8,7 +8,7 @@
 import unittest
 
 
-from opr.run import Bus, Handler
+from opr.handler import Bus, Handler
 
 
 class Client(Handler):

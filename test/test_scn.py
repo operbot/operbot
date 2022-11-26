@@ -9,7 +9,9 @@ import unittest
 
 
 from opr.handler import Command, scan
-from opr import irc
+
+
+from operbot import irc
 
 
 class TestScan(unittest.TestCase):

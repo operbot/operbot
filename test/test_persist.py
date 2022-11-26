@@ -8,7 +8,7 @@
 import unittest
 
 
-from opr import Object
+from opr.object import Object
 
 
 class TestPersist(unittest.TestCase):
