@@ -8,8 +8,8 @@
 import unittest
 
 
-from operbot import Object
-from operbot.rss import Parser
+from opr import Object
+from opr.rss import Parser
 
 
 ITEMS = "title,description,link,pubDate"

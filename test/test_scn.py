@@ -8,8 +8,8 @@
 import unittest
 
 
-from operbot.handler import Command, scan
-from operbot import irc
+from opr.handler import Command, scan
+from opr import irc
 
 
 class TestScan(unittest.TestCase):

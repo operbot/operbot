@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot import Object, dumps, loads
+from opr.object import Object, dumps, loads
 
 
 VALIDJSON = '{"test": "bla"}'

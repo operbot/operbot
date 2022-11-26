@@ -8,7 +8,8 @@
 import unittest
 
 
-from operbot import Cfg, Command, Event, Handler, Object
+from opr.handler import Cfg, Command, Event, Handler
+from opr.object import Object
 
 
 events = []

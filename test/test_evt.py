@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot.handler import Event
+from opr.handler import Event
 
 
 class TestEvent(unittest.TestCase):

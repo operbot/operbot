@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot import Thread
+from opr.thread import Thread
 
 
 def test():

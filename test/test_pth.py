@@ -8,10 +8,10 @@
 import unittest
 
 
-from operbot import fntime
+from opr.object import fntime
 
 
-FN = "operbot.hdl.Event/2d390009cef944e68ce686e5709a54d7/2022-04-11/22:40:31.259218"
+FN = "opr.handler.Event/2d390009cef944e68ce686e5709a54d7/2022-04-11/22:40:31.259218"
 
 
 class TestPath(unittest.TestCase):
