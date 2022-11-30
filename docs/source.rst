@@ -25,7 +25,6 @@
     opr.handler		handler
     opr.object		object
     opr.thread		thread
-    opr.util		utility
 
 
 **OPERBOT**
@@ -34,7 +33,9 @@
     :toctree: 
     :template: module.rst
 
-
     operbot.cmds	commands
+    operbot.find	locate objects
     operbot.irc		internet relay chat
+    operbot.mbx		mailbox
     operbot.rss		rich site syndicate
+    operbot.udp		udp to irc relay
