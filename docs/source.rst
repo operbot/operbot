@@ -16,17 +16,25 @@
     <br>
 
 
+**OPR**
+
+.. autosummary::
+    :toctree: 
+    :template: module.rst
+
+    opr.handler		handler
+    opr.object		object
+    opr.thread		thread
+    opr.util		utility
+
+
 **OPERBOT**
 
 .. autosummary::
     :toctree: 
     :template: module.rst
 
+
     operbot.cmds	commands
-    operbot.handler	handler
     operbot.irc		internet relay chat
-    operbot.object	object
     operbot.rss		rich site syndicate
-    operbot.run 	runtime
-    operbot.thread	thread
-    operbot.util	utility
