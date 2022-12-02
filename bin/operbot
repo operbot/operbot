@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,W0221,W0201,E0611,C0413, W0613,R0801
+# pylint: disable=C0115,C0116,C0411,C0413
 
 
 "write your own commands"
 
 
-__version__ = "108"
-
-
 import atexit
 import importlib
-import importlib.util
 import os
 import readline
 import rlcompleter
@@ -21,14 +17,8 @@ import time
 import traceback
 
 
-sys.path.insert(0, os.getcwd())
-
-
-from opr.handler import Cfg, Command, Event, Handler
-from opr.handler import command, parse, scan, scandir
-from opr.object import Wd, printable, update
-from opr.thread import name
-
+from opr import Command, Cfg, Event, Handler, Wd
+from opr import command, parse, printable, scan, scandir, wait
 
 from operbot import cmds, irc, rss
 
@@ -36,10 +26,10 @@ from operbot import cmds, irc, rss
 Wd.workdir = os.path.expanduser("~/.operbot")
 
 
-errors = []
-
-
-starttime = time.time()
+Cfg.console = False
+Cfg.daemon = False
+Cfg.verbose = False
+Cfg.wait = False
 
 
 scan(cmds)
@@ -49,11 +39,12 @@ scan(rss)
 
 class CLI(Handler):
 
-    def annouce(self, txt):
+    def announce(self, txt):
         pass
 
     def raw(self, txt):
         print(txt)
+        sys.stdout.flush()
 
 
 class Console(CLI):
@@ -73,18 +64,23 @@ class Completer(rlcompleter.Completer):
 
     def __init__(self, options):
         super().__init__()
+        self.matches = []
         self.options = options
 
     def complete(self, text, state):
         if state == 0:
             if text:
-                self.matches = [s for s in self.options if s and s.startswith(text)]
+                self.matches = [
+                                s for s in self.options
+                                if s and s.startswith(text)
+                               ]
             else:
                 self.matches = self.options[:]
         try:
             return self.matches[state]
         except IndexError:
             return None
+
 
 def setcompleter(optionlist):
     completer = Completer(optionlist)
@@ -93,30 +89,36 @@ def setcompleter(optionlist):
     atexit.register(lambda: readline.set_completer(None))
 
 
-def banner(cfg):
-    print(
-          "OPERBOT started at %s %s" % (
-                                      time.ctime(time.time()).replace("  ", " "),
-                                      printable(cfg, "debug,verbose")
-                                     )
-         )
+def boot(txt):
+    parse(txt)
+    if "c" in Cfg.opts:
+        Cfg.console = True
+    if "d" in Cfg.opts:
+        Cfg.daemon = True
+    if "v" in Cfg.opts:
+        Cfg.verbose = True
+    if "w" in Cfg.opts:
+        Cfg.wait = True
 
 
-def from_exception(exc, txt="", sep=" "):
-    result = []
-    for frm in traceback.extract_tb(exc.__traceback__):
-        fnm = os.sep.join(frm.filename.split(os.sep)[-2:])
-        result.append(f"{fnm}:{frm.lineno}")
-    nme = name(exc)
-    res = sep.join(result)
-    return f"{txt} {res} {nme}: {exc}".strip()
+def daemon():
+    pid = os.fork()
+    if pid != 0:
+        os._exit(0)
+    os.setsid()
+    os.umask(0)
+    sis = open("/dev/null", 'r')
+    os.dup2(sis.fileno(), sys.stdin.fileno())
+    if not Cfg.verbose:
+        sos = open("/dev/null", 'a+')
+        ses = open("/dev/null", 'a+')
+        os.dup2(sos.fileno(), sys.stdout.fileno())
+        os.dup2(ses.fileno(), sys.stderr.fileno())
 
 
-def print_exc(ex):
-    traceback.print_exception(type(ex), ex, ex.__traceback__)
-
-
-def importer(pname, mname, path):
+def importer(pname, mname, path=None):
+    if not path:
+        path = pname
     mod = None
     spec = importlib.util.spec_from_file_location(mname, path)
     if spec:
@@ -130,6 +132,10 @@ def init(pname, mname, path=None):
     mod = importer(pname, mname, path)
     if "init" in dir(mod):
         mod.init()
+    return mod
+
+def print_exc(ex):
+    traceback.print_exception(type(ex), ex, ex.__traceback__)
 
 
 def wrap(func):
@@ -151,37 +157,30 @@ def wrap(func):
             print_exc(evt.__exc__)
 
 
-def ver(event):
-    event.reply("OPERBOT %s" % __version__)
-
-
 def main():
-    Command.add(ver)
-    cfg = parse(' '.join(sys.argv[1:]))
-    update(Cfg, cfg)
-    scandir("mod", importer)
-    setcompleter(Command.cmd)
+    boot(" ".join(sys.argv[1:]))
+    scandir(Wd.moddir(), importer)
     if Cfg.txt:
         cli = CLI()
-        return command(cli, Cfg.otxt)
+        evt = command(cli, Cfg.otxt)
+        evt.wait()
+        return        
+    if Cfg.daemon:
+        daemon()
+        Cfg.wait = True
     if Cfg.console:
-        banner(Cfg)
+        setcompleter(Command.cmd)
+        date = time.ctime(time.time()).replace("  ", " ")
+        print("OPERBOT started at %s %s" % (date, printable(Cfg, "console,debug,verbose,wait", plain=True)))
         csl = Console()
         csl.start()
-        csl.wait()
-        return None
-    if not Cfg.exec:
-        banner(Cfg)
-        scandir("mod", init)
-        bot = irc.init()
-        print(printable(bot.cfg, "nick,channel,server,port,sasl"))
+        Cfg.wait = True
+    if Cfg.wait:
+        irc.init()
         rss.init()
-        csl = Console()
-        csl.start()
-        csl.wait()
-        return None
+        scandir(Wd.moddir(), init)
+        wait()
     return None
 
 
 wrap(main)
- 

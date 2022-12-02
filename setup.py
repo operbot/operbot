@@ -31,7 +31,7 @@ def uploadlist(dir):
 
 setup(
     name="operbot",
-    version="108",
+    version="109",
     author="Bart Thate",
     author_email="operbot100@gmail.com",
     url="http://github.com/operbot/operbot",
