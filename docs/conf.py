@@ -1,4 +1,4 @@
-# OPERBOT - write your own commands
+# This file is placed in the Public Domain.
 # -*- coding: utf-8 -*-
 
 
@@ -107,15 +107,22 @@ intersphinx_cache_limit=1
 
 
 rst_prolog = '''.. image:: operlineblack.png
-    :width: 100%
-    :height: 2.3cm
+    :height: 100px
     :target: index.html
 
 .. raw:: html
 
+    <br><br>
+
+'''
+
+rst_epilog = '''
+.. raw:: html
+
+    <br><br>
     <center><b>
 
-`about <about.html>`_ - :ref:`programmer <programmer>` - :ref:`source <source>` - `pypi <http://pypi.org/project/operbot>`_ - `github <http://github.com/operbot/operbot>`_ - `index <genindex-all.html>`_ 
+`about <about.html>`_ - :ref:`programmer <programmer>` - :ref:`source <source>` - `index <genindex-all.html>`_
 
 .. raw:: html
 
