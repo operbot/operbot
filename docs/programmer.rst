@@ -16,15 +16,14 @@
     </center>
     <br>
 
-The ``operbot`` package provides an Object class (in bot.obj), that provides a
-save/load to/from json files on disk. Objects can be searched with database
-functions and read-only files to improve persistence are used. Types in filename
-are used for reconstruction. Methods are factored out into functions to have a
-clean namespace to read JSON data into.
+The ``opr`` package provides an Object class, that saves/loads to/from json
+files on disk. Objects can be searched with database functions. Type in
+filename is used for reconstruction and ethods are factored out into functions
+to have a clean namespace to read JSON data into.
 
 basic usage is this::
 
->>> from operbot import Object
+>>> from opr import Object
 >>> o = Object()
 >>> o.key = "value"
 >>> o.key
@@ -37,8 +36,8 @@ and values.
 
 load/save from/to disk::
 
->>> from operbot import Object
->>> from operbot import load, save
+>>> from opr import Object
+>>> from opr import load, save
 >>> o = Object()
 >>> o.key = "value"
 >>> p = save(o)
@@ -49,9 +48,9 @@ load/save from/to disk::
 
 great for giving objects peristence by having their state stored in files.
 
->>> from operbot import Object, save
->>> from operbot import Wd
+>>> from opr import Object, save
+>>> from opr import Wd
 >>> Wd.workdir = ".test"
 >>> o = Object()
 >>> save(o)
->>> 'operbot.object.Object/2021-08-31/15:31:05.717063'
+>>> 'opr.object.Object/2021-08-31/15:31:05.717063'

@@ -5,5 +5,11 @@
 "debug"
 
 
-def debug(event):
+def __dir__():
+    return (
+            'raise',
+           )
+
+
+def raise(event):
     raise Exception("debug!")
