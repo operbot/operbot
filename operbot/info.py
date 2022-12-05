@@ -1,8 +1,15 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116
+# pylint: disable=C0115,C0116,E1101
 
 
 "runtime information"
+
+
+import threading
+import time
+
+
+from opr import Bus, Object, elapsed, name, update
 
 
 def __dir__():
@@ -11,6 +18,9 @@ def __dir__():
             'thr',
             'upt'
            )
+
+
+starttime = time.time()
 
 
 def flt(event):

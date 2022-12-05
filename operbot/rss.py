@@ -248,7 +248,7 @@ def ftc(event):
     for thr in thrs:
         res.append(thr.join())
     if res:
-        event.reply(",".join([str(x) for x in res]))
+        event.reply(",".join([str(x) for x in res if x]))
         return
 
 

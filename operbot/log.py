@@ -5,6 +5,9 @@
 "log <txt>"
 
 
+import time
+
+
 from opr import Class, Object, elapsed, find, fntime, save
 
 

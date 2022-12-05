@@ -271,7 +271,7 @@ class IRC(Handler, Output):
             return True
         return False
 
-    def raw(self, txt):
+    def direct(self, txt):
         self.sock.send(bytes(txt+"\n", "utf-8"))
 
     def disconnect(self):

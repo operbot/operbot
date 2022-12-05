@@ -16,13 +16,13 @@ import traceback
 import _thread
 
 
-from operbot import Cfg, Command, Event, Handler, Object, Wd
-from operbot import launch, parse, scan, update
-from operbot import elapsed, name
-from operbot.obj import locked
+from opr import Cfg, Command, Event, Handler, Object, Wd
+from opr import launch, parse, scan, update
+from opr import elapsed, name
+from opr import locked
 
 
-from operbot import cmds, irc, rss
+from operbot import cmds, info, irc, log, rss, todo
 
 
 paylock = _thread.allocate_lock()
@@ -33,8 +33,11 @@ Cfg.debug = True
 
 
 scan(cmds)
+scan(info)
 scan(irc)
+scan(log)
 scan(rss)
+scan(todo)
 
 
 errors = []
@@ -48,7 +51,6 @@ param.cfg = ["server=localhost", ""]
 param.dne = ["test4", ""]
 param.rem = ["reddit", ""]
 param.dpl = ["reddit title,summary,link", ""]
-param.log = ["test1", ""]
 param.flt = ["0", ""]
 param.fnd = [
              "cfg",
@@ -58,8 +60,13 @@ param.fnd = [
              "cfg server==localhost",
              "rss rss==reddit"
             ]
+param.log = ["test1", ""]
+param.nme = ["reddit reddit"]
+param.dpl = ["reddit title,link"]
+param.rem = ["reddit"]
 param.rss = ["https://www.reddit.com/r/python/.rss"]
 param.tdo = ["test4", ""]
+param.thr = [""]
 
 
 def cprint(txt):
@@ -120,6 +127,10 @@ def payload(clt):
     return nmr
 
 
+def print_exc(ex):
+    traceback.print_exception(type(ex), ex, ex.__traceback__)
+
+
 def wrap(func):
     fds = sys.stdin.fileno()
     old = termios.tcgetattr(fds)
@@ -129,6 +140,8 @@ def wrap(func):
         cprint("")
     finally:
         termios.tcsetattr(fds, termios.TCSADRAIN, old)
+        for evt in Command.errors:
+            print_exc(evt.__exc__)
 
 
 def main():
@@ -143,10 +156,9 @@ def main():
     res = 1
     for nmr in range(nrs):
         waiters.append(launch(payload, cli))
-    thr = launch(consume, events)
-    for wtr in waiters:
-        res += wtr.join()
-    thr.join()
+    #for wtr in waiters:
+    #    res += wtr.join()
+    consume(events)
     endtime = time.time()
     print("%s %s %s (%s remaining)" %  (
                                         elapsed(endtime - starttime),

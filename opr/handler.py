@@ -30,7 +30,6 @@ def __dir__():
             'parse',
             'scan',
             'scandir',
-            'starttime',
             'wait'
            )
 
@@ -39,7 +38,6 @@ __all__ = __dir__()
 
 
 Cfg = Default()
-starttime = time.time()
 
 
 class Bus(Object):
