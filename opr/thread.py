@@ -59,6 +59,8 @@ class Thread(threading.Thread):
         func, args = self.queue.get()
         if args:
             self._evt = args[0]
+            if "txt" in self._evt:
+                self.name = self._evt.txt
         self.starttime = time.time()
         self._result = func(*args)
 
