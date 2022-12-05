@@ -221,14 +221,14 @@ class IRC(Handler, Output):
 
     def auth(self, event):
         time.sleep(1.0)
-        self.direct("AUTHENTICATE %s" % self.cfg.password)
+        self.raw("AUTHENTICATE %s" % self.cfg.password)
 
     def cap(self, event):
         time.sleep(1.0)
         if self.cfg.password and "ACK" in event.arguments:
-            self.direct("AUTHENTICATE PLAIN")
+            self.raw("AUTHENTICATE PLAIN")
         else:
-            self.direct("CAP REQ :sasl")
+            self.raw("CAP REQ :sasl")
 
     @locked(saylock)
     def command(self, cmd, *args):
@@ -271,7 +271,7 @@ class IRC(Handler, Output):
             return True
         return False
 
-    def direct(self, txt):
+    def raw(self, txt):
         self.sock.send(bytes(txt+"\n", "utf-8"))
 
     def disconnect(self):
@@ -355,8 +355,8 @@ class IRC(Handler, Output):
         assert nck
         assert self.cfg.username
         assert self.cfg.realname
-        self.direct("NICK %s" % nck)
-        self.direct(
+        self.raw("NICK %s" % nck)
+        self.raw(
                  "USER %s %s %s :%s" % (self.cfg.username,
                  server,
                  server,

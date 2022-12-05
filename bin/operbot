@@ -17,6 +17,9 @@ import time
 import traceback
 
 
+sys.path.insert(0, os.getcwd())
+
+
 from opr import Command, Cfg, Event, Handler, Wd
 from opr import command, parse, printable, scan, scandir, wait
 
