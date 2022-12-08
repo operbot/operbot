@@ -5,7 +5,7 @@
 "commands"
 
 
-from opr import Command
+from operbot import Command
 
 
 def __dir__():

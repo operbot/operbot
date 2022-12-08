@@ -20,10 +20,9 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from opr import Command, Cfg, Event, Handler, Wd
-from opr import command, parse, printable, scan, scandir, wait
-
-from operbot import cmds, irc, rss
+from operbot import Command, Cfg, Event, Handler, Wd
+from operbot import command, parse, printable, scan, scandir, wait
+from operbot import cmds, info, irc, rss
 
 
 Wd.workdir = os.path.expanduser("~/.operbot")
@@ -36,6 +35,7 @@ Cfg.wait = False
 
 
 scan(cmds)
+scan(info)
 scan(irc)
 scan(rss)
 
@@ -102,6 +102,8 @@ def boot(txt):
         Cfg.verbose = True
     if "w" in Cfg.opts:
         Cfg.wait = True
+    if "x" in Cfg.opts:
+        Cfg.exec = True
 
 
 def daemon():
@@ -162,7 +164,8 @@ def wrap(func):
 
 def main():
     boot(" ".join(sys.argv[1:]))
-    scandir(Wd.moddir(), importer)
+    if Cfg.exec:
+        scandir(Wd.moddir(), importer)
     if Cfg.txt:
         cli = CLI()
         evt = command(cli, Cfg.otxt)
@@ -181,7 +184,8 @@ def main():
     if Cfg.wait:
         irc.init()
         rss.init()
-        scandir(Wd.moddir(), init)
+        if Cfg.exec:
+            scandir(Wd.moddir(), init)
         wait()
     return None
 

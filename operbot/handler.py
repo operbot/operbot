@@ -13,8 +13,8 @@ import threading
 import time
 
 
-from opr.object import Class, Default, Object, register, update
-from opr.thread import elapsed, launch
+from operbot.object import Class, Default, Object, register, update
+from operbot.thread import elapsed, launch
 
 
 def __dir__():

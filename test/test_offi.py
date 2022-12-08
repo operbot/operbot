@@ -8,7 +8,7 @@
 import unittest
 
 
-from opr.object import Object
+from operbot.object import Object
 from operbot.rss import Parser
 
 

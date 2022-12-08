@@ -10,10 +10,10 @@ import os
 import unittest
 
 
-from opr.object import Object, Wd, items, keys, register, update, values
-from opr.object import edit, kind, load, save
-from opr.object import ObjectDecoder, ObjectEncoder
-from opr.object import printable
+from operbot.object import Object, Wd, items, keys, register, update, values
+from operbot.object import edit, kind, load, save
+from operbot.object import ObjectDecoder, ObjectEncoder
+from operbot.object import printable
 
 
 Wd.workdir = ".test"
@@ -157,7 +157,7 @@ class TestObject(unittest.TestCase):
         self.assertTrue(Object().__module__, "op")
 
     def test_kind(self):
-        self.assertEqual(kind(Object()), "opr.object.Object")
+        self.assertEqual(kind(Object()), "operbot.object.Object")
 
     def test_repr(self):
         self.assertTrue(update(Object(),

@@ -14,4 +14,4 @@ def popen(txt):
         print(line.rstrip())
         sys.stdout.flush()
 
-popen("python3 -m pytest")
+popen("python3 -m pytest --show-capture=stdout --capture=sys")

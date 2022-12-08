@@ -1,61 +1,127 @@
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116
+# pylint: disable=E1101,C0116,W0613
 
 
-"command tests"
+"tinder"
 
 
+import os
+import random
+import shutil
+import sys
+import termios
+import time
+import traceback
 import unittest
+import _thread
 
 
-from opr.handler import Cfg, Command, Event, Handler
-from opr.object import Object
+sys.path.insert(0, os.getcwd())
 
 
+from operbot import Cfg, Command, Event, Handler, Object, Wd
+from operbot import launch, parse, scan, update
+from operbot import elapsed, name
+from operbot import locked
+from operbot import cmds, info, irc, log, rss, todo
+
+
+Wd.workdir = ".test"
+Cfg.debug = True
+
+
+scan(cmds)
+scan(info)
+scan(irc)
+scan(log)
+scan(rss)
+scan(todo)
+
+
+errors = []
 events = []
-skip = ["cfg",]
+results = []
 
 
 param = Object()
-param.cmd = [""]
-param.cfg = ["nick=bot", "server=localhost", "port=6699"]
-param.fnd = ["log", "log txt==test", "config", "config name=bot", "config server==localhost"]
+param.add = ["test@shell", "bart", ""]
+param.cfg = ["server=localhost", ""]
+param.dne = ["test4", ""]
+param.rem = ["reddit", ""]
+param.dpl = ["reddit title,summary,link", ""]
 param.flt = ["0", ""]
-param.log = ["test1", "test2"]
-param.mre = [""]
+param.fnd = [
+             "cfg",
+             "log",
+             "rss",
+             "log txt==test",
+             "cfg server==localhost",
+             "rss rss==reddit"
+            ]
+param.log = ["test1", ""]
+param.nme = ["reddit reddit"]
+param.dpl = ["reddit title,link"]
+param.rem = ["reddit"]
+param.rss = ["https://www.reddit.com/r/python/.rss"]
+param.tdo = ["test4", ""]
 param.thr = [""]
+
 
 
 class CLI(Handler):
 
     def raw(self, txt):
         if Cfg.verbose:
-            print(txt)
+            cprint(txt)
 
 
-def consume(evt):
+def boot(txt):
+    parse(txt)
+    if "c" in Cfg.opts:
+        Cfg.console = True
+    if "d" in Cfg.opts:
+        Cfg.daemon = True
+    if "v" in Cfg.opts:
+        Cfg.verbose = True
+    if "w" in Cfg.opts:
+        Cfg.wait = True
+    if "x" in Cfg.opts:
+        Cfg.exec = True
+
+
+def consume(evts):
     fixed = []
-    for _e in evt:
-        _e.wait()
-        fixed.append(_e)
-    for fix in fixed:
+    res = []
+    for evt in evts:
+        evt.wait()
+        fixed.append(evt)
+    for fff in fixed:
         try:
-            evt.remove(fix)
+            evts.remove(fff)
         except ValueError:
             continue
+    return res
+
+
+def cprint(txt):
+    print(txt)
+    sys.stdout.flush()
+
 
 
 class TestCommands(unittest.TestCase):
 
+    def setUp(self):
+        boot(" ".join(sys.argv[1:]))
+        cprint(Cfg)
+        
     def test_commands(self):
         cli = CLI()
         cmds = sorted(Command.cmd)
         for cmd in cmds:
-            if cmd in skip:
-                continue
             for ex in getattr(param, cmd, ""):
                 evt = Event()
-                evt.channel = "#bot"
+                evt.channel = "#operbot"
                 evt.orig = repr(cli)
                 txt = cmd + " " + ex
                 evt.txt = txt.strip()

@@ -8,7 +8,7 @@
 import unittest
 
 
-from opr.thread import Timer
+from operbot.thread import Timer
 
 
 def test():

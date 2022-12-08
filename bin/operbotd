@@ -9,10 +9,7 @@
 __version__ = "108"
 
 
-from opr.object import Wd
-from opr.handler import scan, wait
-
-
+from operbot import Wd, scan, wait
 from operbot import cmds, irc, rss
 
 

@@ -17,11 +17,11 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from opr.object import Class, Db, Default, Object, write
-from opr.object import find, fntime, last, printable, save
-from opr.object import edit, register, spl, update
-from opr.handler import Bus, Cfg
-from opr.thread import Repeater, elapsed, launch
+from operbot.object import Class, Db, Default, Object, write
+from operbot.object import find, fntime, last, printable, save
+from operbot.object import edit, register, spl, update
+from operbot.handler import Bus, Cfg
+from operbot.thread import Repeater, elapsed, launch
 
 
 def __dir__():

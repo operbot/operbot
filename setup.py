@@ -40,7 +40,6 @@ setup(
     long_description_content_type="text/x-rst",
     license="Public Domain",
     packages=["operbot"],
-    install_requires=["opr"],
     include_package_data=True,
     data_files=[
                 ("share/operbot", ["README.rst", "files/operbot.service",])

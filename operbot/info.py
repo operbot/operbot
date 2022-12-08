@@ -9,7 +9,7 @@ import threading
 import time
 
 
-from opr import Bus, Object, elapsed, name, update
+from operbot import Bus, Object, elapsed, name, update
 
 
 def __dir__():

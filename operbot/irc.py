@@ -18,12 +18,12 @@ import threading
 import _thread
 
 
-from opr.object import Class, Default, Object
-from opr.object import keys, last, printable
-from opr.object import edit, fntime, find, save, update
-from opr.object import locked, register
-from opr.handler import Command, Event, Handler
-from opr.thread import elapsed, launch
+from operbot.object import Class, Default, Object
+from operbot.object import keys, last, printable
+from operbot.object import edit, fntime, find, save, update
+from operbot.object import locked, register
+from operbot.handler import Command, Event, Handler
+from operbot.thread import elapsed, launch
 
 
 def __dir__():

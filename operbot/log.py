@@ -8,7 +8,7 @@
 import time
 
 
-from opr import Class, Object, elapsed, find, fntime, save
+from operbot import Class, Object, elapsed, find, fntime, save
 
 
 def __dir__():
