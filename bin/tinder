@@ -16,6 +16,9 @@ import traceback
 import _thread
 
 
+sys.path.insert(0, os.getcwd())
+
+
 from opr import Cfg, Command, Event, Handler, Object, Wd
 from opr import launch, parse, scan, update
 from opr import elapsed, name
