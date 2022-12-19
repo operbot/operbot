@@ -7,9 +7,9 @@
 
 def __dir__():
     return (
-            'rse',
+            'dbg',
            )
 
 
-def rse(event):
+def dbg(event):
     raise Exception("debug!")

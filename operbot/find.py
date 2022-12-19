@@ -8,12 +8,16 @@
 import time
 
 
-from opr.object import Wd, fntime, keys, printable
-from opr.object import find as fnd
-from opr.thread import elapsed
+from opr.objects import Wd, find, fntime, keys, printable
+from opr.threads import elapsed
 
 
-def find(event):
+def __dir__():
+    return (
+            "fnd",
+           )
+
+def fnd(event):
     if not event.args:
         res = ",".join(sorted([x.split(".")[-1].lower() for x in Wd.types()]))
         if res:
@@ -23,10 +27,17 @@ def find(event):
         return
     otype = event.args[0]
     nmr = 0
-    for obj in fnd(otype, event.gets):
+    keyz = None
+    if event.gets:
+        keyz = ",".join(keys(event.gets))
+    if len(event.args) > 1:
+        keyz += "," + ",".join(event.args[1:])
+    for obj in find(otype, event.gets):
+        if not keyz:
+            keyz = "," + ",".join(keys(obj))
         txt = "%s %s %s" % (
                             str(nmr),
-                            printable(obj, event.sets.keys or keys(obj), event.toskip),
+                            printable(obj, keyz, event.toskip),
                             elapsed(time.time()-fntime(obj.__fnm__))
                            )
         nmr += 1

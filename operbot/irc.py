@@ -18,12 +18,13 @@ import threading
 import _thread
 
 
-from operbot.object import Class, Default, Object
-from operbot.object import keys, last, printable
-from operbot.object import edit, fntime, find, save, update
-from operbot.object import locked, register
-from operbot.handler import Command, Event, Handler
-from operbot.thread import elapsed, launch
+from opr.msg import Event
+from opr.hdl import Command, Handler
+from opr.obj import Class, Default, Object
+from opr.obj import edit, fntime, find, keys, last, locked, printable
+from opr.obj import register, save, update
+from opr.run import Cfg
+from opr.thr import elapsed, launch
 
 
 def __dir__():
@@ -42,7 +43,7 @@ def __dir__():
 __all__ = __dir__()
 
 
-NAME = "operbot"
+NAME = Cfg.name or "operbot"
 REALNAME = "program your own commands"
 
 
@@ -73,7 +74,7 @@ class Config(Default):
     servermodes = ""
     sleep = 60
     username = "%s" % NAME
-    users = False
+    users = True
 
     def __init__(self):
         super().__init__()
@@ -526,8 +527,8 @@ class IRC(Handler, Output):
             self.channels.append(self.cfg.channel)
         self.connected.clear()
         self.joined.clear()
-        Output.start(self)
-        Handler.start(self)
+        launch(Output.start, self)
+        launch(Handler.start, self)
         launch(
                self.doconnect,
                self.cfg.server,
@@ -578,7 +579,7 @@ class Users(Object):
         users = list(Users.get_users(origin))
         res = None
         if len(users) > 0:
-            res = users[-1][-1]
+            res = users[-1]
         return res
 
     @staticmethod

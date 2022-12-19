@@ -9,7 +9,9 @@ import threading
 import time
 
 
-from operbot import Bus, Object, elapsed, name, update
+from opr.obj import Object, update
+from opr.hdl import Bus
+from opr.thr import elapsed, name
 
 
 def __dir__():
@@ -43,8 +45,8 @@ def thr(event):
         if getattr(obj, "sleep", None):
             uptime = obj.sleep - int(time.time() - obj.state["latest"])
         else:
-            uptime = int(time.time() - obj.starttime)
-        result.append((uptime, thread.getName()))
+            uptime = int(time.time() - starttime)
+        result.append((uptime, thread.name))
     res = []
     for uptime, txt in sorted(result, key=lambda x: x[0]):
         res.append("%s/%s" % (txt, elapsed(uptime)))

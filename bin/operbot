@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
-# pylint: disable=C0115,C0116,C0411,C0413
+# pylint: disable=C0116,C0413,W0212,C0301,W0613
 
 
 "write your own commands"
@@ -8,51 +8,53 @@
 
 import atexit
 import importlib
+import importlib.util
 import os
 import readline
 import rlcompleter
 import sys
-import termios
 import time
-import traceback
+import termios
 
 
 sys.path.insert(0, os.getcwd())
 
 
-from operbot import Command, Cfg, Event, Handler, Wd
-from operbot import command, parse, printable, scan, scandir, wait
-from operbot import cmds, info, irc, rss
+from opr.message import Event
+from opr.handler import Command, Handler
+from opr.objects import Wd, printable
+from opr.running import Cfg, boot, command, scandir, scanner, wait
+from opr.threads import launch
 
 
+import operbot
+
+
+Cfg.name = "operbot"
 Wd.workdir = os.path.expanduser("~/.operbot")
-
-
-Cfg.console = False
-Cfg.daemon = False
-Cfg.verbose = False
-Cfg.wait = False
-
-
-scan(cmds)
-scan(info)
-scan(irc)
-scan(rss)
 
 
 class CLI(Handler):
 
-    def announce(self, txt):
+    @staticmethod
+    def announce(txt):
         pass
 
-    def raw(self, txt):
+    @staticmethod
+    def raw(txt):
         print(txt)
         sys.stdout.flush()
 
 
-class Console(CLI):
 
-    def handle(self, event):
+class Console(Handler):
+
+    @staticmethod
+    def announce(txt):
+        pass
+
+    @staticmethod
+    def handle(event):
         Command.handle(event)
         event.wait()
 
@@ -62,11 +64,16 @@ class Console(CLI):
         event.orig = repr(self)
         return event
 
+    @staticmethod
+    def raw(txt):
+        print(txt)
+        sys.stdout.flush()
+
 
 class Completer(rlcompleter.Completer):
 
     def __init__(self, options):
-        super().__init__()
+        rlcompleter.Completer.__init__(self)
         self.matches = []
         self.options = options
 
@@ -85,27 +92,6 @@ class Completer(rlcompleter.Completer):
             return None
 
 
-def setcompleter(optionlist):
-    completer = Completer(optionlist)
-    readline.set_completer(completer.complete)
-    readline.parse_and_bind("tab: complete")
-    atexit.register(lambda: readline.set_completer(None))
-
-
-def boot(txt):
-    parse(txt)
-    if "c" in Cfg.opts:
-        Cfg.console = True
-    if "d" in Cfg.opts:
-        Cfg.daemon = True
-    if "v" in Cfg.opts:
-        Cfg.verbose = True
-    if "w" in Cfg.opts:
-        Cfg.wait = True
-    if "x" in Cfg.opts:
-        Cfg.exec = True
-
-
 def daemon():
     pid = os.fork()
     if pid != 0:
@@ -121,26 +107,33 @@ def daemon():
         os.dup2(ses.fileno(), sys.stderr.fileno())
 
 
-def importer(pname, mname, path=None):
-    if not path:
-        path = pname
-    mod = None
-    spec = importlib.util.spec_from_file_location(mname, path)
+def importer(mname, path):
+    spec = importlib.util.find_spec(mname)
     if spec:
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        scan(mod)
-    return mod
+        if "init" in dir(mod):
+            launch(mod.init)
+        return mod
+    return None
 
-
-def init(pname, mname, path=None):
-    mod = importer(pname, mname, path)
-    if "init" in dir(mod):
-        mod.init()
-    return mod
 
 def print_exc(ex):
     traceback.print_exception(type(ex), ex, ex.__traceback__)
+
+
+def setcompleter(optionlist):
+    completer = Completer(optionlist)
+    readline.set_completer(completer.complete)
+    readline.parse_and_bind("tab: complete")
+    atexit.register(lambda: readline.set_completer(None))
+
+
+def setcompleter(optionlist):
+    completer = Completer(optionlist)
+    readline.set_completer(completer.complete)
+    readline.parse_and_bind("tab: complete")
+    atexit.register(lambda: readline.set_completer(None))
 
 
 def wrap(func):
@@ -150,7 +143,6 @@ def wrap(func):
         old = termios.tcgetattr(fds)
     except termios.error:
         gotterm = False
-    readline.redisplay()
     try:
         func()
     except (EOFError, KeyboardInterrupt):
@@ -163,31 +155,23 @@ def wrap(func):
 
 
 def main():
-    boot(" ".join(sys.argv[1:]))
-    if Cfg.exec:
-        scandir(Wd.moddir(), importer)
-    if Cfg.txt:
-        cli = CLI()
-        evt = command(cli, Cfg.otxt)
-        evt.wait()
-        return        
+    boot()
+    wait = False
     if Cfg.daemon:
         daemon()
         Cfg.wait = True
+    scanner(operbot, importer)
+    scandir("mod", importer, "mod")
+    if Cfg.prs.txt:
+        cli = CLI()
+        return command(cli, Cfg.prs.otxt)
     if Cfg.console:
         setcompleter(Command.cmd)
         date = time.ctime(time.time()).replace("  ", " ")
-        print("OPERBOT started at %s %s" % (date, printable(Cfg, "console,debug,verbose,wait", plain=True)))
-        csl = Console()
-        csl.start()
-        Cfg.wait = True
+        print("%s started at %s %s" % (Cfg.name.upper(), date, printable(Cfg, plain=True)))
+        cli = Console()
+        cli.start()
     if Cfg.wait:
-        irc.init()
-        rss.init()
-        if Cfg.exec:
-            scandir(Wd.moddir(), init)
-        wait()
-    return None
-
+        wait() 
 
 wrap(main)

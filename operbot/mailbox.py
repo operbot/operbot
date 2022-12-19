@@ -10,9 +10,8 @@ import os
 import time
 
 
-from opr.object import Class, Object
-from opr.object import find, fntime, printable, save, update
-from opr.thread import elapsed
+from opr.obj import Class, Object, find, fntime, printable, save
+from opr.thr import elapsed
 
 
 def __dir__():
@@ -155,8 +154,7 @@ def mbx(event):
     except FileNotFoundError:
         pass
     for ema in thing:
-        email = Email()
-        update(email, ema._headers)
+        email = Email(ema._headers)
         email.text = ""
         for payload in ema.walk():
             if payload.get_content_type() == 'text/plain':

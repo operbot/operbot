@@ -2,19 +2,21 @@
 # pylint: disable=C0115,C0116,R0903
 
 
-"tdo <txt>"
+"todo"
 
 
 import time
 
 
-from operbot import Class, Object, elapsed, find, fntime, save
+from opr.obj import Class, Object, find, fntime, save
+from opr.thr import elapsed
+
 
 
 def __dir__():
     return (
             'Todo',
-            'tdo',
+            'todo',
            )
 
 

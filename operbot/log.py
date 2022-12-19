@@ -2,13 +2,14 @@
 # pylint: disable=E1101,R0903,C0115,C0116
 
 
-"log <txt>"
+"logging"
 
 
 import time
 
 
-from operbot import Class, Object, elapsed, find, fntime, save
+from opr.objects import Class, Object, find, fntime, save
+from opr.threads import elapsed
 
 
 def __dir__():

@@ -10,6 +10,7 @@ import re
 import threading
 import time
 import urllib
+import _thread
 
 
 from urllib.error import HTTPError, URLError
@@ -17,11 +18,10 @@ from urllib.parse import quote_plus, urlencode
 from urllib.request import Request, urlopen
 
 
-from operbot.object import Class, Db, Default, Object, write
-from operbot.object import find, fntime, last, printable, save
-from operbot.object import edit, register, spl, update
-from operbot.handler import Bus, Cfg
-from operbot.thread import Repeater, elapsed, launch
+from opr import Bus, Class, Cfg, Db, Default, Object, Repeater
+from opr import find, fntime, last
+from opr import locked, printable, register, save, spl, write, update
+from opr import elapsed, launch 
 
 
 def __dir__():
@@ -45,6 +45,9 @@ def init():
     fetcher = Fetcher()
     fetcher.start()
     return fetcher
+
+
+fetchlock = _thread.allocate_lock()
 
 
 class Feed(Default):
@@ -98,6 +101,7 @@ class Fetcher(Object):
             result += " - "
         return result[:-2].rstrip()
 
+    @locked(fetchlock)
     def fetch(self, feed):
         counter = 0
         objs = []
@@ -174,6 +178,7 @@ class Parser(Object):
 
 def getfeed(url, item):
     if Cfg.debug:
+        print("debug enabled, not fetching.")
         return []
     try:
         result = geturl(url)
@@ -202,7 +207,6 @@ def gettinyurl(url):
 
 
 def geturl(url):
-    "http url fetcher."
     url = urllib.parse.urlunparse(urllib.parse.urlparse(url))
     req = urllib.request.Request(url)
     req.add_header("User-agent", useragent("oirc"))
@@ -254,7 +258,7 @@ def ftc(event):
 
 def nme(event):
     if len(event.args) != 2:
-        event.reply("nme <stringinurl> <name>")
+        event.reply("name <stringinurl> <name>")
         return
     selector = {"rss": event.args[0]}
     got = []
