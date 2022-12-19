@@ -19,9 +19,9 @@ from urllib.request import Request, urlopen
 
 
 from opr import Bus, Class, Cfg, Db, Default, Object, Repeater
-from opr import find, fntime, last
+from opr import edit, find, fntime, last
 from opr import locked, printable, register, save, spl, write, update
-from opr import elapsed, launch 
+from opr import elapsed, launch
 
 
 def __dir__():
