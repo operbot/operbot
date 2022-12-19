@@ -39,6 +39,7 @@ setup(
     long_description=read(),
     long_description_content_type="text/x-rst",
     license="Public Domain",
+    install_requires=["opr"],
     packages=["operbot"],
     include_package_data=True,
     data_files=[

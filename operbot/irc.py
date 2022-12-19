@@ -18,20 +18,20 @@ import threading
 import _thread
 
 
-from opr.msg import Event
-from opr.hdl import Command, Handler
-from opr.obj import Class, Default, Object
-from opr.obj import edit, fntime, find, keys, last, locked, printable
-from opr.obj import register, save, update
-from opr.run import Cfg
-from opr.thr import elapsed, launch
+from opr.message import Event
+from opr.handler import Command, Handler
+from opr.objects import Class, Default, Object
+from opr.objects import edit, fntime, find, keys, last, locked, printable
+from opr.objects import register, save, update
+from opr.running import Cfg
+from opr.threads import elapsed, launch
 
 
 def __dir__():
     return (
             'Config',
             'IRC',
-            'cfg',
+            'icfg',
             'dlt',
             'init',
             'met',
@@ -603,7 +603,7 @@ class User(Object):
             update(self, val)
 
 
-def cfg(event):
+def icfg(event):
     config = Config()
     last(config)
     if not event.sets:

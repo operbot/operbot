@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot.handler import Command, scan
+from opr.handler import Command, scan
 from operbot import irc
 
 
@@ -16,4 +16,4 @@ class TestScan(unittest.TestCase):
 
     def test_scan(self):
         scan(irc)
-        self.assertTrue("cfg" in Command.cmd)
+        self.assertTrue("icfg" in Command.cmd)

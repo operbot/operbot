@@ -1,29 +1,23 @@
 # This file is placed in the Public Domain.
-# pylint: disable=E1101,C0116,W0613
+# pylint: disable=E1101,C0115,C0116,C0413,W0613
 
 
 "tinder"
 
 
 import os
-import random
-import shutil
 import sys
-import termios
-import time
-import traceback
 import unittest
-import _thread
 
 
 sys.path.insert(0, os.getcwd())
 
 
-from operbot import Cfg, Command, Event, Handler, Object, Wd
-from operbot import launch, parse, scan, update
-from operbot import elapsed, name
-from operbot import locked
-from operbot import cmds, info, irc, log, rss, todo
+from opr import Cfg, Command, Event, Handler, Object, Wd
+from opr import parse, scan
+
+
+from operbot import cmds, irc, log, rss, status, todo
 
 
 Wd.workdir = ".test"
@@ -31,10 +25,10 @@ Cfg.debug = True
 
 
 scan(cmds)
-scan(info)
 scan(irc)
 scan(log)
 scan(rss)
+scan(status)
 scan(todo)
 
 
@@ -114,11 +108,11 @@ class TestCommands(unittest.TestCase):
     def setUp(self):
         boot(" ".join(sys.argv[1:]))
         cprint(Cfg)
-        
+
     def test_commands(self):
         cli = CLI()
-        cmds = sorted(Command.cmd)
-        for cmd in cmds:
+        cmdz = sorted(Command.cmd)
+        for cmd in cmdz:
             for ex in getattr(param, cmd, ""):
                 evt = Event()
                 evt.channel = "#operbot"

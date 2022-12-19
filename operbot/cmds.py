@@ -5,7 +5,7 @@
 "commands"
 
 
-from opr.hdl import Command
+from opr.handler import Command
 
 
 def __dir__():

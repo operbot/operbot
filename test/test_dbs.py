@@ -8,7 +8,7 @@
 import unittest
 
 
-from operbot.object import Db
+from opr.objects import Db
 
 
 class TestDbs(unittest.TestCase):

@@ -2,13 +2,13 @@
 # pylint: disable=C0115,C0116
 
 
-"thread"
+"threads"
 
 
 import unittest
 
 
-from operbot.thread import Thread
+from opr.threads import Thread
 
 
 def test():

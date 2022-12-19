@@ -2,7 +2,7 @@
 # pylint: disable=E1101,C0116,C0411,R0904,C0115
 
 
-"object"
+"objects"
 
 
 import json
@@ -10,10 +10,10 @@ import os
 import unittest
 
 
-from operbot.object import Object, Wd, items, keys, register, update, values
-from operbot.object import edit, kind, load, save
-from operbot.object import ObjectDecoder, ObjectEncoder
-from operbot.object import printable
+from opr.objects import Object, Wd, items, keys, register, update, values
+from opr.objects import edit, kind, load, save
+from opr.objects import ObjectDecoder, ObjectEncoder
+from opr.objects import printable
 
 
 Wd.workdir = ".test"
@@ -157,7 +157,7 @@ class TestObject(unittest.TestCase):
         self.assertTrue(Object().__module__, "op")
 
     def test_kind(self):
-        self.assertEqual(kind(Object()), "operbot.object.Object")
+        self.assertEqual(kind(Object()), "opr.objects.Object")
 
     def test_repr(self):
         self.assertTrue(update(Object(),
