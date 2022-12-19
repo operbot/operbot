@@ -6,16 +6,14 @@
 "write your own commands"
 
 
-__version__ = "110"
-
-
 import sys
 
 
-from operbot import Cfg, Handler, command, Wd, parse, scan
+from opr import Cfg, Handler, Wd, command, parse, scan
 from operbot import cmds, irc, rss
 
 
+Cfg.name = "operbot"
 Wd.workdir = "/var/lib/operbot/"
 
 
@@ -29,13 +27,12 @@ class CLI(Handler):
     @staticmethod
     def raw(txt):
         print(txt)
-
+        sys.stdout.flush()
 
 def main():
     parse(' '.join(sys.argv[1:]))
     cli = CLI()
-    evt = command(cli, Cfg.otxt)
-    evt.wait()
+    command(cli, Cfg.prs.otxt)
 
 
 main()

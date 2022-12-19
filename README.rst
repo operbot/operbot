@@ -27,9 +27,7 @@ presence in a channel.
 last version saved on disk is served to the user layer. Files are JSON dumps
 that are read-only so thus should provide (disk) persistence. Paths carry the
 type in the path name what makes reconstruction from filename easier then
-reading type from the object. ``OPERBOT`` uses ~/.operbot/mod to read
-modules from.
-
+reading type from the object. `
 
 ``OPERBOT`` has some functionality, mostly feeding RSS feeds into a irc
 channel. It can do some logging of txt and take note of things todo.
@@ -38,19 +36,19 @@ channel. It can do some logging of txt and take note of things todo.
 **INSTALL**
 
 |
-| ``pip3 install operbot --upgrade --force-reinstall``
+| ``pip3 install operbot``
 |
 
 **CONFIGURATION**
 
 |
-| configuration is done by calling the ``cfg`` command of ``operbot``
+| configuration is done by calling the ``icfg`` command of ``operbot``
 | 
 
 **irc**
 
 
-| ``operbot cfg server=<server> channel=<channel> nick=<nick>``
+| ``operbot icfg server=<server> channel=<channel> nick=<nick>``
 |
 | (*) default channel/server is #operbot on localhost
 |
@@ -59,14 +57,28 @@ channel. It can do some logging of txt and take note of things todo.
 
 
 | ``operbot pwd <nickservnick> <nickservpass>``
-| ``operbot cfg password=<outputfrompwd>``
+| ``operbot icfg password=<outputfrompwd>``
 |
 
 **users**
 
+as default the user's userhost is checked when a user types a command in a
+channel. To add a user to the bot use the met command:
 
-| ``operbot cfg users=True``
+|
 | ``operbot met <userhost>``
+|
+
+to delete a user use the del command with a substring of the userhost:
+
+|
+| ``operbot del <substring>``
+|
+
+to disable userhost checking disable users with the ``icfg`` command:
+
+|
+| ``operbot icfg users=False``
 |
 
 **rss**
@@ -105,7 +117,7 @@ use the -c option to start the bot as a console.
 
 | ``$ operbot -c``
 | ``OPERBOT started at Fri Sep 16 02:11:23 2022``
-| ``> cfg``
+| ``> icfg``
 | ``server=localhost port=6667 channel=#operbot nick=operbot cc=!``
 | ``> thr``
 | ``Console.loop(8s) IRC.keep(8s) IRC.loop(8s) IRC.output(8s) thr(8s) Fetcher.run/4m59s``
@@ -142,7 +154,7 @@ here is a short description of the commands.
 **PROGRAMMING**
 
 
-The ``operbot`` package provides an Object class, that mimics a dict while using
+The ``opr`` package provides an Object class, that mimics a dict while using
 attribute access and provides a save/load to/from json files on disk.
 Objects can be searched with database functions and uses read-only files
 to improve persistence and a type in filename for reconstruction. Methods are
@@ -150,7 +162,7 @@ factored out into functions to have a clean namespace to read JSON data into.
 
 basic usage is this::
 
- >>> from operbot import Object
+ >>> from opr import Object
  >>> o = Object()
  >>> o.key = "value"
  >>> o.key
@@ -163,7 +175,7 @@ and values.
 
 load/save from/to disk::
 
- >>> from operbot import Object, load, save
+ >>> from opr import Object, load, save
  >>> o = Object()
  >>> o.key = "value"
  >>> p = save(o)
@@ -174,19 +186,19 @@ load/save from/to disk::
 
 great for giving objects peristence by having their state stored in files::
 
- >>> from operbot import Object, save
+ >>> from opr import Object, save
  >>> o = Object()
  >>> save(o)
- operbot.object.Object/89efa5fd7ad9497b96fdcb5f01477320/2022-11-21/17:20:12.221192
+ opr.objects.Object/89efa5fd7ad9497b96fdcb5f01477320/2022-11-21/17:20:12.221192
+
 
 **SYSTEMD**
+
 
 to run the bot after reboot, install the service file and start the service
 by enabling it with ``--now``::
 
-
- $ ``sudo cp /usr/local/share/operbot/operbot.service /etc/systemd/system``
- $ ``sudo systemctl enable operbot --now``
+ $ ``sudo systemctl enable /usr/local/operbot/operbot.service  --now``
 
  (*) default channel/server is #operbot on localhost
 

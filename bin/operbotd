@@ -6,10 +6,7 @@
 "write your own commands"
 
 
-__version__ = "108"
-
-
-from operbot import Wd, scan, wait
+from opr import Wd, scan, wait
 from operbot import cmds, irc, rss
 
 

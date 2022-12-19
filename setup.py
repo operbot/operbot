@@ -39,11 +39,11 @@ setup(
     long_description=read(),
     long_description_content_type="text/x-rst",
     license="Public Domain",
-    install_requires=["opr"],
+    install_requires=["opr>=8"],
     packages=["operbot"],
     include_package_data=True,
     data_files=[
-                ("share/operbot", ["README.rst", "files/operbot.service",])
+                ("operbot", ["README.rst", "files/operbot.service",])
                ],
     scripts=[
              "bin/operbot",
