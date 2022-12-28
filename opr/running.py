@@ -10,8 +10,8 @@ import sys
 import time
 
 
-from .handler import scan
 from .message import Event, Parsed
+from .handler import scan
 from .objects import Default, spl, update
 
 
@@ -43,6 +43,8 @@ def boot():
         Cfg.verbose = True
     if "w" in prs.opts:
         Cfg.wait = True
+    if "x" in prs.opts:
+        Cfg.exec = True
     update(Cfg.prs, prs)
     update(Cfg, prs.sets)
 
@@ -90,17 +92,23 @@ def scanner(pkg, importer, mods=None):
 
 
 def scandir(path, importer, pname, mods=None):
+    res = []
     for modname in listmod(path):
         if mods and not include(modname, spl(mods)):
             continue
         mname = "%s.%s" % (pname, modname)
-        mod = importer(mname, path)
+        ppath = os.path.join("%s/%s.py" % (path, modname))
+        mod = importer(mname, ppath)
+        res.append(mod)
         scan(mod)
+    return res
 
 
-def wait():
+def wait(func=None):
     while 1:
         time.sleep(1.0)
+        if func:
+            func()
 
 
 ## runtime
