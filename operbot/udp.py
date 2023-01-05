@@ -9,9 +9,7 @@ import socket
 import time
 
 
-from opr.handler import Bus
-from opr.objects import Class, Object,last
-from opr.threads import launch
+from opr import Bus, Class, Object, launch, last
 
 
 def __dir__():

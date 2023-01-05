@@ -8,8 +8,7 @@
 import time
 
 
-from opr.objects import Class, Object, find, fntime, save
-from opr.threads import elapsed
+from opr import Class, Object, elapsed, find, fntime, save
 
 
 
