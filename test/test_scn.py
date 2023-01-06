@@ -5,11 +5,21 @@
 "scan tests"
 
 
+import inspect
 import unittest
 
 
-from opr.handler import Command, scan
+from opr.handler import Command
 from operbot import irc
+
+
+def scan(mod):
+    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
+        if key.startswith("cb"):
+            continue
+        names = cmd.__code__.co_varnames
+        if "event" in names:
+            Command.add(cmd)
 
 
 class TestScan(unittest.TestCase):

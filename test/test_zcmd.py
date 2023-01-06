@@ -5,6 +5,7 @@
 "tinder"
 
 
+import inspect
 import os
 import sys
 import unittest
@@ -14,22 +15,14 @@ sys.path.insert(0, os.getcwd())
 
 
 from opr import Cfg, Command, Event, Handler, Object, Wd
-from opr import parse, scan
+from opr import parse
 
 
-from operbot import cmds, irc, log, rss, status, todo
+from operbot import cmd, irc, log, rss, sts, tdo
 
 
 Wd.workdir = ".test"
 Cfg.debug = True
-
-
-scan(cmds)
-scan(irc)
-scan(log)
-scan(rss)
-scan(status)
-scan(todo)
 
 
 errors = []
@@ -101,6 +94,22 @@ def cprint(txt):
     print(txt)
     sys.stdout.flush()
 
+
+def scan(mod):
+    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
+        if key.startswith("cb"):
+            continue
+        names = cmd.__code__.co_varnames
+        if "event" in names:
+            Command.add(cmd)
+
+
+scan(cmd)
+scan(irc)
+scan(log)
+scan(rss)
+scan(sts)
+scan(tdo)
 
 
 class TestCommands(unittest.TestCase):
