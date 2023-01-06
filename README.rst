@@ -125,7 +125,7 @@ setter for that.
 
 
 | ``$ operbot -c mod=irc,rss,cmd``
-| ``OPERBOT started at Fri Jan 6 01:49:58 2023 version=111 console=True mod=irc,rss,cmd
+| ``OPERBOT started at Fri Jan 6 01:49:58 2023 version=111 console=True mod=irc,rss,cmd``
 | ``> cmd``
 | ``cmd,dlt,dpl,flt,ftc,icfg,log,met,mre,nme,pwd,rem,rss,thr,upt``
 | ``>``
