@@ -31,7 +31,7 @@ def uploadlist(dir):
 
 setup(
     name="operbot",
-    version="110",
+    version="111",
     author="Bart Thate",
     author_email="operbot100@gmail.com",
     url="http://github.com/operbot/operbot",
@@ -43,7 +43,8 @@ setup(
     packages=["operbot"],
     include_package_data=True,
     data_files=[
-                ("operbot", ["README.rst", "files/operbot.service",])
+                ("operbot", ["files/operbot.service",]),
+                ("share/doc/operbot", ["README.rst"])
                ],
     scripts=[
              "bin/operbot",
