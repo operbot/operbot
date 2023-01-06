@@ -129,7 +129,7 @@ use the -c option to start the bot as a console.
 here is a short description of the commands.
 
 
-| ``cfg`` - show the irc configuration, also edits the config
+| ``icfg`` - show the irc configuration, also edits the config
 | ``cmd`` - show all commands
 | ``dlt`` - remove a user
 | ``dne`` - flag todo as done

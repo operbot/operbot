@@ -31,7 +31,7 @@ def __dir__():
             "User",
             'init',
             'dlt',
-            'cfg',
+            'icfg',
             'met',
             'mre',
             'pwd'
@@ -612,7 +612,7 @@ class User(Object):
 Class.add(User)
 
 
-def cfg(event):
+def icfg(event):
     config = Config()
     last(config)
     if not event.sets:
