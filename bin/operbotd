@@ -6,19 +6,29 @@
 "write your own commands"
 
 
-from opr import Wd, scan, wait
-from operbot import cmds, irc, rss
+import inspect
 
 
-scan(cmds)
-scan(irc)
-scan(rss)
+from opr import Command, Wd, wait
+from operbot import cmd, irc, rss
 
 
 Wd.workdir = "/var/lib/operbot/"
 
 
+def scan(mod):
+    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
+        if key.startswith("cb"):
+            continue
+        names = cmd.__code__.co_varnames
+        if "event" in names:
+            Command.add(cmd)
+
+
 def main():
+    scan(cmd)
+    scan(irc)
+    scan(rss)
     irc.init()
     rss.init()
     wait()

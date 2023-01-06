@@ -6,20 +6,17 @@
 "write your own commands"
 
 
+import inspect
 import sys
 
 
-from opr import Cfg, Handler, Wd, command, parse, scan
-from operbot import cmds, irc, rss
+from opr import Cfg, Command, Handler, Wd, command, parse
+
+from operbot import cmd, irc, rss
 
 
 Cfg.name = "operbot"
 Wd.workdir = "/var/lib/operbot/"
-
-
-scan(cmds)
-scan(irc)
-scan(rss)
 
 
 class CLI(Handler):
@@ -29,8 +26,21 @@ class CLI(Handler):
         print(txt)
         sys.stdout.flush()
 
+
+def scan(mod):
+    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
+        if key.startswith("cb"):
+            continue
+        names = cmd.__code__.co_varnames
+        if "event" in names:
+            Command.add(cmd)
+
+
 def main():
     parse(' '.join(sys.argv[1:]))
+    scan(cmd)
+    scan(irc)
+    scan(rss)
     cli = CLI()
     command(cli, Cfg.prs.otxt)
 

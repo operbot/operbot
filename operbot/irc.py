@@ -31,7 +31,7 @@ def __dir__():
             "User",
             'init',
             'dlt',
-            'icfg',
+            'cfg',
             'met',
             'mre',
             'pwd'
@@ -41,8 +41,8 @@ def __dir__():
 __all__ = __dir__()
 
 
-NAME = "opr"
-REALNAME = "Object Programming Runtime"
+NAME = "operbot"
+REALNAME = "write your own commands"
 
 
 saylock = _thread.allocate_lock()
@@ -612,7 +612,7 @@ class User(Object):
 Class.add(User)
 
 
-def icfg(event):
+def cfg(event):
     config = Config()
     last(config)
     if not event.sets:
@@ -624,7 +624,7 @@ def icfg(event):
     else:
         edit(config, event.sets)
         save(config)
-        event.done()
+        event.ok()
 
 
 def dlt(event):
@@ -635,7 +635,7 @@ def dlt(event):
     for obj in find("user", selector):
         obj.__deleted__ = True
         save(obj)
-        event.done()
+        event.ok()
         break
 
 
