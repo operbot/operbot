@@ -5,6 +5,9 @@
 "tinder"
 
 
+## imports
+
+
 import inspect
 import os
 import sys
@@ -14,15 +17,23 @@ import unittest
 sys.path.insert(0, os.getcwd())
 
 
-from opr import Cfg, Command, Event, Handler, Object, Wd
-from opr import parse
-
-
+from opr import Cfg, Command, Event, Handler, Object, Wd, parse, scan
 from operbot import cmd, irc, log, rss, sts, tdo
 
 
-Wd.workdir = ".test"
+## defines
+
+
 Cfg.debug = True
+Wd.workdir = ".test"
+
+
+scan(cmd)
+scan(irc)
+scan(log)
+scan(rss)
+scan(sts)
+scan(tdo)
 
 
 errors = []
@@ -54,12 +65,17 @@ param.tdo = ["test4", ""]
 param.thr = [""]
 
 
+## classes
+
 
 class CLI(Handler):
 
     def raw(self, txt):
         if Cfg.verbose:
             cprint(txt)
+
+
+## utilities
 
 
 def boot(txt):
@@ -95,21 +111,7 @@ def cprint(txt):
     sys.stdout.flush()
 
 
-def scan(mod):
-    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
-        if key.startswith("cb"):
-            continue
-        names = cmd.__code__.co_varnames
-        if "event" in names:
-            Command.add(cmd)
-
-
-scan(cmd)
-scan(irc)
-scan(log)
-scan(rss)
-scan(sts)
-scan(tdo)
+## unittests
 
 
 class TestCommands(unittest.TestCase):
