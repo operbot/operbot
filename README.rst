@@ -117,11 +117,36 @@ use the -c option to start the bot as a console.
 
 | ``$ operbot -c``
 | ``OPERBOT started at Fri Sep 16 02:11:23 2022``
+| ``> cmd``
+| ``>``
+
+the standard bot is running empty without any modules enabled, use the mod=
+setter for that.
+
+
+| ``$ operbot -c mod=irc,rss,cmd``
+| ``OPERBOT started at Fri Jan 6 01:49:58 2023 version=111 console=True mod=irc,rss,cmd
+| ``> cmd``
+| ``cmd,dlt,dpl,flt,ftc,icfg,log,met,mre,nme,pwd,rem,rss,thr,upt``
+| ``>``
+
+
+the ``mod`` command will show you a list of modules you can load.
+
+| ``$ operbot mod``
+| ``udp,rss,tdo,sts,cmd,irc,log``
+
+
+configuration of the irc client is done with the ``icfg`` command.
+
+
 | ``> icfg``
 | ``server=localhost port=6667 channel=#operbot nick=operbot cc=!``
 | ``> thr``
 | ``Console.loop(8s) IRC.keep(8s) IRC.loop(8s) IRC.output(8s) thr(8s) Fetcher.run/4m59s``
 |
+
+
 
 **COMMANDS**
 

@@ -9,20 +9,11 @@
 import inspect
 
 
-from opr import Command, Wd, wait
+from opr import Command, Wd, scan, wait
 from operbot import cmd, irc, rss
 
 
 Wd.workdir = "/var/lib/operbot/"
-
-
-def scan(mod):
-    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
-        if key.startswith("cb"):
-            continue
-        names = cmd.__code__.co_varnames
-        if "event" in names:
-            Command.add(cmd)
 
 
 def main():

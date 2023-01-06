@@ -26,7 +26,7 @@ import traceback
 
 
 from opr import Cfg, Command, Event, Handler, Wd
-from opr import boot, command, last, launch, printable, scanpkg, wait
+from opr import boot, command, last, launch, printable, scan, scanpkg, wait
 
 
 import operbot
@@ -144,15 +144,6 @@ def initer(mname, path=None):
         thr.join()
 
 
-def scan(mod):
-    for key, cmd in inspect.getmembers(mod, inspect.isfunction):
-        if key.startswith("cb"):
-            continue
-        names = cmd.__code__.co_varnames
-        if "event" in names:
-            Command.add(cmd)
-
-
 def scanner(mname, path=None):
     mods = importer(mname, path)
     scan(mods)
@@ -177,10 +168,19 @@ def wrap(func):
             traceback.print_exception(type(ex), ex, ex.__traceback__)
 
 
+## commands
+
+
+def mod(event):
+    path = operbot.__path__[0]
+    event.reply(",".join([x[:-3] for x in os.listdir(path) if not (x.startswith("_") or x.endswith("~"))]))
+
+
 ## runtime
 
 
 def main():
+    Command.add(mod)
     boot(" ".join(sys.argv[1:]))
     if Cfg.prs.txt:
         scanpkg(operbot, scanner)
